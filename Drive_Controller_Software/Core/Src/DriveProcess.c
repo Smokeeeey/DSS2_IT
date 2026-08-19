@@ -16,8 +16,12 @@ bool driveProcess(Event* ev)
 	switch(driveState){                  // this is the transition state machine
 		//-----------------------------------------------------------------------
 		case INIT_DRIVE:
-			if (ev->id == E_CAR_INIT){
-				carState = OFF;
+			if (ev->id == E_MODE_D){
+				carState = DRIVE;
+			}
+
+			if (ev->id == E_MODE_P){
+				carState = DRIVE;
 			}
 				break;
 		//-----------------------------------------------------------------------
