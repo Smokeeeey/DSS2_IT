@@ -1,0 +1,7 @@
+../Core/Src/event.c:4:6:Event_init	1
+../Core/Src/event.c:12:6:Event_setPE	1
+../Core/Src/event.c:17:15:Event_getPE	1
+../Core/Src/event.c:22:6:Event_setId	1
+../Core/Src/event.c:27:7:Event_getId	1
+../Core/Src/event.c:32:6:Event_setDelay	1
+../Core/Src/event.c:37:10:Event_getDelay	1

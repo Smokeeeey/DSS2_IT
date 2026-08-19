@@ -1,0 +1,5 @@
+../Core/Src/flash.c:17:17:GetPage	24	static
+../Core/Src/flash.c:33:17:GetBank	16	static
+../Core/Src/flash.c:38:6:FlashErase	16	static
+../Core/Src/flash.c:61:6:FlashWrite	24	static
+../Core/Src/flash.c:70:10:FlashRead	48	static
