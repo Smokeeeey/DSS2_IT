@@ -64,6 +64,7 @@ UART_HandleTypeDef huart2;
 Nunchuck_ST Nunchuck_1;
 Joystick js;
 bool switch_Nunchuck_Joystick = false;
+Gear_ST gear;
 
 uint32_t adc_ch6 = 0; // Channel 6 of the ADC
 uint32_t adc_ch8 = 0; // Channel 8 of the ADC

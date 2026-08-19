@@ -10,29 +10,32 @@
 
 //---------------------------Includes---------------------------
 
+#include <GearProcess.h>
 #include "CO_app_STM32.h" // Includes the ported CANopen files
 #include "OD.h"
 #include "xf.h"
 #include "flash.h"
 #include "stdbool.h"
-#include "JoystickProssess.h"
-#include "NunchuckProcess.h"
 
 //---------------------------Defines---------------------------
 
 #define CO_CONFIG_SDO_CLI CO_CONFIG_SDO_CLI_ENABLE // Mandatory to act as SDO client !!!
 #define CO_CONFIG_NMT (CO_CONFIG_GLOBAL_FLAG_CALLBACK_PRE | CO_CONFIG_GLOBAL_FLAG_TIMERNEXT|CO_CONFIG_NMT_MASTER)
 
-#define NUNCHUCK_ADRR (0x52 << 1)
-#define MAX_JOYSTICK 905
-#define MIN_JOYSTICK 85
-#define MAX_NUNCHUCK 230
-#define MIN_NUNCHUCK 30
-#define COURSE_JOYSTICK 200
 
-#define TRESHOLD_NEW_VALUE 2
+//---------------------------Values---------------------------
+//#define NUNCHUCK_ADRR (0x52 << 1)
+//#define MAX_JOYSTICK 905
+//#define MIN_JOYSTICK 85
+//#define MAX_NUNCHUCK 230
+//#define MIN_NUNCHUCK 30
+//#define COURSE_JOYSTICK 200
+//
+//#define TRESHOLD_NEW_VALUE 2
+#define POS_GEAR_1 0
+#define POS_GEAR_2 1
 
-//---------------------Emplacements Flash---------------------
+//----------------------------Flash---------------------------
 
 #define ZEROLIMIT_ADR 8
 #define NUNCHUCK_OFFSET_ADR 16
@@ -44,36 +47,27 @@
 
 typedef enum {
 	E_INIT = 1,
-	E_DEFAULT = 2,
-	E_NON_USED = 3,
-	E_SEND = 4,
-	E_RECEIVE = 5
+	E_GEAR_ENGAGED = 2,
+	E_GEAR_TRANSIT = 3,
+	E_GEAR_ERROR = 4,
 }EventList;
 
 typedef enum {
 	INIT = 1,
-	DEFAULT = 2,
-	NON_USED = 3,
-	SEND = 4,
-	RECEIVE = 5
+	ENGAGED = 2,
+	TRANSITION = 3,
+	ERROR = 4,
 }StateControl;
 
 //---------------------------Structures---------------------------
 
 typedef struct{
-	int16_t x;
-	int16_t y;
-	bool zButton;
-	bool cButton;
-}Nunchuck_ST;
-extern Nunchuck_ST Nunchuck_1;
+	int16_t position;
+	bool in_transition;
+	bool change;
+}Gear_ST;
+extern Gear_ST Gear;
 
-typedef struct {
-	int16_t x;
-	int16_t y;
-	bool button;
-}Joystick;
-extern Joystick js;
 
 //---------------------------CanOpen---------------------------
 
