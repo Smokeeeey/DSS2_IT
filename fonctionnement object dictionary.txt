@@ -1,0 +1,8 @@
+fonctionnement object dictionary 
+
+ouvrir/télécharger le dossier net8.0-windows
+ourvir fichier EDSEditor.exe
+ourvir dans l'application lancée le fichier se trouvant au chemin suivant : 
+...workspace_1.18.1\DSS2_joystick_JN\CANopenNode_STM32\DS301_profile.xpd (le dossier de stm vient du git correspondant: )
+aller dans "Object dictionary" 
+créer un nouvel object 
