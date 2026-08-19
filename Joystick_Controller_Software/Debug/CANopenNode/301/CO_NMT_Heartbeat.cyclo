@@ -1,9 +1,9 @@
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_driver.h:609:1:CO_getUint16	1
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_ODinterface.h:343:1:OD_getIndex	2
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_ODinterface.h:463:1:OD_extension_init	2
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_ODinterface.h:524:1:OD_get_u16	1
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_Emergency.h:454:1:CO_isError	4
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_Emergency.h:472:1:CO_getErrorRegister	3
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_driver.h:609:1:CO_getUint16	1
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_ODinterface.h:343:1:OD_getIndex	2
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_ODinterface.h:463:1:OD_extension_init	2
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_ODinterface.h:524:1:OD_get_u16	1
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_Emergency.h:454:1:CO_isError	4
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_Emergency.h:472:1:CO_getErrorRegister	3
 ../CANopenNode/301/CO_NMT_Heartbeat.c:30:1:CO_NMT_receive	4
 ../CANopenNode/301/CO_NMT_Heartbeat.c:56:1:OD_write_1017	6
 ../CANopenNode/301/CO_NMT_Heartbeat.c:73:1:CO_NMT_init	13

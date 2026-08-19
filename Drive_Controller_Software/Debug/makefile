@@ -43,34 +43,34 @@ $(wildcard ../makefile.init) \
 $(wildcard ../makefile.targets) \
 
 
-BUILD_ARTIFACT_NAME := Joystick_Controller_Software
+BUILD_ARTIFACT_NAME := Drive_Controller_Software
 BUILD_ARTIFACT_EXTENSION := elf
 BUILD_ARTIFACT_PREFIX :=
 BUILD_ARTIFACT := $(BUILD_ARTIFACT_PREFIX)$(BUILD_ARTIFACT_NAME)$(if $(BUILD_ARTIFACT_EXTENSION),.$(BUILD_ARTIFACT_EXTENSION),)
 
 # Add inputs and outputs from these tool invocations to the build variables 
 EXECUTABLES += \
-Joystick_Controller_Software.elf \
+Drive_Controller_Software.elf \
 
 MAP_FILES += \
-Joystick_Controller_Software.map \
+Drive_Controller_Software.map \
 
 SIZE_OUTPUT += \
 default.size.stdout \
 
 OBJDUMP_LIST += \
-Joystick_Controller_Software.list \
+Drive_Controller_Software.list \
 
 
 # All Target
 all: main-build
 
 # Main-build Target
-main-build: Joystick_Controller_Software.elf secondary-outputs
+main-build: Drive_Controller_Software.elf secondary-outputs
 
 # Tool invocations
-Joystick_Controller_Software.elf Joystick_Controller_Software.map: $(OBJS) $(USER_OBJS) C:\Users\alessio.ciardo\Documents\GIT\DSS2\Joystick_Controller_Software\STM32L432KCUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Joystick_Controller_Software.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\alessio.ciardo\Documents\GIT\DSS2\Joystick_Controller_Software\STM32L432KCUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Joystick_Controller_Software.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Drive_Controller_Software.elf Drive_Controller_Software.map: $(OBJS) $(USER_OBJS) C:\Users\loic.pinuela\Desktop\DSS2_IT\Drive_Controller_Software\STM32L432KCUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Drive_Controller_Software.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\loic.pinuela\Desktop\DSS2_IT\Drive_Controller_Software\STM32L432KCUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Drive_Controller_Software.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -79,14 +79,14 @@ default.size.stdout: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
-Joystick_Controller_Software.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "Joystick_Controller_Software.list"
+Drive_Controller_Software.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objdump -h -S $(EXECUTABLES) > "Drive_Controller_Software.list"
 	@echo 'Finished building: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) Joystick_Controller_Software.elf Joystick_Controller_Software.list Joystick_Controller_Software.map default.size.stdout
+	-$(RM) Drive_Controller_Software.elf Drive_Controller_Software.list Drive_Controller_Software.map default.size.stdout
 	-@echo ' '
 
 secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
