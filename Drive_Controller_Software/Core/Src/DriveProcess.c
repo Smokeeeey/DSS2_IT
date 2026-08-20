@@ -17,68 +17,74 @@ bool driveProcess(Event* ev)
 		//-----------------------------------------------------------------------
 		case INIT_DRIVE:
 			if (ev->id == E_MODE_D){
-				carState = DRIVE;
+				driveState = DRIVE;
 			}
 
 			if (ev->id == E_MODE_P){
-				carState = DRIVE;
+				driveState = PARK;
+			}
+			if (ev->id == E_ERROR){
+				driveState = ERROR_DRIVE;
 			}
 				break;
 		//-----------------------------------------------------------------------
 		case PARK:
-			if (ev->id == E_CONTACT_OFF){
-				carState = OFF;
+			if (ev->id == E_MODE_G){
+				driveState = GEARCHANGE;
 			}
 			if (ev->id == E_MODE_D){
-				carState = DRIVE;
+				driveState = DRIVE;
 			}
 			if (ev->id == E_MODE_R){
-				carState = REVERSE;
+				driveState = REVERSE;
 			}
-			if (ev->id == E_MODE_N){
-				carState = NEUTRAL;
+			if (ev->id == E_ERROR){
+				driveState = ERROR_DRIVE;
 			}
 			break;
 		//-----------------------------------------------------------------------
 		case REVERSE:
-			if (ev->id == E_CONTACT_OFF){
-				carState = OFF;
-			}
-			if (ev->id == E_MODE_P){
-				carState = PARK;
-			}
-			if (ev->id == E_MODE_N){
-				carState = NEUTRAL;
-			}
-			break;
-		//-----------------------------------------------------------------------
-		case NEUTRAL:
-			if (ev->id == E_CONTACT_OFF){
-				carState = OFF;
-			}
-			if (ev->id == E_MODE_P){
-				carState = PARK;
-			}
-			if (ev->id == E_MODE_R){
-				carState = REVERSE;
-			}
 			if (ev->id == E_MODE_D){
-				carState = DRIVE;
+				driveState = DRIVE;
 			}
-
+			if (ev->id == E_MODE_P){
+				driveState = PARK;
+			}
+			if (ev->id == E_ERROR){
+				driveState = ERROR_DRIVE;
+			}
 			break;
 		//-----------------------------------------------------------------------
 		case DRIVE:
-			if (ev->id == E_CONTACT_OFF){
-				carState = OFF;
+			if (ev->id == E_MODE_P){
+				driveState = PARK;
 			}
-			if (ev->id == E_MODE_N){
-				carState = NEUTRAL;
+			if (ev->id == E_MODE_R){
+				driveState = REVERSE;
 			}
-			if (ev->id == E_TEMPOMAT_ON){
-				carState = TEMPOMAT;
+			if (ev->id == E_MODE_G){
+				driveState = GEARCHANGE;
+			}
+			if (ev->id == E_ERROR){
+				driveState = ERROR_DRIVE;
 			}
 
+			break;
+		//-----------------------------------------------------------------------
+		case GEARCHANGE:
+			if (ev->id == E_MODE_P){
+				driveState = PARK;
+			}
+			if (ev->id == E_MODE_D){
+				driveState = DRIVE;
+			}
+			if (ev->id == E_ERROR){
+				driveState = ERROR_DRIVE;
+			}
+			break;
+
+		//-----------------------------------------------------------------------
+		case ERROR_DRIVE:
 
 			break;
 
@@ -93,32 +99,26 @@ bool driveProcess(Event* ev)
 	switch(driveState){                  // this is the entry action state machine
 
 		//-----------------------------------------------------------------------
-		case CAR_INIT:
-			break;
-		//-----------------------------------------------------------------------
-		case OFF:
-			XF_post(lightControl, E_LIGHT_OFF, 0);
+		case INIT_DRIVE:
 			break;
 		//-----------------------------------------------------------------------
 		case PARK:
-			XF_post(motorControl, E_MOTOR_GEAR0, 0);
+
 			break;
 		//-----------------------------------------------------------------------
 		case REVERSE:
-			XF_post(motorControl, E_MOTOR_GEAR0, 0);
+
 			break;
 		//-----------------------------------------------------------------------
-		case NEUTRAL:
-			XF_post(motorControl, E_MOTOR_NEUTRAL, 0);
+		case GEARCHANGE:
+
 			break;
 		//-----------------------------------------------------------------------
 		case DRIVE:
-			if (memOldState != TEMPOMAT){
-				XF_post(motorControl, E_MOTOR_GEAR0, 0);
-			}
+
 			break;
 		//-----------------------------------------------------------------------
-		case TEMPOMAT:
+		case ERROR_DRIVE:
 
 			break;
 	}

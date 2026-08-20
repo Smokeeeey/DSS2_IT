@@ -61,8 +61,8 @@ UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
 
-Nunchuck_ST Nunchuck_1;
-Joystick js;
+Car_ST Car_1;
+Steering_ST Steering_1;
 bool switch_Nunchuck_Joystick = false;
 
 uint32_t adc_ch6 = 0; // Channel 6 of the ADC
@@ -96,37 +96,12 @@ void physicalSwitch(){
 	//Active ou désactive les modes joystick et nunchuck
 	if (switch_Nunchuck_Joystick != old_switch_Nunchuck_Joystick){
 		if (switch_Nunchuck_Joystick){
-			//Mode nunchuck
-			XF_post(nunchuckProcess, E_SEND, 0);
+
 		} else {
-			//Mode joystick
-			XF_post(nunchuckProcess, E_NON_USED, 0);
-			XF_post(joystickProssess, E_DEFAULT, 0);
+
 		}
 	}
 	old_switch_Nunchuck_Joystick = switch_Nunchuck_Joystick;
-
-}
-
-void Nunchuck_Init(){
-
-	uint8_t data[2];
-
-	data[0] = 0xF0;
-	data[1] = 0x55;
-
-	HAL_I2C_Master_Transmit(&hi2c1, NUNCHUCK_ADRR, data, 2, HAL_MAX_DELAY);
-
-	HAL_Delay(10);
-
-	//----------------------------
-
-	data[0] = 0xFB;
-	data[1] = 0x00;
-
-	HAL_I2C_Master_Transmit(&hi2c1, NUNCHUCK_ADRR, data, 2, HAL_MAX_DELAY);
-
-	HAL_Delay(10);
 
 }
 
@@ -139,7 +114,7 @@ void Nunchuck_Init(){
 CANopenNodeSTM32 canOpenNodeSTM32;
 
 
-
+/* Utilisé pour stocker en flash
 static ODR_t storeCallback(OD_stream_t *stream, const void *buf,OD_size_t count, OD_size_t *countWritten)
 {
 	if (stream->subIndex == 4) // save manufacturer defined parameters (subindex 4)
@@ -156,6 +131,7 @@ static ODR_t storeCallback(OD_stream_t *stream, const void *buf,OD_size_t count,
 		}
 	}
 }
+*/
 
 static OD_extension_t my_extensionJoystick;
 
@@ -166,7 +142,11 @@ void mapCallbacks(OD_t *od) {
 	if (entry != NULL) {
 		// Assign the custom write function (set read to NULL if not needed)
 		my_extensionJoystick.read = NULL;
+
+		/* utilisé pour écrire sur la flash
 		my_extensionJoystick.write = storeCallback;
+		*/
+
 		my_extensionJoystick.object = NULL; // Can be used to store private data
 		// Register the extension to the OD entry
 		OD_extension_init(entry, &my_extensionJoystick);
@@ -232,6 +212,7 @@ int main(void)
 
   XF_init();
 
+  /*utilisé sur pour la flash
   // before canopen_app_init()
   if(FlashRead(0) == 0x1234567812345678)
   {
@@ -244,6 +225,7 @@ int main(void)
 
 	  OD_PERSIST_COMM.x2004_treshold_NewValue = FlashRead(TRESHOLD_NEW_VALUE_ADR);
   }
+  */
 
 
   // 1. Map the CANopen instance to your hardware (hcan1 is usually defined by CubeMX)
@@ -259,15 +241,11 @@ int main(void)
   mapCallbacks(OD);
   canopen_app_init(&canOpenNodeSTM32);
 
-  //Initialise le nunchuck
-  Nunchuck_Init();
 
   //Initialise les machines d'état
-  XF_post(nunchuckProcess, E_INIT, 0);
-  XF_post(joystickProssess, E_INIT, 0);
+  XF_post(steeringProcess, INIT_STEERING, 0);
+  XF_post(driveProcess, INIT_DRIVE, 0);
 
-  //On indique NON_USED à la machine d'état nunchuck si le switch est par défault sur joystick
-  if(!HAL_GPIO_ReadPin(SLIDER_GPIO_Port, SLIDER_Pin)) XF_post(nunchuckProcess, E_NON_USED, 0);
 
   //Affectation du pointer sur l'adresse de l'i2c pour avoir accès depuis tout les fichiers
   phi2c1 = &hi2c1;

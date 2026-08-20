@@ -33,16 +33,18 @@ typedef enum {
 	INIT_DRIVE,
 	PARK,
 	REVERSE,
-	NEUTRAL,
-	DRIVE
+	GEARCHANGE,
+	DRIVE,
+	ERROR_DRIVE
 }StateDriveControl;
 
 typedef enum{
 	E_INIT_DRIVE = 1,			// must be not 0 !!!
 	E_MODE_P,
 	E_MODE_R,
-	E_MODE_N,
-	E_MODE_D
+	E_MODE_G,
+	E_MODE_D,
+	E_ERROR
 }EventStateDriveControl;
 
 
