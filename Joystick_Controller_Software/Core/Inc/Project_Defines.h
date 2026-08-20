@@ -34,10 +34,8 @@
 
 //---------------------Emplacements Flash---------------------
 
-#define ZEROLIMIT_ADR 8
-#define NUNCHUCK_OFFSET_ADR 16
-#define JOYSTICK_OFFSET_ADR 32
-#define TRESHOLD_NEW_VALUE_ADR 48
+#define POS0_ADDR 8
+#define POS1_ADDR 16
 
 
 //---------------------------ENUM---------------------------

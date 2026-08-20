@@ -136,8 +136,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc){
 	if(hadc->Instance == ADC1){
-		adc_ch6 = HAL_ADCEx_InjectedGetValue(hadc, ADC_INJECTED_RANK_1);
-		adc_ch8 = HAL_ADCEx_InjectedGetValue(hadc, ADC_INJECTED_RANK_2);
+		gear.position = HAL_ADCEx_InjectedGetValue(hadc, ADC_INJECTED_RANK_1);
 	}
 }
 
@@ -210,7 +209,7 @@ int main(void)
 
   //Initialise la machines d'état
   XF_post(gearProcess, E_INIT, 0);
-  uint8_t oldGear;
+  static uint8_t oldGearRequest = 0;
 
   /* USER CODE END 2 */
 
@@ -226,19 +225,25 @@ int main(void)
 
 	  XF_executeOnce();
 
-	  //physicalSwitch();
-
 	  if(lectureADC){
 		  HAL_ADCEx_InjectedStart_IT(&hadc1);
 		  lectureADC = false;
 	  }
+    gear.change_gear_requested = 0; 
 	  //if gear change requested
-	  if(OD_RAM.x2000_gear == 0)
-	  {
-		  //enable transition process
-		  XF_post(processJoystick, E_GEAR_TRANSIT, 0);
-		  HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2001_gearPos0);
-	  }
+    gear.gear_requested = OD_RAM.x2000_gear; 
+    if (gear.gear_requested != oldGearRequest)
+    {
+      oldGearRequest = gear.gear_requested; 
+      gear.change_gear_requested = 1; 
+    }
+	  // if(OD_RAM.x2000_gear == 0)
+	  // {
+    //   gear.actual_gear = OD_RAM.x2000_gear; 
+		//   //enable transition process
+		//   XF_post(processJoystick, E_GEAR_TRANSIT, 0);
+		//   //HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2001_gearPos0);   (done in SM)
+	  // }
   }
   /* USER CODE END 3 */
 }
