@@ -1,0 +1,22 @@
+----------------------------------------------------------------------------------------------------------------------------------
+NCDrill File Report For: HESSO2L.PcbDoc   28.04.2026  16:35:31
+----------------------------------------------------------------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : HESSO2L.TXT
+
+Tool       Hole Size               Hole Tolerance               Hole Type       Hole Count   Plated         Tool Travel
+----------------------------------------------------------------------------------------------------------------------------------
+T1      0.8mm (31mil)                                             Round             2         PTH        2.00mm (0.08inch)
+T2      0.9mm (35mil)                                             Round             65        PTH        425.39mm (16.75inch)
+T3      1mm (39mil)                                               Round             11        PTH        100.39mm (3.95inch)
+T4      1.1mm (43mil)                                             Round             30        PTH        225.85mm (8.89inch)
+T5      1.4mm (55mil)                                             Round             4         PTH        49.00mm (1.93inch)
+T6      1.5mm (59mil)                                             Round             5         PTH        20.00mm (0.79inch)
+T7      3.15mm (124mil)                                           Round             6         PTH        171.62mm (6.76inch)
+T8      3.2mm (126mil)                                            Round             4         PTH        236.00mm (9.29inch)
+T9      0.8mm (31mil)                                             Round             1         NPTH       0.00mm (0.00inch)
+----------------------------------------------------------------------------------------------------------------------------------
+Totals                                                                              128
+
+Total Processing Time (hh:mm:ss) : 00:00:00

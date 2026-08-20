@@ -1,0 +1,7 @@
+Removed Pin From Net: NetName=+5 Pin=JP1-1
+Removed Pin From Net: NetName=+3V3 Pin=JP1-3
+Removed Member From Class: ClassName=MustBeRenamed_A4 Member=JP1
+Change Component Footprint: Designator=J4 Old Footprint=ScrewHeader6 P5.0 New Footprint=ScrewHeader5 P5.0
+Change Component Designator: OldDesignator=J4 NewDesignator=J?
+Change Net Name : Old Net Name=NetJ4_5 New Net Name=NetJ?_5
+Added Room: Name=MustBeRenamed_A4
