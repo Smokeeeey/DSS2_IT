@@ -210,6 +210,7 @@ int main(void)
 
   //Initialise la machines d'état
   XF_post(gearProcess, E_INIT, 0);
+  uint8_t oldGear;
 
   /* USER CODE END 2 */
 
@@ -231,7 +232,13 @@ int main(void)
 		  HAL_ADCEx_InjectedStart_IT(&hadc1);
 		  lectureADC = false;
 	  }
-
+	  //if gear change requested
+	  if(OD_RAM.x2000_gear == 0)
+	  {
+		  //enable transition process
+		  XF_post(processJoystick, E_GEAR_TRANSIT, 0);
+		  HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2001_gearPos0);
+	  }
   }
   /* USER CODE END 3 */
 }

@@ -83,17 +83,15 @@ bool gearProcess(Event* ev){
 						if (gear.actual_gear == 0)
 						{
 							gear.gear_requested = 1;
+							HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2002_gearPos1);
 							XF_post(gearProcess, E_GEAR_TRANSIT, 0);
-							//send to OD
 						}else
 						{
 							gear.gear_requested = 0;
+							HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2001_gearPos0);
 							XF_post(gearProcess, E_GEAR_TRANSIT, 0);
-							//send to OD
 						}
 					}
-					if()
-
 					break;
 				//-------------------------------------------
 				case TRANSITION:
