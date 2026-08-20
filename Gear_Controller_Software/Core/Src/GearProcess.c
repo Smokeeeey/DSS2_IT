@@ -13,7 +13,6 @@ bool gearProcess(Event* ev){
 		// Garde la vielle valeur
 		static Gear_ST oldGear;
 		static StateControl oldGearState;
-		uint8_t oldActualGear;
 		uint8_t stateNum;
 
 		//***********************************************
@@ -24,7 +23,7 @@ bool gearProcess(Event* ev){
 			case INIT:
 				stateNum=1;
 				if (ev->id == E_INIT) {
-						gearState = ENGAGED;
+						gearState = TRANSITION;
 				}
 				break;
 			//-------------------------------------------
@@ -34,7 +33,7 @@ bool gearProcess(Event* ev){
 					gearState = TRANSITION;
 				}
 				if (ev->id == E_GEAR_ERROR) {
-					gearState = ERROR;
+					gearState = GEARERROR;
 				}
 				break;
 			//-------------------------------------------
@@ -45,11 +44,11 @@ bool gearProcess(Event* ev){
 				}
 				//if in this state for too long send error
 				if (ev->id == E_GEAR_ERROR) {
-					gearState = ERROR;
+					gearState = GEARERROR;
 				}
 				break;
 			//-------------------------------------------
-			case ERROR:
+			case GEARERROR:
 				stateNum=4;
 				if (ev->id == E_GEAR_ENGAGED) {
 					gearState = ENGAGED;
@@ -71,17 +70,30 @@ bool gearProcess(Event* ev){
 				//-------------------------------------------
 				case ENGAGED:
 					gear.in_transition = 0;
-					gear.position = HAL_ADCEx_InjectedGetValue(hadc, ADC_INJECTED_RANK_1);
-					//request the other gear of what is currently engaged
-					if (gear.actual_gear == 0)
+					//check if gear engaged is actually gear requested
+					if(gear.actual_gear != gear.gear_requested)
 					{
-						gear.gear_requested = 1;
-						//send to OD
-					}else
-					{
-						gear.gear_requested = 0;
-						//send to OD
+						XF_post(gearProcess, E_GEAR_TRANSIT, 0);
 					}
+					//check if driver requested gear change
+					if (gear.gear_change_requested)
+					{
+						gear.position = HAL_ADCEx_InjectedGetValue(hadc, ADC_INJECTED_RANK_1);
+						//request the other gear of what is currently engaged
+						if (gear.actual_gear == 0)
+						{
+							gear.gear_requested = 1;
+							XF_post(gearProcess, E_GEAR_TRANSIT, 0);
+							//send to OD
+						}else
+						{
+							gear.gear_requested = 0;
+							XF_post(gearProcess, E_GEAR_TRANSIT, 0);
+							//send to OD
+						}
+					}
+					if()
+
 					break;
 				//-------------------------------------------
 				case TRANSITION:
@@ -101,7 +113,7 @@ bool gearProcess(Event* ev){
 
 					break;
 				//-------------------------------------------
-				case ERROR:
+				case GEARERROR:
 					gear.in_error = 1;
 					break;
 				//-------------------------------------------

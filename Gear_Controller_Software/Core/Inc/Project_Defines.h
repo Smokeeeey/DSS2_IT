@@ -56,7 +56,7 @@ typedef enum {
 	INIT = 1,
 	ENGAGED = 2,
 	TRANSITION = 3,
-	ERROR = 4,
+	GEARERROR = 4,
 }StateControl;
 
 //---------------------------Structures---------------------------
@@ -68,6 +68,7 @@ typedef struct{
 	bool gear_engaged;		//is gear in socle
 	bool in_transition;		//is gear in between
 	bool in_error;
+	bool gear_change_requested;  //if request from joy btn
 }Gear_ST;
 extern Gear_ST gear;
 

@@ -16,7 +16,7 @@
 
         Created:      23.11.2020 13:00:00
         Created By:   
-        Modified:     16.03.2026 21:10:11
+        Modified:     20.08.2026 13:37:43
         Modified By:  
 
     Device Info:
@@ -229,6 +229,8 @@ typedef struct {
         uint32_t applicationObject7;
         uint32_t applicationObject8;
     } x1A03_TPDOMappingParameter;
+    uint32_t x2001_gearPos0;
+    uint32_t x2002_gearPos1;
 } OD_PERSIST_COMM_t;
 
 typedef struct {
@@ -242,9 +244,8 @@ typedef struct {
         uint32_t COB_IDClientToServerRx;
         uint32_t COB_IDServerToClientTx;
     } x1200_SDOServerParameter;
-    uint32_t x2000_gear_position;
-    uint32_t x2001_gear_engaged;
-    uint32_t x2002_gear_transitioning;
+    uint8_t x2000_gear;
+    uint32_t x2003_gearPos;
     uint32_t x6000_velocity;
 } OD_RAM_t;
 
@@ -303,7 +304,8 @@ extern OD_ATTR_OD OD_t *OD;
 #define OD_ENTRY_H2000 &OD->list[33]
 #define OD_ENTRY_H2001 &OD->list[34]
 #define OD_ENTRY_H2002 &OD->list[35]
-#define OD_ENTRY_H6000 &OD->list[36]
+#define OD_ENTRY_H2003 &OD->list[36]
+#define OD_ENTRY_H6000 &OD->list[37]
 
 
 /*******************************************************************************
@@ -342,10 +344,11 @@ extern OD_ATTR_OD OD_t *OD;
 #define OD_ENTRY_H1A01_TPDOMappingParameter &OD->list[30]
 #define OD_ENTRY_H1A02_TPDOMappingParameter &OD->list[31]
 #define OD_ENTRY_H1A03_TPDOMappingParameter &OD->list[32]
-#define OD_ENTRY_H2000_gear_position &OD->list[33]
-#define OD_ENTRY_H2001_gear_engaged &OD->list[34]
-#define OD_ENTRY_H2002_gear_transitioning &OD->list[35]
-#define OD_ENTRY_H6000_velocity &OD->list[36]
+#define OD_ENTRY_H2000_gear &OD->list[33]
+#define OD_ENTRY_H2001_gearPos0 &OD->list[34]
+#define OD_ENTRY_H2002_gearPos1 &OD->list[35]
+#define OD_ENTRY_H2003_gearPos &OD->list[36]
+#define OD_ENTRY_H6000_velocity &OD->list[37]
 
 
 /*******************************************************************************
