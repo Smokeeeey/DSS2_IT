@@ -11,18 +11,18 @@
 
     File info:
         File Names:   OD.h; OD.c
-        Project File: JoystickController_CanOpenDic.xdd
+        Project File: DS301_profile.xpd
         File Version: 1
 
-        Created:      19.05.2026 15:00:18
+        Created:      23.11.2020 13:00:00
         Created By:   
-        Modified:     09.06.2026 19:47:04
+        Modified:     16.03.2026 21:10:11
         Modified By:  
 
     Device Info:
         Vendor Name:  
         Vendor ID:    
-        Product Name: JoystickController
+        Product Name: New Product
         Product ID:   
 
         Description:  
@@ -37,7 +37,7 @@
 #define OD_CNT_EM 1
 #define OD_CNT_SYNC 1
 #define OD_CNT_SYNC_PROD 1
-#define OD_CNT_STORAGE 5
+#define OD_CNT_STORAGE 1
 #define OD_CNT_TIME 1
 #define OD_CNT_EM_PROD 1
 #define OD_CNT_HB_CONS 1
@@ -45,7 +45,7 @@
 #define OD_CNT_SDO_SRV 1
 #define OD_CNT_SDO_CLI 1
 #define OD_CNT_RPDO 4
-#define OD_CNT_TPDO 5
+#define OD_CNT_TPDO 4
 
 
 /*******************************************************************************
@@ -55,9 +55,6 @@
 #define OD_CNT_ARR_1010 4
 #define OD_CNT_ARR_1011 4
 #define OD_CNT_ARR_1016 8
-#define OD_CNT_ARR_2002 2
-#define OD_CNT_ARR_2003 2
-#define OD_CNT_ARR_2020 3
 
 
 /*******************************************************************************
@@ -189,14 +186,6 @@ typedef struct {
         uint8_t SYNCStartValue;
     } x1803_TPDOCommunicationParameter;
     struct {
-        uint8_t highestSub_indexSupported;
-        uint32_t COB_IDUsedByTPDO;
-        uint8_t transmissionType;
-        uint16_t inhibitTime;
-        uint16_t eventTimer;
-        uint8_t SYNCStartValue;
-    } x1804_TPDOCommunicationParameter;
-    struct {
         uint8_t numberOfMappedApplicationObjectsInPDO;
         uint32_t applicationObject1;
         uint32_t applicationObject2;
@@ -240,23 +229,6 @@ typedef struct {
         uint32_t applicationObject7;
         uint32_t applicationObject8;
     } x1A03_TPDOMappingParameter;
-    struct {
-        uint8_t numberOfMappedApplicationObjectsInPDO;
-        uint32_t applicationObject1;
-        uint32_t applicationObject2;
-        uint32_t applicationObject3;
-        uint32_t applicationObject4;
-        uint32_t applicationObject5;
-        uint32_t applicationObject6;
-        uint32_t applicationObject7;
-        uint32_t applicationObject8;
-    } x1A04_TPDOMappingParameter;
-    uint8_t x2001_zeroLimit;
-    uint8_t x2002_nunchuckOffsets_sub0;
-    int8_t x2002_nunchuckOffsets[OD_CNT_ARR_2002];
-    uint8_t x2003_joystickOffsets_sub0;
-    int8_t x2003_joystickOffsets[OD_CNT_ARR_2003];
-    int16_t x2004_treshold_NewValue;
 } OD_PERSIST_COMM_t;
 
 typedef struct {
@@ -270,8 +242,9 @@ typedef struct {
         uint32_t COB_IDClientToServerRx;
         uint32_t COB_IDServerToClientTx;
     } x1200_SDOServerParameter;
-    uint8_t x2020_joystick_sub0;
-    int8_t x2020_joystick[OD_CNT_ARR_2020];
+    uint32_t x2000_gear_position;
+    uint32_t x2001_gear_engaged;
+    uint32_t x2002_gear_transitioning;
     uint32_t x6000_velocity;
 } OD_RAM_t;
 
@@ -323,18 +296,14 @@ extern OD_ATTR_OD OD_t *OD;
 #define OD_ENTRY_H1801 &OD->list[26]
 #define OD_ENTRY_H1802 &OD->list[27]
 #define OD_ENTRY_H1803 &OD->list[28]
-#define OD_ENTRY_H1804 &OD->list[29]
-#define OD_ENTRY_H1A00 &OD->list[30]
-#define OD_ENTRY_H1A01 &OD->list[31]
-#define OD_ENTRY_H1A02 &OD->list[32]
-#define OD_ENTRY_H1A03 &OD->list[33]
-#define OD_ENTRY_H1A04 &OD->list[34]
-#define OD_ENTRY_H2001 &OD->list[35]
-#define OD_ENTRY_H2002 &OD->list[36]
-#define OD_ENTRY_H2003 &OD->list[37]
-#define OD_ENTRY_H2004 &OD->list[38]
-#define OD_ENTRY_H2020 &OD->list[39]
-#define OD_ENTRY_H6000 &OD->list[40]
+#define OD_ENTRY_H1A00 &OD->list[29]
+#define OD_ENTRY_H1A01 &OD->list[30]
+#define OD_ENTRY_H1A02 &OD->list[31]
+#define OD_ENTRY_H1A03 &OD->list[32]
+#define OD_ENTRY_H2000 &OD->list[33]
+#define OD_ENTRY_H2001 &OD->list[34]
+#define OD_ENTRY_H2002 &OD->list[35]
+#define OD_ENTRY_H6000 &OD->list[36]
 
 
 /*******************************************************************************
@@ -369,18 +338,14 @@ extern OD_ATTR_OD OD_t *OD;
 #define OD_ENTRY_H1801_TPDOCommunicationParameter &OD->list[26]
 #define OD_ENTRY_H1802_TPDOCommunicationParameter &OD->list[27]
 #define OD_ENTRY_H1803_TPDOCommunicationParameter &OD->list[28]
-#define OD_ENTRY_H1804_TPDOCommunicationParameter &OD->list[29]
-#define OD_ENTRY_H1A00_TPDOMappingParameter &OD->list[30]
-#define OD_ENTRY_H1A01_TPDOMappingParameter &OD->list[31]
-#define OD_ENTRY_H1A02_TPDOMappingParameter &OD->list[32]
-#define OD_ENTRY_H1A03_TPDOMappingParameter &OD->list[33]
-#define OD_ENTRY_H1A04_TPDOMappingParameter &OD->list[34]
-#define OD_ENTRY_H2001_zeroLimit &OD->list[35]
-#define OD_ENTRY_H2002_nunchuckOffsets &OD->list[36]
-#define OD_ENTRY_H2003_joystickOffsets &OD->list[37]
-#define OD_ENTRY_H2004_treshold_NewValue &OD->list[38]
-#define OD_ENTRY_H2020_joystick &OD->list[39]
-#define OD_ENTRY_H6000_velocity &OD->list[40]
+#define OD_ENTRY_H1A00_TPDOMappingParameter &OD->list[29]
+#define OD_ENTRY_H1A01_TPDOMappingParameter &OD->list[30]
+#define OD_ENTRY_H1A02_TPDOMappingParameter &OD->list[31]
+#define OD_ENTRY_H1A03_TPDOMappingParameter &OD->list[32]
+#define OD_ENTRY_H2000_gear_position &OD->list[33]
+#define OD_ENTRY_H2001_gear_engaged &OD->list[34]
+#define OD_ENTRY_H2002_gear_transitioning &OD->list[35]
+#define OD_ENTRY_H6000_velocity &OD->list[36]
 
 
 /*******************************************************************************
