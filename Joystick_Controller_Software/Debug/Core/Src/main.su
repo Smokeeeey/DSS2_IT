@@ -1,4 +1,4 @@
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_ODinterface.h:463:1:OD_extension_init	16	static
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_ODinterface.h:463:1:OD_extension_init	16	static
 ../Core/Src/main.c:89:6:physicalSwitch	8	static
 ../Core/Src/main.c:111:6:Nunchuck_Init	24	static
 ../Core/Src/main.c:143:14:storeCallback	56	static

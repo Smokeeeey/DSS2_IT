@@ -12,5 +12,8 @@
 
 bool steeringProcess(Event* ev);
 
+void initialisation_steering();
+int target_position();
+
 
 #endif /* INC_STEERINGPROCESS_H_ */

@@ -1,9 +1,9 @@
 CANopenNode_STM32/CO_app_STM32.o: ../CANopenNode_STM32/CO_app_STM32.c \
  ../CANopenNode_STM32/CO_app_STM32.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/CANopen.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_driver.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_config.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode_STM32/CO_driver_target.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/CANopen.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_driver.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_config.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode_STM32/CO_driver_target.h \
  ../Core/Inc/main.h ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h \
  ../Core/Inc/stm32l4xx_hal_conf.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h \
@@ -41,42 +41,42 @@ CANopenNode_STM32/CO_app_STM32.o: ../CANopenNode_STM32/CO_app_STM32.c \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_ODinterface.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_driver.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_NMT_Heartbeat.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_ODinterface.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_Emergency.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_HBconsumer.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_NMT_Heartbeat.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_Node_Guarding.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_Emergency.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_SDOserver.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_SDOclient.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_SDOserver.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_fifo.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_SYNC.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_PDO.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_SYNC.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_TIME.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/303/CO_LEDs.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/304/CO_GFC.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/304/CO_SRDO.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/305/CO_LSSslave.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/305/CO_LSS.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/305/CO_LSSmaster.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/309/CO_gateway_ascii.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_SDOclient.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/305/CO_LSSmaster.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/303/CO_LEDs.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/extra/CO_trace.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_ODinterface.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_driver.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_NMT_Heartbeat.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_ODinterface.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_Emergency.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_HBconsumer.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_NMT_Heartbeat.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_Node_Guarding.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_Emergency.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_SDOserver.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_SDOclient.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_SDOserver.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_fifo.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_SYNC.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_PDO.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_SYNC.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_TIME.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/303/CO_LEDs.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/304/CO_GFC.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/304/CO_SRDO.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/305/CO_LSSslave.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/305/CO_LSS.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/305/CO_LSSmaster.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/309/CO_gateway_ascii.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_SDOclient.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/305/CO_LSSmaster.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/303/CO_LEDs.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/extra/CO_trace.h \
  ../CANopenNode_STM32/CO_storageBlank.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/storage/CO_storage.h \
+ C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/storage/CO_storage.h \
  ../CANopenNode_STM32/OD.h
 ../CANopenNode_STM32/CO_app_STM32.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/CANopen.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_driver.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_config.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode_STM32/CO_driver_target.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/CANopen.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_driver.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_config.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode_STM32/CO_driver_target.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -115,34 +115,34 @@ C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode_STM32
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_ODinterface.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_driver.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_NMT_Heartbeat.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_ODinterface.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_Emergency.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_HBconsumer.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_NMT_Heartbeat.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_Node_Guarding.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_Emergency.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_SDOserver.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_SDOclient.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_SDOserver.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_fifo.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_SYNC.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_PDO.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_SYNC.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_TIME.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/303/CO_LEDs.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/304/CO_GFC.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/304/CO_SRDO.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/305/CO_LSSslave.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/305/CO_LSS.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/305/CO_LSSmaster.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/309/CO_gateway_ascii.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/301/CO_SDOclient.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/305/CO_LSSmaster.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/303/CO_LEDs.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/extra/CO_trace.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_ODinterface.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_driver.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_NMT_Heartbeat.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_ODinterface.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_Emergency.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_HBconsumer.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_NMT_Heartbeat.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_Node_Guarding.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_Emergency.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_SDOserver.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_SDOclient.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_SDOserver.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_fifo.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_SYNC.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_PDO.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_SYNC.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_TIME.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/303/CO_LEDs.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/304/CO_GFC.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/304/CO_SRDO.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/305/CO_LSSslave.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/305/CO_LSS.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/305/CO_LSSmaster.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/309/CO_gateway_ascii.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/301/CO_SDOclient.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/305/CO_LSSmaster.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/303/CO_LEDs.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/extra/CO_trace.h:
 ../CANopenNode_STM32/CO_storageBlank.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Gear_Controller_Software/CANopenNode/storage/CO_storage.h:
+C:/Users/loic.pinuela/Desktop/DSS2_IT/Joystick_Controller_Software/CANopenNode/storage/CO_storage.h:
 ../CANopenNode_STM32/OD.h:

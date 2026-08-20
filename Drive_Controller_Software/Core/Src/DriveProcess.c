@@ -103,7 +103,6 @@ bool driveProcess(Event* ev)
 			break;
 		//-----------------------------------------------------------------------
 		case PARK:
-
 			break;
 		//-----------------------------------------------------------------------
 		case REVERSE:
@@ -115,7 +114,7 @@ bool driveProcess(Event* ev)
 			break;
 		//-----------------------------------------------------------------------
 		case DRIVE:
-
+			XF_post(driveProcess, E_MODE_R, 0);
 			break;
 		//-----------------------------------------------------------------------
 		case ERROR_DRIVE:
@@ -124,3 +123,6 @@ bool driveProcess(Event* ev)
 	}
 	return true;
 }
+
+
+

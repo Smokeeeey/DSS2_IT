@@ -30,6 +30,22 @@
 //---------------------------ENUM---------------------------
 
 typedef enum {
+	ETAPE1,
+	ETAPE2,
+	ETAPE3,
+	ETAPE4
+}StateInitControl;
+
+typedef enum{
+	E_ETAPE1 = 1,
+	E_ETAPE2,
+	E_ETAPE3,
+	E_ETAPE4
+}EventStateInitControl;
+
+//***
+
+typedef enum {
 	INIT_DRIVE,
 	PARK,
 	REVERSE,
@@ -46,6 +62,8 @@ typedef enum{
 	E_MODE_D,
 	E_ERROR
 }EventStateDriveControl;
+
+//***
 
 
 typedef enum {
