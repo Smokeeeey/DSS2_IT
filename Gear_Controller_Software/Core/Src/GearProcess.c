@@ -14,6 +14,7 @@ bool gearProcess(Event* ev){
 		static Gear_ST oldGear;
 		static StateControl oldGearState;
 		uint8_t oldActualGear;
+		uint8_t stateNum;
 
 		//***********************************************
 		// 		Transition state machine
@@ -21,12 +22,14 @@ bool gearProcess(Event* ev){
 		switch(gearState){
 			//-------------------------------------------
 			case INIT:
+				stateNum=1;
 				if (ev->id == E_INIT) {
 						gearState = ENGAGED;
 				}
 				break;
 			//-------------------------------------------
 			case ENGAGED:
+				stateNum=2;
 				if (ev->id == E_GEAR_TRANSIT) {
 					gearState = TRANSITION;
 				}
@@ -36,6 +39,7 @@ bool gearProcess(Event* ev){
 				break;
 			//-------------------------------------------
 			case TRANSITION:
+				stateNum=3;
 				if (ev->id == E_GEAR_ENGAGED) {
 					gearState = ENGAGED;
 				}
@@ -46,6 +50,7 @@ bool gearProcess(Event* ev){
 				break;
 			//-------------------------------------------
 			case ERROR:
+				stateNum=4;
 				if (ev->id == E_GEAR_ENGAGED) {
 					gearState = ENGAGED;
 				}
