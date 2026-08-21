@@ -72,7 +72,7 @@ Core/Src/GearProcess.o: ../Core/Src/GearProcess.c \
  C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Gear_Controller_Software/CANopenNode/extra/CO_trace.h \
  C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Gear_Controller_Software/CANopenNode_STM32/OD.h \
  ../Core/Inc/xf.h ../Core/Inc/main.h ../Core/Inc/event.h \
- ../Core/Inc/ireactive.h ../Core/Inc/flash.h
+ ../Core/Inc/ireactive.h ../Core/Inc/flash.h ../Core/Inc/GearProcess.h
 ../Core/Inc/GearProcess.h:
 ../Core/Inc/Project_Defines.h:
 C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Gear_Controller_Software/CANopenNode_STM32/CO_app_STM32.h:
@@ -152,3 +152,4 @@ C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Gear_Controller_Software/CANop
 ../Core/Inc/event.h:
 ../Core/Inc/ireactive.h:
 ../Core/Inc/flash.h:
+../Core/Inc/GearProcess.h:

@@ -10,17 +10,18 @@
 
 //---------------------------Includes---------------------------
 
-#include <GearProcess.h>
 #include "CO_app_STM32.h" // Includes the ported CANopen files
 #include "OD.h"
 #include "xf.h"
 #include "flash.h"
 #include "stdbool.h"
+#include "GearProcess.h"
+
 
 //---------------------------Defines---------------------------
 
-#define CO_CONFIG_SDO_CLI CO_CONFIG_SDO_CLI_ENABLE // Mandatory to act as SDO client !!!
-#define CO_CONFIG_NMT (CO_CONFIG_GLOBAL_FLAG_CALLBACK_PRE | CO_CONFIG_GLOBAL_FLAG_TIMERNEXT|CO_CONFIG_NMT_MASTER)
+//#define CO_CONFIG_SDO_CLI CO_CONFIG_SDO_CLI_ENABLE // Mandatory to act as SDO client !!!
+//#define CO_CONFIG_NMT (CO_CONFIG_GLOBAL_FLAG_CALLBACK_PRE | CO_CONFIG_GLOBAL_FLAG_TIMERNEXT|CO_CONFIG_NMT_MASTER)
 
 
 //---------------------------Values---------------------------
@@ -73,7 +74,7 @@ typedef struct{
 	bool in_error;
 }Gear_ST;
 extern Gear_ST gear;
-extern uint8_t oldGearRequest = 0;
+
 
 
 //---------------------------CanOpen---------------------------
@@ -86,6 +87,7 @@ extern uint32_t adc_ch6; // Channel 6 of the ADC
 extern uint32_t adc_ch8; // Channel 8 of the ADC
 extern bool switch_Nunchuck_Joystick;
 extern I2C_HandleTypeDef *phi2c1;
-//extern DAC_HandleTypeDef *hdac1;
+extern DAC_HandleTypeDef hdac1;
+
 
 #endif /* SRC_PROJECT_DEFINES_H_ */

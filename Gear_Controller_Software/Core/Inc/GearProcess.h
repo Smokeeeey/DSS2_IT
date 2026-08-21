@@ -9,7 +9,6 @@
 #define SRC_GEARPROCESS_H_
 
 #include "Project_Defines.h"
-#include <stdbool.h>
 
 bool gearProcess(Event* ev);
 

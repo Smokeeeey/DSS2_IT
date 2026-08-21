@@ -60,12 +60,13 @@ TIM_HandleTypeDef htim2;
 UART_HandleTypeDef huart2;
 
 /* USER CODE BEGIN PV */
-
+CANopenNodeSTM32 canOpenNodeSTM32;
 Gear_ST gear;
 
 //uint32_t adc_ch6 = 0; // Channel 6 of the ADC
 //uint32_t adc_ch8 = 0; // Channel 8 of the ADC
 bool lectureADC = false;
+uint32_t pos;
 //I2C_HandleTypeDef *phi2c1;
 
 
@@ -89,55 +90,16 @@ static void MX_I2C1_Init(void);
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
-/* USER CODE BEG                     IN 0 */
-CANopenNodeSTM32 canOpenNodeSTM32;
-
-
-
-static ODR_t storeCallback(OD_stream_t *stream, const void *buf,OD_size_t count, OD_size_t *countWritten)
+/* USER CODE BEGIN 0 */
+void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
-	if (stream->subIndex == 4) // save manufacturer defined parameters (subindex 4)
-	{
-		if(strncmp(buf,"save",4) == 0) // check if «save» string has been written (Byte0‐3)
-		{
-			FlashErase(1); // erase flash
-			FlashWrite(0,0x1234567812345678); // signature
-
-//			FlashWrite(ZEROLIMIT_ADR,OD_PERSIST_COMM.x2001_zeroLimit); // save your parameters values
-//			FlashWrite(NUNCHUCK_OFFSET_ADR,OD_PERSIST_COMM.x2002_nunchuckOffsets); // save your parameters values
-		}
-	}
+	pos = HAL_ADCEx_InjectedGetValue(hadc, ADC_INJECTED_RANK_1);
 }
-
-static OD_extension_t my_extensionGear;
-
-void mapCallbacks(OD_t *od) {
-
-	/* Find the OD entry for Index 0x1010 */
-	OD_entry_t *entry = OD_find(od, 0x1010); // Find the OD entry for joystick value
-	if (entry != NULL) {
-		// Assign the custom write function (set read to NULL if not needed)
-		my_extensionGear.read = NULL;
-		my_extensionGear.write = storeCallback;
-		my_extensionGear.object = NULL; // Can be used to store private data
-		// Register the extension to the OD entry
-		OD_extension_init(entry, &my_extensionGear);
-	}
-}
-
-
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-	// you can check the good timer ... if(htim ...
 	canopen_app_interrupt();
 	XF_decrementAndQueueTimers();
-}
-
-void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc){
-	if(hadc->Instance == ADC1){
-		gear.position = HAL_ADCEx_InjectedGetValue(hadc, ADC_INJECTED_RANK_1);		//register exact pos
-	}
 }
 
 /* USER CODE END 0 */
@@ -178,7 +140,7 @@ int main(void)
   MX_DAC1_Init();
   MX_TIM2_Init();
   MX_I2C1_Init();
-   /* USER CODE BEGIN 2 */
+  /* USER CODE BEGIN 2 */
   HAL_TIM_Base_Start_IT(&htim2);
 
   XF_init();
@@ -188,9 +150,8 @@ int main(void)
   if(FlashRead(0) == 0x1234567812345678)
   {
 	  //if default values saved in flash, read flash (for now no values stored)
-//	  OD_PERSIST_COMM.x2001_zeroLimit = FlashRead(ZEROLIMIT_ADR);
-//	  OD_PERSIST_COMM.x2002_nunchuckOffsets[0] = FlashRead(NUNCHUCK_OFFSET_ADR);
-//	  OD_PERSIST_COMM.x2002_nunchuckOffsets[1] = FlashRead(NUNCHUCK_OFFSET_ADR + 8);
+//	  OD_PERSIST_COMM.x2001_gearPos0 = FlashRead(8);
+//	  OD_PERSIST_COMM.x2002_gearPos1 = FlashRead(16);
   }
 
 
@@ -201,13 +162,13 @@ int main(void)
   // 3. Map the timer used for CANopen heartbeat and fast tasks (e.g., TIM2)
   canOpenNodeSTM32.timerHandle = &htim2;
   // 4. Configure Node‐ID (1‐127) and Baudrate (e.g., 125, 250, 500, 1000)
-  canOpenNodeSTM32.desiredNodeID = 8;
+  canOpenNodeSTM32.desiredNodeID = 5;
   canOpenNodeSTM32.baudrate = 250;
   // 5. Initialize the application
-  mapCallbacks(OD);
+//  mapCallbacks(OD);
   canopen_app_init(&canOpenNodeSTM32);
 
-  //Initialise la machines d'état
+  //Initialize SM_
   XF_post(gearProcess, E_INIT, 0);
   //static uint8_t oldGearRequest = 0;
 
@@ -305,15 +266,14 @@ static void MX_ADC1_Init(void)
   */
   hadc1.Instance = ADC1;
   hadc1.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV64;
-  hadc1.Init.Resolution = ADC_RESOLUTION_10B;
+  hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.DataAlign = ADC_DATAALIGN_RIGHT;
-  hadc1.Init.ScanConvMode = ADC_SCAN_ENABLE;
+  hadc1.Init.ScanConvMode = ADC_SCAN_DISABLE;
   hadc1.Init.EOCSelection = ADC_EOC_SINGLE_CONV;
   hadc1.Init.LowPowerAutoWait = DISABLE;
   hadc1.Init.ContinuousConvMode = DISABLE;
   hadc1.Init.NbrOfConversion = 1;
-  hadc1.Init.DiscontinuousConvMode = ENABLE;
-  hadc1.Init.NbrOfDiscConversion = 2;
+  hadc1.Init.DiscontinuousConvMode = DISABLE;
   hadc1.Init.DMAContinuousRequests = DISABLE;
   hadc1.Init.Overrun = ADC_OVR_DATA_PRESERVED;
   hadc1.Init.OversamplingMode = DISABLE;
@@ -328,28 +288,19 @@ static void MX_ADC1_Init(void)
 
   /** Configure Injected Channel
   */
-  sConfigInjected.InjectedChannel = ADC_CHANNEL_6;
+  sConfigInjected.InjectedChannel = ADC_CHANNEL_10;
   sConfigInjected.InjectedRank = ADC_INJECTED_RANK_1;
   sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_2CYCLES_5;
   sConfigInjected.InjectedSingleDiff = ADC_SINGLE_ENDED;
   sConfigInjected.InjectedOffsetNumber = ADC_OFFSET_NONE;
   sConfigInjected.InjectedOffset = 0;
-  sConfigInjected.InjectedNbrOfConversion = 2;
+  sConfigInjected.InjectedNbrOfConversion = 1;
   sConfigInjected.InjectedDiscontinuousConvMode = DISABLE;
   sConfigInjected.AutoInjectedConv = DISABLE;
   sConfigInjected.QueueInjectedContext = DISABLE;
   sConfigInjected.ExternalTrigInjecConv = ADC_INJECTED_SOFTWARE_START;
   sConfigInjected.ExternalTrigInjecConvEdge = ADC_EXTERNALTRIGINJECCONV_EDGE_NONE;
   sConfigInjected.InjecOversamplingMode = DISABLE;
-  if (HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  /** Configure Injected Channel
-  */
-  sConfigInjected.InjectedChannel = ADC_CHANNEL_8;
-  sConfigInjected.InjectedRank = ADC_INJECTED_RANK_2;
   if (HAL_ADCEx_InjectedConfigChannel(&hadc1, &sConfigInjected) != HAL_OK)
   {
     Error_Handler();

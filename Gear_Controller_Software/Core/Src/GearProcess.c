@@ -12,7 +12,8 @@ bool gearProcess(Event* ev){
 
 		// keep old value
 		static StateControl oldGearState;
-		static uint8_t stateNum;
+		static uint8_t stateNum=0;
+		static uint8_t oldGearRequest = 0;
 
 		//***********************************************
 		// 		Transition state machine
@@ -92,6 +93,7 @@ bool gearProcess(Event* ev){
 							XF_post(gearProcess, E_GEAR_TRANSIT, 0);
 						}
 					}
+
 					break;
 				//-------------------------------------------
 				case TRANSITION:
@@ -99,21 +101,21 @@ bool gearProcess(Event* ev){
 					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
 					//check position to allow engaged state
 					//delay to wait for gear to reach
-					if (gear.position <= 100 && gear.position >= 90)
+					if (gear.position <= MAXPOS1 && gear.position >= MINPOS1)
 					{
 						gear.actual_gear = 1;
 						OD_RAM.x2000_gear = gear.actual_gear; 								//write in dictionary
 						CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);		//send on can
-						XF_post(gearProcess, E_GEAR_ENGAGED, 0);
-					}else if (gear.position <= 200 && gear.position >= 150)
+					//	XF_post(gearProcess, E_GEAR_ENGAGED, 0);
+					}else if (gear.position <= MINPOS0 && gear.position >= MAXPOS0)
 					{
 						gear.actual_gear = 0;
 						OD_RAM.x2000_gear = gear.actual_gear; 								//write in dictionary
 						CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);		//send on can
-						XF_post(gearProcess, E_GEAR_ENGAGED, 0);
+					//	XF_post(gearProcess, E_GEAR_ENGAGED, 0);
 					}
 					//if over ...s post error
-
+					XF_post(gearProcess, E_GEAR_ENGAGED, 10);
 					break;
 				//-------------------------------------------
 				case GEARERROR:

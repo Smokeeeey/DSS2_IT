@@ -36,7 +36,6 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
- ../Core/Inc/Project_Defines.h ../Core/Inc/GearProcess.h \
  ../Core/Inc/Project_Defines.h \
  C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Gear_Controller_Software/CANopenNode_STM32/CO_app_STM32.h \
  C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Gear_Controller_Software/CANopenNode/CANopen.h \
@@ -73,7 +72,8 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Gear_Controller_Software/CANopenNode/extra/CO_trace.h \
  C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Gear_Controller_Software/CANopenNode_STM32/OD.h \
  ../Core/Inc/xf.h ../Core/Inc/main.h ../Core/Inc/event.h \
- ../Core/Inc/ireactive.h ../Core/Inc/flash.h
+ ../Core/Inc/ireactive.h ../Core/Inc/flash.h ../Core/Inc/GearProcess.h \
+ ../Core/Inc/Project_Defines.h
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -112,8 +112,6 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h:
-../Core/Inc/Project_Defines.h:
-../Core/Inc/GearProcess.h:
 ../Core/Inc/Project_Defines.h:
 C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Gear_Controller_Software/CANopenNode_STM32/CO_app_STM32.h:
 C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Gear_Controller_Software/CANopenNode/CANopen.h:
@@ -154,3 +152,5 @@ C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Gear_Controller_Software/CANop
 ../Core/Inc/event.h:
 ../Core/Inc/ireactive.h:
 ../Core/Inc/flash.h:
+../Core/Inc/GearProcess.h:
+../Core/Inc/Project_Defines.h:
