@@ -8,6 +8,8 @@
 #ifndef SRC_PROJECT_DEFINES_H_
 #define SRC_PROJECT_DEFINES_H_
 
+
+
 //---------------------------Includes---------------------------
 
 #include "CO_app_STM32.h" // Includes the ported CANopen files
@@ -17,11 +19,10 @@
 #include "stdbool.h"
 #include "DriveProcess.h"
 #include "SteeringProcess.h"
+#include "InitSteeringProcess.h"
 
 //---------------------------Defines---------------------------
 
-#define CO_CONFIG_SDO_CLI CO_CONFIG_SDO_CLI_ENABLE // Mandatory to act as SDO client !!!
-#define CO_CONFIG_NMT (CO_CONFIG_GLOBAL_FLAG_CALLBACK_PRE | CO_CONFIG_GLOBAL_FLAG_TIMERNEXT|CO_CONFIG_NMT_MASTER)
 
 //1000 = 100%
 #define powerMotor 500
@@ -33,6 +34,7 @@
 //---------------------------ENUM---------------------------
 
 typedef enum {
+	INIT,
 	ETAPE1,
 	ETAPE2,
 	ETAPE3,
@@ -40,7 +42,8 @@ typedef enum {
 }StateInitControl;
 
 typedef enum{
-	E_ETAPE1 = 1,
+	E_INIT = 1,
+	E_ETAPE1,
 	E_ETAPE2,
 	E_ETAPE3,
 	E_ETAPE4
@@ -107,5 +110,6 @@ extern uint32_t adc_ch6; // Channel 6 of the ADC
 extern uint32_t adc_ch8; // Channel 8 of the ADC
 extern bool switch_Nunchuck_Joystick;
 extern I2C_HandleTypeDef *phi2c1;
+extern StateInitControl initState;
 
 #endif /* SRC_PROJECT_DEFINES_H_ */

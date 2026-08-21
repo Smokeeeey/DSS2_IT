@@ -14,6 +14,7 @@ StateSteeringControl steeringState = INIT_STEERING;
 int16_t count = 0;
 int32_t tempPosMotor = 0;
 
+
 bool steeringProcess(Event* ev)
 	{
 	static StateSteeringControl oldState = INIT_STEERING;
@@ -56,6 +57,7 @@ bool steeringProcess(Event* ev)
 					{
 						XF_post(steeringProcess, E_FIND0, 0);
 					}
+					XF_post(steeringProcess, E_INIT_STEERING, 0);
 					break;
 				//-----------------------------------------------------------------------
 				case FIND0:
@@ -65,6 +67,7 @@ bool steeringProcess(Event* ev)
 						if (OD_RAM.x2039_steeringStatusWord == 0x0C){
 							XF_post(steeringProcess, E_REACHED, 0);
 						}
+						XF_post(steeringProcess, E_FIND0, 50);
 
 						break;
 					}
@@ -90,12 +93,12 @@ bool steeringProcess(Event* ev)
 					}
 
 
-						XF_post(steeringProcess, E_REACHED, 0);
+					XF_post(steeringProcess, E_REACHED, 0);
 					break;
 				//-----------------------------------------------------------------------
 				case REACHED:
 
-						XF_post(steeringProcess, E_MOVE, 0);
+					XF_post(steeringProcess, E_MOVE, 0);
 
 					break;
 				//-----------------------------------------------------------------------

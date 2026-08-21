@@ -9,15 +9,22 @@
 #include <InitSteeringProcess.h>
 
 
-StateInitControl initState = ETAPE1;
+StateInitControl initState = INIT;
 
 bool initSteeringProcess(Event* ev)
 	{
-	static StateInitControl oldState = ETAPE1;
+	static StateInitControl oldState = INIT;
 
 	//****************************************************************************
 	switch(initState){                  // this is the transition state machine
 
+		//-----------------------------------------------------------------------
+		case INIT:
+			if (ev->id == E_ETAPE1){
+				initState = ETAPE1;
+			}
+			break;
+		//-----------------------------------------------------------------------
 		case ETAPE1:
 			if (ev->id == E_ETAPE2){
 				initState = ETAPE2;
@@ -46,11 +53,20 @@ bool initSteeringProcess(Event* ev)
 
 		switch(initState){
 
+			case INIT:
+					//Reveil de l'epos vu qu'on est master
+					//CO_NMT_sendCommand(canOpenNodeSTM32.canOpenStack->NMT, CO_NMT_ENTER_OPERATIONAL,2);
+					XF_post(initSteeringProcess, E_ETAPE1, 0);
+					break;
+			//-----------------------------------------------------------------------
+
 			case ETAPE1:	//Switch on disabled
 					if ((OD_RAM.x2030_driveStatusWord & 0x006F) == 0x0021)
 					{
 						XF_post(initSteeringProcess, E_ETAPE2, 0);
 					}
+					XF_post(initSteeringProcess, E_ETAPE1, 50);
+
 					break;
 			//-----------------------------------------------------------------------
 			case ETAPE2:	//Ready to switch on
@@ -58,6 +74,7 @@ bool initSteeringProcess(Event* ev)
 					{
 						XF_post(initSteeringProcess, E_ETAPE3, 0);
 					}
+					XF_post(initSteeringProcess, E_ETAPE2, 50);
 				break;
 			//-----------------------------------------------------------------------
 			case ETAPE3:	//Switched on
@@ -65,6 +82,7 @@ bool initSteeringProcess(Event* ev)
 					{
 						XF_post(initSteeringProcess, E_ETAPE4, 0);
 					}
+					XF_post(initSteeringProcess, E_ETAPE3, 50);
 				break;
 			//-----------------------------------------------------------------------
 			case ETAPE4:
@@ -82,18 +100,18 @@ bool initSteeringProcess(Event* ev)
 			//-----------------------------------------------------------------------
 			case ETAPE1:
 				OD_RAM.x2035_steeringControlWord = 0x0006;
-				CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
+				CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[7]);
 				break;
 			//-----------------------------------------------------------------------
 			case ETAPE2:
 				OD_RAM.x2035_steeringControlWord = 0x0007;
-				CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
+				CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[7]);
 				break;
 
 			//-----------------------------------------------------------------------
 			case ETAPE3:
 				OD_RAM.x2035_steeringControlWord = 0x000F;
-				CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
+				CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[7]);
 				break;
 
 			//-----------------------------------------------------------------------

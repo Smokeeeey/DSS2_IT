@@ -11,8 +11,7 @@
 #include "Project_Defines.h"
 #include <math.h>
 
-int16_t count;
-int32_t tempPosMotor;
+
 
 bool steeringProcess(Event* ev);
 

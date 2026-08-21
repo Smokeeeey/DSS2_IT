@@ -235,7 +235,7 @@ int main(void)
   // 3. Map the timer used for CANopen heartbeat and fast tasks (e.g., TIM2)
   canOpenNodeSTM32.timerHandle = &htim2;
   // 4. Configure Node‐ID (1‐127) and Baudrate (e.g., 125, 250, 500, 1000)
-  canOpenNodeSTM32.desiredNodeID = 8;
+  canOpenNodeSTM32.desiredNodeID = 3;
   canOpenNodeSTM32.baudrate = 250;
   // 5. Initialize the application
   mapCallbacks(OD);
@@ -243,8 +243,9 @@ int main(void)
 
 
   //Initialise les machines d'état
-  XF_post(steeringProcess, INIT_STEERING, 0);
-  XF_post(driveProcess, INIT_DRIVE, 0);
+//  XF_post(steeringProcess, INIT_STEERING, 0);
+//  XF_post(driveProcess, INIT_DRIVE, 0);
+  XF_post(initSteeringProcess, INIT, 0);
 
 
   //Affectation du pointer sur l'adresse de l'i2c pour avoir accès depuis tout les fichiers
@@ -264,7 +265,7 @@ int main(void)
 
 	  XF_executeOnce();
 
-	  physicalSwitch();
+	  //physicalSwitch();
 
 	  if(lectureADC){
 		  HAL_ADCEx_InjectedStart_IT(&hadc1);

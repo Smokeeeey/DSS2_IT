@@ -10,9 +10,10 @@
 
 #include "Project_Defines.h"
 
-StateInitControl initState;
 
 bool initSteeringProcess(Event* ev);
+
+
 
 
 #endif /* INC_INITSTEERINGPROCESS_H_ */
