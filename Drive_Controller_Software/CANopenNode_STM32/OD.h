@@ -16,7 +16,7 @@
 
         Created:      19.05.2026 15:00:18
         Created By:   
-        Modified:     20.08.2026 15:07:35
+        Modified:     21.08.2026 10:54:09
         Modified By:  
 
     Device Info:
@@ -373,7 +373,7 @@ typedef struct {
     uint16_t x2033_driveMode;
     uint16_t x2034_driveControlWord;
     uint16_t x2035_steeringControlWord;
-    uint16_t x2036_steeringMode;
+    int8_t x2036_steeringMode;
     int16_t x2037_steeringTorque;
     int32_t x2038_steeringPosition;
     uint16_t x2039_steeringStatusWord;

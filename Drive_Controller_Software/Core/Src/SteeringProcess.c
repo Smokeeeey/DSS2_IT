@@ -7,9 +7,12 @@
  */
 
 #include <SteeringProcess.h>
+#include <InitSteeringProcess.h>
 
 
 StateSteeringControl steeringState = INIT_STEERING;
+int16_t count = 0;
+int32_t tempPosMotor = 0;
 
 bool steeringProcess(Event* ev)
 	{
@@ -19,10 +22,16 @@ bool steeringProcess(Event* ev)
 	switch(steeringState){                  // this is the transition state machine
 		//-----------------------------------------------------------------------
 		case INIT_STEERING:
+			if (ev->id == E_FIND0){
+				steeringState = FIND0;
+			}
+				break;
+		//-----------------------------------------------------------------------
+		case FIND0:
 			if (ev->id == E_REACHED){
 				steeringState = REACHED;
 			}
-				break;
+			break;
 		//-----------------------------------------------------------------------
 		case REACHED:
 			if (ev->id == E_MOVE){
@@ -43,14 +52,32 @@ bool steeringProcess(Event* ev)
 
 				//-----------------------------------------------------------------------
 				case INIT_STEERING:
-					initialisation_steering();
+					if (initState == ETAPE4)
+					{
+						XF_post(steeringProcess, E_FIND0, 0);
+					}
+					break;
+				//-----------------------------------------------------------------------
+				case FIND0:
+
+					//Check si moteur a bouge de 10 au moins
+					if (OD_RAM.x203A_steeringMotorCurrentPosition >= 10 + tempPosMotor || OD_RAM.x203A_steeringMotorCurrentPosition <= 10 - tempPosMotor)
+					{
+
+					} else
+					{
+						HAL_Delay(1);
+
+					}
+
+
+						XF_post(steeringProcess, E_REACHED, 0);
 					break;
 				//-----------------------------------------------------------------------
 				case REACHED:
-					if (){
 
 						XF_post(steeringProcess, E_MOVE, 0);
-					}
+
 					break;
 				//-----------------------------------------------------------------------
 				case MOVE:
@@ -70,13 +97,17 @@ bool steeringProcess(Event* ev)
 		case INIT_STEERING:
 			break;
 		//-----------------------------------------------------------------------
+		case FIND0:
+
+			break;
+		//-----------------------------------------------------------------------
 		case REACHED:
 
 			break;
 		//-----------------------------------------------------------------------
 		case MOVE:
 
-			target_position(OD_PERSIST_COMM.x200);
+			//target_position();
 
 			break;
 	}
@@ -86,21 +117,36 @@ bool steeringProcess(Event* ev)
 
 /* ======== Functions ========== */
 
-void initialisation_steering(){
 
 
+void target_position(int32_t target){
 
+
+	//Write the steering position in dico
+	OD_RAM.x2038_steeringPosition = target;
 
 	//Envoie sur le can
+	CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 
-
-
-	XF_post(steeringProcess, E_REACHED, 0);
 }
 
-int target_position(){
+void sendSinus()
+{
+	//Stock pos motor
+	tempPosMotor = OD_RAM.x203A_steeringMotorCurrentPosition;
 
+	//Increase count
+	count = count + (2 * 3.1416 / 8);
 
+	//Mode 10 torque
+	OD_RAM.x2036_steeringMode = 0x0A;
+
+	//Envoie sinus
+	OD_RAM.x2037_steeringTorque = sin(count);
+
+	//Envoie sur le can
+	CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
+	HAL_Delay(50);
 }
 
 

@@ -9,11 +9,14 @@
 #define INC_STEERINGPROCESS_H_
 
 #include "Project_Defines.h"
+#include <math.h>
+
+int16_t count;
 
 bool steeringProcess(Event* ev);
 
 void initialisation_steering();
-int target_position();
+void target_position(int32_t target);
 
 
 #endif /* INC_STEERINGPROCESS_H_ */

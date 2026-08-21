@@ -10,6 +10,8 @@
 
 #include "Project_Defines.h"
 
+StateInitControl initState;
+
 bool initSteeringProcess(Event* ev);
 
 

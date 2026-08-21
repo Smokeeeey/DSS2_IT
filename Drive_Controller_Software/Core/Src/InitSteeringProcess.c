@@ -46,26 +46,29 @@ bool initSteeringProcess(Event* ev)
 
 		switch(initState){
 
-			case ETAPE1:
-				if (ev->id == E_ETAPE2){
-					initState = ETAPE2;
-				}
+			case ETAPE1:	//Switch on disabled
+					if ((OD_RAM.x2030_driveStatusWord & 0x006F) == 0x0021)
+					{
+						XF_post(initSteeringProcess, E_ETAPE2, 0);
+					}
 					break;
 			//-----------------------------------------------------------------------
-			case ETAPE2:
-				if (ev->id == E_ETAPE3){
-					initState = ETAPE3;
-				}
+			case ETAPE2:	//Ready to switch on
+					if ((OD_RAM.x2030_driveStatusWord & 0x006F) == 0x0023)
+					{
+						XF_post(initSteeringProcess, E_ETAPE3, 0);
+					}
 				break;
 			//-----------------------------------------------------------------------
-			case ETAPE3:
-				if (ev->id == E_ETAPE4){
-					initState = ETAPE4;
-				}
+			case ETAPE3:	//Switched on
+					if ((OD_RAM.x2030_driveStatusWord & 0x006F) == 0x0027)
+					{
+						XF_post(initSteeringProcess, E_ETAPE4, 0);
+					}
 				break;
 			//-----------------------------------------------------------------------
 			case ETAPE4:
-
+				// moteur opérationnel
 				break;
 		}
 
@@ -78,25 +81,23 @@ bool initSteeringProcess(Event* ev)
 
 			//-----------------------------------------------------------------------
 			case ETAPE1:
-				OD_RAM.x2035_steeringControlWord = 0x0080;
+				OD_RAM.x2035_steeringControlWord = 0x0006;
 				CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 				break;
 			//-----------------------------------------------------------------------
 			case ETAPE2:
-				OD_RAM.x2035_steeringControlWord = 0x0006;
+				OD_RAM.x2035_steeringControlWord = 0x0007;
 				CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 				break;
 
 			//-----------------------------------------------------------------------
 			case ETAPE3:
-				OD_RAM.x2035_steeringControlWord = 0x0007 ;
+				OD_RAM.x2035_steeringControlWord = 0x000F;
 				CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 				break;
 
 			//-----------------------------------------------------------------------
 			case ETAPE4:
-				OD_RAM.x2035_steeringControlWord = 0x000F ;
-				CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 				break;
 	}
 	return true;

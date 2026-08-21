@@ -15,7 +15,7 @@
         <ProfileTechnology>CANopen</ProfileTechnology>
       </ISO15745Reference>
     </ProfileHeader>
-    <ProfileBody xmlns:q1="http://www.canopen.org/xml/1.1" xsi:type="q1:ProfileBody_Device_CANopen" formatName="CANopen" formatVersion="1.0" fileName="JoystickController_CanOpenDic.xdd" fileCreator="" fileCreationDate="2026-05-19" fileCreationTime="15:00:18.0000000+02:00" fileModifiedBy="" fileModificationDate="2026-08-20" fileModificationTime="15:07:35.5583176+02:00" fileVersion="1" supportedLanguages="en" xmlns="">
+    <ProfileBody xmlns:q1="http://www.canopen.org/xml/1.1" xsi:type="q1:ProfileBody_Device_CANopen" formatName="CANopen" formatVersion="1.0" fileName="JoystickController_CanOpenDic.xdd" fileCreator="" fileCreationDate="2026-05-19" fileCreationTime="15:00:18.0000000+02:00" fileModifiedBy="" fileModificationDate="2026-08-21" fileModificationTime="10:54:09.2956331+02:00" fileVersion="1" supportedLanguages="en" xmlns="">
       <q1:DeviceIdentity>
         <q1:vendorName></q1:vendorName>
         <q1:vendorID></q1:vendorID>
@@ -2884,7 +2884,7 @@ The life time factor multiplied with the guard time gives the life time for the 
           </q1:parameter>
           <q1:parameter uniqueID="UID_OBJ_2036" access="readWriteInput">
             <label lang="en">SteeringMode</label>
-            <UINT />
+            <SINT />
             <q1:defaultValue value="0" />
           </q1:parameter>
           <q1:parameter uniqueID="UID_OBJ_2037" access="readWriteInput">
@@ -2945,7 +2945,7 @@ The life time factor multiplied with the guard time gives the life time for the 
         <ProfileTechnology>CANopen</ProfileTechnology>
       </ISO15745Reference>
     </ProfileHeader>
-    <ProfileBody xmlns:q2="http://www.canopen.org/xml/1.1" xsi:type="q2:ProfileBody_CommunicationNetwork_CANopen" formatName="CANopen" formatVersion="1.0" fileName="JoystickController_CanOpenDic.xdd" fileCreator="" fileCreationDate="2026-05-19" fileCreationTime="15:00:18.0000000+02:00" fileModificationDate="2026-08-20" fileModificationTime="15:07:35.5583176+02:00" fileVersion="1" supportedLanguages="en" xmlns="">
+    <ProfileBody xmlns:q2="http://www.canopen.org/xml/1.1" xsi:type="q2:ProfileBody_CommunicationNetwork_CANopen" formatName="CANopen" formatVersion="1.0" fileName="JoystickController_CanOpenDic.xdd" fileCreator="" fileCreationDate="2026-05-19" fileCreationTime="15:00:18.0000000+02:00" fileModificationDate="2026-08-21" fileModificationTime="10:54:09.2956331+02:00" fileVersion="1" supportedLanguages="en" xmlns="">
       <ApplicationLayers>
         <q2:CANopenObjectList>
           <CANopenObject index="1000" name="Device type" objectType="7" PDOmapping="no" uniqueIDRef="UID_OBJ_1000" />

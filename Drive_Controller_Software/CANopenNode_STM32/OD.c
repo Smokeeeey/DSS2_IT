@@ -330,7 +330,7 @@ OD_ATTR_RAM OD_RAM_t OD_RAM = {
     .x2033_driveMode = 0x0000,
     .x2034_driveControlWord = 0x0000,
     .x2035_steeringControlWord = 0x0000,
-    .x2036_steeringMode = 0x0000,
+    .x2036_steeringMode = 0,
     .x2037_steeringTorque = 0,
     .x2038_steeringPosition = 0,
     .x2039_steeringStatusWord = 0x0000,
@@ -1907,8 +1907,8 @@ static CO_PROGMEM ODObjs_t ODObjs = {
     },
     .o_2036_steeringMode = {
         .dataOrig = &OD_RAM.x2036_steeringMode,
-        .attribute = ODA_SDO_RW | ODA_TPDO | ODA_MB,
-        .dataLength = 2
+        .attribute = ODA_SDO_RW | ODA_TPDO,
+        .dataLength = 1
     },
     .o_2037_steeringTorque = {
         .dataOrig = &OD_RAM.x2037_steeringTorque,

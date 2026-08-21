@@ -68,12 +68,14 @@ typedef enum{
 
 typedef enum {
 	INIT_STEERING,
+	FIND0,
 	REACHED,
 	MOVE
 }StateSteeringControl;
 
 typedef enum{
 	E_INIT_STEERING = 1,			// must be not 0 !!!
+	E_FIND0,
 	E_REACHED,
 	E_MOVE
 }EventStateSteeringControl;
