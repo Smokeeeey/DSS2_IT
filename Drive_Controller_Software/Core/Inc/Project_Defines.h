@@ -23,6 +23,9 @@
 #define CO_CONFIG_SDO_CLI CO_CONFIG_SDO_CLI_ENABLE // Mandatory to act as SDO client !!!
 #define CO_CONFIG_NMT (CO_CONFIG_GLOBAL_FLAG_CALLBACK_PRE | CO_CONFIG_GLOBAL_FLAG_TIMERNEXT|CO_CONFIG_NMT_MASTER)
 
+//1000 = 100%
+#define powerMotor 500
+
 //---------------------Emplacements Flash---------------------
 
 

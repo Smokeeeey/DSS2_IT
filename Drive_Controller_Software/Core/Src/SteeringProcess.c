@@ -60,14 +60,33 @@ bool steeringProcess(Event* ev)
 				//-----------------------------------------------------------------------
 				case FIND0:
 
+					//Empeche la boucle pendant le homming
+					if (OD_RAM.x2036_steeringMode == 0x06){
+						if (OD_RAM.x2039_steeringStatusWord == 0x0C){
+							XF_post(steeringProcess, E_REACHED, 0);
+						}
+
+						break;
+					}
+
+					//Stock pos motor
+					tempPosMotor = OD_RAM.x203A_steeringMotorCurrentPosition;
+
+					//Sequence for the sinus
+					sendSinus();
+
 					//Check si moteur a bouge de 10 au moins
-					if (OD_RAM.x203A_steeringMotorCurrentPosition >= 10 + tempPosMotor || OD_RAM.x203A_steeringMotorCurrentPosition <= 10 - tempPosMotor)
+					if (OD_RAM.x203A_steeringMotorCurrentPosition >= tempPosMotor + 10 || OD_RAM.x203A_steeringMotorCurrentPosition <= tempPosMotor - 10)
 					{
+						//Mode 6 homming
+						OD_RAM.x2036_steeringMode = 0x06;
+						//Envoie sur le can
+						CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 
 					} else
 					{
 						HAL_Delay(1);
-
+						sendSinus();
 					}
 
 
@@ -132,9 +151,6 @@ void target_position(int32_t target){
 
 void sendSinus()
 {
-	//Stock pos motor
-	tempPosMotor = OD_RAM.x203A_steeringMotorCurrentPosition;
-
 	//Increase count
 	count = count + (2 * 3.1416 / 8);
 
@@ -142,7 +158,7 @@ void sendSinus()
 	OD_RAM.x2036_steeringMode = 0x0A;
 
 	//Envoie sinus
-	OD_RAM.x2037_steeringTorque = sin(count);
+	OD_RAM.x2037_steeringTorque = (int16_t) sin(count) * powerMotor;
 
 	//Envoie sur le can
 	CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);

@@ -12,11 +12,12 @@
 #include <math.h>
 
 int16_t count;
+int32_t tempPosMotor;
 
 bool steeringProcess(Event* ev);
 
-void initialisation_steering();
 void target_position(int32_t target);
+void sendSinus();
 
 
 #endif /* INC_STEERINGPROCESS_H_ */
