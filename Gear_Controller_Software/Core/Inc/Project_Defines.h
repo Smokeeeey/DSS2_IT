@@ -65,10 +65,9 @@ typedef struct{
 	int16_t position;		//exact pos
 	uint8_t actual_gear;	//gear num
 	uint8_t gear_requested; //requested gear (depends on old gear)
-	bool gear_engaged;		//is gear in socle
 	bool in_transition;		//is gear in between
 	bool in_error;
-	bool gear_change_requested;  //if request from joy btn
+	bool change_gear;  //if request from joy btn
 }Gear_ST;
 extern Gear_ST gear;
 

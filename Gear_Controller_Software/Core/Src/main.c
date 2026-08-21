@@ -229,21 +229,14 @@ int main(void)
 		  HAL_ADCEx_InjectedStart_IT(&hadc1);
 		  lectureADC = false;
 	  }
-    gear.change_gear_requested = 0; 
-	  //if gear change requested
+
+    gear.change_gear = 0;
     gear.gear_requested = OD_RAM.x2000_gear; 
-    if (gear.gear_requested != oldGearRequest)
+    if (OD_RAM.x2000_gear != oldGearRequest)
     {
       oldGearRequest = gear.gear_requested; 
-      gear.change_gear_requested = 1; 
+      gear.change_gear = 1;
     }
-	  // if(OD_RAM.x2000_gear == 0)
-	  // {
-    //   gear.actual_gear = OD_RAM.x2000_gear; 
-		//   //enable transition process
-		//   XF_post(processJoystick, E_GEAR_TRANSIT, 0);
-		//   //HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2001_gearPos0);   (done in SM)
-	  // }
   }
   /* USER CODE END 3 */
 }
