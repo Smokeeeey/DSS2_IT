@@ -16,7 +16,7 @@
 
         Created:      23.11.2020 13:00:00
         Created By:   
-        Modified:     20.08.2026 13:37:43
+        Modified:     21.08.2026 11:32:42
         Modified By:  
 
     Device Info:
@@ -45,7 +45,7 @@
 #define OD_CNT_SDO_SRV 1
 #define OD_CNT_SDO_CLI 1
 #define OD_CNT_RPDO 4
-#define OD_CNT_TPDO 4
+#define OD_CNT_TPDO 5
 
 
 /*******************************************************************************
@@ -186,6 +186,14 @@ typedef struct {
         uint8_t SYNCStartValue;
     } x1803_TPDOCommunicationParameter;
     struct {
+        uint8_t highestSub_indexSupported;
+        uint32_t COB_IDUsedByTPDO;
+        uint8_t transmissionType;
+        uint16_t inhibitTime;
+        uint16_t eventTimer;
+        uint8_t SYNCStartValue;
+    } x1804_TPDOCommunicationParameter;
+    struct {
         uint8_t numberOfMappedApplicationObjectsInPDO;
         uint32_t applicationObject1;
         uint32_t applicationObject2;
@@ -229,6 +237,17 @@ typedef struct {
         uint32_t applicationObject7;
         uint32_t applicationObject8;
     } x1A03_TPDOMappingParameter;
+    struct {
+        uint8_t numberOfMappedApplicationObjectsInPDO;
+        uint32_t applicationObject1;
+        uint32_t applicationObject2;
+        uint32_t applicationObject3;
+        uint32_t applicationObject4;
+        uint32_t applicationObject5;
+        uint32_t applicationObject6;
+        uint32_t applicationObject7;
+        uint32_t applicationObject8;
+    } x1A04_TPDOMappingParameter;
     uint32_t x2001_gearPos0;
     uint32_t x2002_gearPos1;
 } OD_PERSIST_COMM_t;
@@ -246,6 +265,7 @@ typedef struct {
     } x1200_SDOServerParameter;
     uint8_t x2000_gear;
     uint32_t x2003_gearPos;
+    uint8_t x2004_gearTransition;
     uint32_t x6000_velocity;
 } OD_RAM_t;
 
@@ -297,15 +317,18 @@ extern OD_ATTR_OD OD_t *OD;
 #define OD_ENTRY_H1801 &OD->list[26]
 #define OD_ENTRY_H1802 &OD->list[27]
 #define OD_ENTRY_H1803 &OD->list[28]
-#define OD_ENTRY_H1A00 &OD->list[29]
-#define OD_ENTRY_H1A01 &OD->list[30]
-#define OD_ENTRY_H1A02 &OD->list[31]
-#define OD_ENTRY_H1A03 &OD->list[32]
-#define OD_ENTRY_H2000 &OD->list[33]
-#define OD_ENTRY_H2001 &OD->list[34]
-#define OD_ENTRY_H2002 &OD->list[35]
-#define OD_ENTRY_H2003 &OD->list[36]
-#define OD_ENTRY_H6000 &OD->list[37]
+#define OD_ENTRY_H1804 &OD->list[29]
+#define OD_ENTRY_H1A00 &OD->list[30]
+#define OD_ENTRY_H1A01 &OD->list[31]
+#define OD_ENTRY_H1A02 &OD->list[32]
+#define OD_ENTRY_H1A03 &OD->list[33]
+#define OD_ENTRY_H1A04 &OD->list[34]
+#define OD_ENTRY_H2000 &OD->list[35]
+#define OD_ENTRY_H2001 &OD->list[36]
+#define OD_ENTRY_H2002 &OD->list[37]
+#define OD_ENTRY_H2003 &OD->list[38]
+#define OD_ENTRY_H2004 &OD->list[39]
+#define OD_ENTRY_H6000 &OD->list[40]
 
 
 /*******************************************************************************
@@ -340,15 +363,18 @@ extern OD_ATTR_OD OD_t *OD;
 #define OD_ENTRY_H1801_TPDOCommunicationParameter &OD->list[26]
 #define OD_ENTRY_H1802_TPDOCommunicationParameter &OD->list[27]
 #define OD_ENTRY_H1803_TPDOCommunicationParameter &OD->list[28]
-#define OD_ENTRY_H1A00_TPDOMappingParameter &OD->list[29]
-#define OD_ENTRY_H1A01_TPDOMappingParameter &OD->list[30]
-#define OD_ENTRY_H1A02_TPDOMappingParameter &OD->list[31]
-#define OD_ENTRY_H1A03_TPDOMappingParameter &OD->list[32]
-#define OD_ENTRY_H2000_gear &OD->list[33]
-#define OD_ENTRY_H2001_gearPos0 &OD->list[34]
-#define OD_ENTRY_H2002_gearPos1 &OD->list[35]
-#define OD_ENTRY_H2003_gearPos &OD->list[36]
-#define OD_ENTRY_H6000_velocity &OD->list[37]
+#define OD_ENTRY_H1804_TPDOCommunicationParameter &OD->list[29]
+#define OD_ENTRY_H1A00_TPDOMappingParameter &OD->list[30]
+#define OD_ENTRY_H1A01_TPDOMappingParameter &OD->list[31]
+#define OD_ENTRY_H1A02_TPDOMappingParameter &OD->list[32]
+#define OD_ENTRY_H1A03_TPDOMappingParameter &OD->list[33]
+#define OD_ENTRY_H1A04_TPDOMappingParameter &OD->list[34]
+#define OD_ENTRY_H2000_gear &OD->list[35]
+#define OD_ENTRY_H2001_gearPos0 &OD->list[36]
+#define OD_ENTRY_H2002_gearPos1 &OD->list[37]
+#define OD_ENTRY_H2003_gearPos &OD->list[38]
+#define OD_ENTRY_H2004_gearTransition &OD->list[39]
+#define OD_ENTRY_H6000_velocity &OD->list[40]
 
 
 /*******************************************************************************

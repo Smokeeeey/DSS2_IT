@@ -34,6 +34,11 @@
 //#define TRESHOLD_NEW_VALUE 2
 #define POS_GEAR_1 0
 #define POS_GEAR_2 1
+#define GEAR_REQUESTED OD_RAM.x2000_gear
+#define MAXPOS0	100
+#define MINPOS0 40
+#define MAXPOS1 1000
+#define MINPOS1 950
 
 //----------------------------Flash---------------------------
 
@@ -65,11 +70,10 @@ typedef struct{
 	int16_t position;		//exact pos
 	uint8_t actual_gear;	//gear num
 	uint8_t gear_requested; //requested gear (depends on old gear)
-	bool in_transition;		//is gear in between
 	bool in_error;
-	bool change_gear;  //if request from joy btn
 }Gear_ST;
 extern Gear_ST gear;
+extern uint8_t oldGearRequest = 0;
 
 
 //---------------------------CanOpen---------------------------
@@ -82,5 +86,6 @@ extern uint32_t adc_ch6; // Channel 6 of the ADC
 extern uint32_t adc_ch8; // Channel 8 of the ADC
 extern bool switch_Nunchuck_Joystick;
 extern I2C_HandleTypeDef *phi2c1;
+//extern DAC_HandleTypeDef *hdac1;
 
 #endif /* SRC_PROJECT_DEFINES_H_ */

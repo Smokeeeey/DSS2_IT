@@ -63,10 +63,10 @@ UART_HandleTypeDef huart2;
 
 Gear_ST gear;
 
-uint32_t adc_ch6 = 0; // Channel 6 of the ADC
-uint32_t adc_ch8 = 0; // Channel 8 of the ADC
+//uint32_t adc_ch6 = 0; // Channel 6 of the ADC
+//uint32_t adc_ch8 = 0; // Channel 8 of the ADC
 bool lectureADC = false;
-I2C_HandleTypeDef *phi2c1;
+//I2C_HandleTypeDef *phi2c1;
 
 
 
@@ -103,8 +103,8 @@ static ODR_t storeCallback(OD_stream_t *stream, const void *buf,OD_size_t count,
 			FlashErase(1); // erase flash
 			FlashWrite(0,0x1234567812345678); // signature
 
-			FlashWrite(ZEROLIMIT_ADR,OD_PERSIST_COMM.x2001_zeroLimit); // save your parameters values
-			FlashWrite(NUNCHUCK_OFFSET_ADR,OD_PERSIST_COMM.x2002_nunchuckOffsets); // save your parameters values
+//			FlashWrite(ZEROLIMIT_ADR,OD_PERSIST_COMM.x2001_zeroLimit); // save your parameters values
+//			FlashWrite(NUNCHUCK_OFFSET_ADR,OD_PERSIST_COMM.x2002_nunchuckOffsets); // save your parameters values
 		}
 	}
 }
@@ -136,7 +136,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc){
 	if(hadc->Instance == ADC1){
-		gear.position = HAL_ADCEx_InjectedGetValue(hadc, ADC_INJECTED_RANK_1);
+		gear.position = HAL_ADCEx_InjectedGetValue(hadc, ADC_INJECTED_RANK_1);		//register exact pos
 	}
 }
 
@@ -188,9 +188,9 @@ int main(void)
   if(FlashRead(0) == 0x1234567812345678)
   {
 	  //if default values saved in flash, read flash (for now no values stored)
-	  OD_PERSIST_COMM.x2001_zeroLimit = FlashRead(ZEROLIMIT_ADR);
-	  OD_PERSIST_COMM.x2002_nunchuckOffsets[0] = FlashRead(NUNCHUCK_OFFSET_ADR);
-	  OD_PERSIST_COMM.x2002_nunchuckOffsets[1] = FlashRead(NUNCHUCK_OFFSET_ADR + 8);
+//	  OD_PERSIST_COMM.x2001_zeroLimit = FlashRead(ZEROLIMIT_ADR);
+//	  OD_PERSIST_COMM.x2002_nunchuckOffsets[0] = FlashRead(NUNCHUCK_OFFSET_ADR);
+//	  OD_PERSIST_COMM.x2002_nunchuckOffsets[1] = FlashRead(NUNCHUCK_OFFSET_ADR + 8);
   }
 
 
@@ -209,7 +209,7 @@ int main(void)
 
   //Initialise la machines d'état
   XF_post(gearProcess, E_INIT, 0);
-  static uint8_t oldGearRequest = 0;
+  //static uint8_t oldGearRequest = 0;
 
   /* USER CODE END 2 */
 
@@ -230,13 +230,6 @@ int main(void)
 		  lectureADC = false;
 	  }
 
-    gear.change_gear = 0;
-    gear.gear_requested = OD_RAM.x2000_gear; 
-    if (OD_RAM.x2000_gear != oldGearRequest)
-    {
-      oldGearRequest = gear.gear_requested; 
-      gear.change_gear = 1;
-    }
   }
   /* USER CODE END 3 */
 }
