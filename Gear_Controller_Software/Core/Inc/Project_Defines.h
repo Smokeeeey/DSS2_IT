@@ -36,10 +36,10 @@
 #define POS_GEAR_1 0
 #define POS_GEAR_2 1
 #define GEAR_REQUESTED OD_RAM.x2000_gear
-#define MAXPOS0	100
-#define MINPOS0 40
-#define MAXPOS1 1000
-#define MINPOS1 950
+#define MAXPOS1	1400
+#define MINPOS1 1200
+#define MAXPOS0 2400
+#define MINPOS0 2300
 
 //----------------------------Flash---------------------------
 

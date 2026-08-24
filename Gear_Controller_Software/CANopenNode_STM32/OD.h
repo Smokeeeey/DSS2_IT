@@ -16,7 +16,7 @@
 
         Created:      23.11.2020 13:00:00
         Created By:   
-        Modified:     21.08.2026 11:32:42
+        Modified:     24.08.2026 13:25:33
         Modified By:  
 
     Device Info:
@@ -264,7 +264,7 @@ typedef struct {
         uint32_t COB_IDServerToClientTx;
     } x1200_SDOServerParameter;
     uint8_t x2000_gear;
-    uint32_t x2003_gearPos;
+    int16_t x2003_gearPos;
     uint8_t x2004_gearTransition;
     uint32_t x6000_velocity;
 } OD_RAM_t;

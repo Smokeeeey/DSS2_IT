@@ -65,7 +65,7 @@ Gear_ST gear;
 
 //uint32_t adc_ch6 = 0; // Channel 6 of the ADC
 //uint32_t adc_ch8 = 0; // Channel 8 of the ADC
-bool lectureADC = false;
+bool lectureADC = true;
 uint32_t pos;
 //I2C_HandleTypeDef *phi2c1;
 
@@ -94,6 +94,9 @@ static void MX_I2C1_Init(void);
 void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
 	pos = HAL_ADCEx_InjectedGetValue(hadc, ADC_INJECTED_RANK_1);
+	OD_RAM.x2003_gearPos = pos;
+	gear.position = OD_RAM.x2003_gearPos;
+	HAL_ADCEx_InjectedStart_IT(&hadc1);
 }
 
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
@@ -144,6 +147,8 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim2);
 
   XF_init();
+
+  HAL_DAC_Start(&hdac1, DAC_CHANNEL_1);
 
   // before canopen_app_init()
   //read data entered from flash
@@ -288,7 +293,7 @@ static void MX_ADC1_Init(void)
 
   /** Configure Injected Channel
   */
-  sConfigInjected.InjectedChannel = ADC_CHANNEL_10;
+  sConfigInjected.InjectedChannel = ADC_CHANNEL_6;
   sConfigInjected.InjectedRank = ADC_INJECTED_RANK_1;
   sConfigInjected.InjectedSamplingTime = ADC_SAMPLETIME_2CYCLES_5;
   sConfigInjected.InjectedSingleDiff = ADC_SINGLE_ENDED;
