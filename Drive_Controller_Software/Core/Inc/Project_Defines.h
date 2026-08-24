@@ -19,7 +19,6 @@
 #include "stdbool.h"
 #include "DriveProcess.h"
 #include "SteeringProcess.h"
-#include "InitSteeringProcess.h"
 
 //---------------------------Defines---------------------------
 
@@ -33,23 +32,6 @@
 
 //---------------------------ENUM---------------------------
 
-typedef enum {
-	INIT,
-	ETAPE1,
-	ETAPE2,
-	ETAPE3,
-	ETAPE4
-}StateInitControl;
-
-typedef enum{
-	E_INIT = 1,
-	E_ETAPE1,
-	E_ETAPE2,
-	E_ETAPE3,
-	E_ETAPE4
-}EventStateInitControl;
-
-//***
 
 typedef enum {
 	INIT_DRIVE,
@@ -73,14 +55,22 @@ typedef enum{
 
 
 typedef enum {
-	INIT_STEERING,
-	FIND0,
-	REACHED,
-	MOVE
+	INIT_STEERING		= 10,
+	SWITCH_ON_DISABLED	= 20,
+	SHUTDOWN			= 30,
+	SWITCH_ON			= 40,
+	STEERING_ENABLE		= 50,
+	FIND0				= 60,
+	REACHED				= 70,
+	MOVE				= 80
 }StateSteeringControl;
 
 typedef enum{
 	E_INIT_STEERING = 1,			// must be not 0 !!!
+	E_SWITCH_ON_DISABLED,
+	E_SHUTDOWN,
+	E_SWITCH_ON,
+	E_STEERING_ENABLE,
 	E_FIND0,
 	E_REACHED,
 	E_MOVE
@@ -110,6 +100,5 @@ extern uint32_t adc_ch6; // Channel 6 of the ADC
 extern uint32_t adc_ch8; // Channel 8 of the ADC
 extern bool switch_Nunchuck_Joystick;
 extern I2C_HandleTypeDef *phi2c1;
-extern StateInitControl initState;
 
 #endif /* SRC_PROJECT_DEFINES_H_ */

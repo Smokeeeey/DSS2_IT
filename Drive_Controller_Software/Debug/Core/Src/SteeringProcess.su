@@ -1,4 +1,4 @@
 C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_PDO.h:354:1:CO_TPDOsendRequest	16	static
 ../Core/Src/SteeringProcess.c:18:6:steeringProcess	16	static
-../Core/Src/SteeringProcess.c:144:6:target_position	16	static
-../Core/Src/SteeringProcess.c:155:6:sendSinus	8	static
+../Core/Src/SteeringProcess.c:246:6:target_position	16	static
+../Core/Src/SteeringProcess.c:257:6:sendSinus	8	static

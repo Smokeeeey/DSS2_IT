@@ -7,22 +7,46 @@
  */
 
 #include <SteeringProcess.h>
-#include <InitSteeringProcess.h>
 
 
 StateSteeringControl steeringState = INIT_STEERING;
+StateSteeringControl oldStateSteering = INIT_STEERING;
 int16_t count = 0;
 int32_t tempPosMotor = 0;
 
 
 bool steeringProcess(Event* ev)
 	{
-	static StateSteeringControl oldState = INIT_STEERING;
+
 
 	//****************************************************************************
 	switch(steeringState){                  // this is the transition state machine
 		//-----------------------------------------------------------------------
 		case INIT_STEERING:
+			if (ev->id == E_SWITCH_ON_DISABLED){
+				steeringState = SWITCH_ON_DISABLED;
+			}
+				break;
+		//-----------------------------------------------------------------------
+		case SWITCH_ON_DISABLED:
+			if (ev->id == E_SHUTDOWN){
+				steeringState = SHUTDOWN;
+			}
+				break;
+		//-----------------------------------------------------------------------
+		case SHUTDOWN:
+			if (ev->id == E_SWITCH_ON){
+				steeringState = SWITCH_ON;
+			}
+				break;
+		//-----------------------------------------------------------------------
+		case SWITCH_ON:
+			if (ev->id == E_STEERING_ENABLE){
+				steeringState = STEERING_ENABLE;
+			}
+				break;
+		//-----------------------------------------------------------------------
+		case STEERING_ENABLE:
 			if (ev->id == E_FIND0){
 				steeringState = FIND0;
 			}
@@ -47,18 +71,71 @@ bool steeringProcess(Event* ev)
 			break;
 	}
 	//****************************************************************************
-	if(steeringState == oldState){			// this is the loop actions
+	if(steeringState == oldStateSteering){			// this is the loop actions
 
 		switch(steeringState){
 
 				//-----------------------------------------------------------------------
 				case INIT_STEERING:
-					if (initState == ETAPE4)
+
+					//Reveil de l'epos vu qu'on est master
+					CO_NMT_sendCommand(canOpenNodeSTM32.canOpenStack->NMT, CO_NMT_ENTER_OPERATIONAL,2);
+
+					if ((OD_RAM.x2039_steeringStatusWord & 0x006F) == 0x0040)
 					{
-						XF_post(steeringProcess, E_FIND0, 0);
+						XF_post(steeringProcess, E_SWITCH_ON_DISABLED, 100);
 					}
-					XF_post(steeringProcess, E_INIT_STEERING, 0);
+					else
+					{
+						XF_post(steeringProcess, E_SWITCH_ON_DISABLED, 100);
+					}
+
 					break;
+
+				//-----------------------------------------------------------------------
+				case SWITCH_ON_DISABLED:
+
+					if ((OD_RAM.x2039_steeringStatusWord & 0x006F) == 0x0021)
+					{
+						XF_post(steeringProcess, E_SHUTDOWN, 100);
+					}
+					else
+					{
+						XF_post(steeringProcess, E_SWITCH_ON_DISABLED, 100);
+					}
+
+					break;
+				//-----------------------------------------------------------------------
+				case SHUTDOWN:
+
+					if ((OD_RAM.x2039_steeringStatusWord & 0x006F) == 0x0023)
+					{
+						XF_post(steeringProcess, E_SWITCH_ON, 100);
+					}
+					else
+					{
+						XF_post(steeringProcess, E_SHUTDOWN, 100);
+					}
+
+					break;
+				//-----------------------------------------------------------------------
+				case SWITCH_ON:
+					if ((OD_RAM.x2039_steeringStatusWord & 0x006F) == 0x0027)
+					{
+						XF_post(steeringProcess, E_STEERING_ENABLE, 100);
+					}
+					else
+					{
+						XF_post(steeringProcess, E_SWITCH_ON, 100);
+					}
+
+					break;
+				//-----------------------------------------------------------------------
+				case STEERING_ENABLE:
+
+
+					break;
+
 				//-----------------------------------------------------------------------
 				case FIND0:
 
@@ -111,7 +188,7 @@ bool steeringProcess(Event* ev)
 		return false;
 	}
 
-	oldState = steeringState;
+	oldStateSteering = steeringState;
 	//****************************************************************************
 	switch(steeringState){                  // this is the entry action state machine
 
@@ -119,16 +196,33 @@ bool steeringProcess(Event* ev)
 		case INIT_STEERING:
 			break;
 		//-----------------------------------------------------------------------
+		case SWITCH_ON_DISABLED:
+			OD_RAM.x2035_steeringControlWord = 0x0006; //6
+			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+			XF_post(steeringProcess, E_SWITCH_ON_DISABLED, 200);
+			break;
+		case SHUTDOWN:
+			OD_RAM.x2035_steeringControlWord = 0x0007; //7
+			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+			XF_post(steeringProcess, E_SHUTDOWN, 200);
+			break;
+		//-----------------------------------------------------------------------
+		case SWITCH_ON:
+			OD_RAM.x2035_steeringControlWord = 0x000F; //F
+			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+			XF_post(steeringProcess, E_SWITCH_ON, 200);
+			break;
+		//-----------------------------------------------------------------------
+		case STEERING_ENABLE:
+			break;
+		//-----------------------------------------------------------------------
 		case FIND0:
-
 			break;
 		//-----------------------------------------------------------------------
 		case REACHED:
-
 			break;
 		//-----------------------------------------------------------------------
 		case MOVE:
-
 			//target_position();
 
 			break;

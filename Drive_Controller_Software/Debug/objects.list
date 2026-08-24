@@ -25,7 +25,6 @@
 "./CANopenNode_STM32/CO_storageBlank.o"
 "./CANopenNode_STM32/OD.o"
 "./Core/Src/DriveProcess.o"
-"./Core/Src/InitSteeringProcess.o"
 "./Core/Src/SteeringProcess.o"
 "./Core/Src/event.o"
 "./Core/Src/flash.o"
