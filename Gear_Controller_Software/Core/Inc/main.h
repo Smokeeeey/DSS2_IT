@@ -57,8 +57,12 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define AXE_Y_In6_Pin GPIO_PIN_1
+#define AXE_Y_In6_GPIO_Port GPIOA
 #define VCP_TX_Pin GPIO_PIN_2
 #define VCP_TX_GPIO_Port GPIOA
+#define C_DAC1_Pin GPIO_PIN_4
+#define C_DAC1_GPIO_Port GPIOA
 #define External_Btn_Pin GPIO_PIN_6
 #define External_Btn_GPIO_Port GPIOA
 #define Joystick_Btn_Pin GPIO_PIN_7

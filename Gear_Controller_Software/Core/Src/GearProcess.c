@@ -12,7 +12,6 @@ bool gearProcess(Event* ev){
 
 		// keep old value
 		static StateControl oldGearState;
-		static uint8_t stateNum=0;
 		static uint8_t oldGearRequest = 0;
 
 		//***********************************************
@@ -91,43 +90,60 @@ bool gearProcess(Event* ev){
 				//-------------------------------------------
 				case GO_TO1 :
 					OD_RAM.x2004_gearTransition = 1;
-					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
+					//CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
 					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2001_gearPos0);
 					//check if pos1 reached
 					if (gear.position <= MAXPOS0 && gear.position >= MINPOS0)
 					{
-						CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
+						CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 						XF_post(gearProcess, E_REACHED, 0);
 					}
-					XF_post(gearProcess, E_GOTO1, 10);
+					else if (OD_RAM.x2000_gear == 1)
+					{
+						XF_post(gearProcess, E_GOTO2, 0);
+					}
+					else
+					{
+						XF_post(gearProcess, E_GOTO1, 10);
+					}
 					break;
 				case GO_TO2 :
 					OD_RAM.x2004_gearTransition = 1;
-					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
-					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2001_gearPos0);
+					//CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
+					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2002_gearPos1);
 					//check if pos2 reached
 					if (gear.position <= MAXPOS1 && gear.position >= MINPOS1)
 					{
-						CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
+						CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 						XF_post(gearProcess, E_REACHED, 0);
 					}
-					XF_post(gearProcess, E_GOTO2, 10);
+					else if (OD_RAM.x2000_gear == 0)
+					{
+						XF_post(gearProcess, E_GOTO1, 0);
+					}
+					else
+					{
+						XF_post(gearProcess, E_GOTO2, 10);
+					}
 					break;
 				case REACHED :
 					OD_RAM.x2004_gearTransition = 0 ;
-					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
+					//CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
 					if (OD_RAM.x2000_gear != oldGearRequest)
 					{
-						oldGearRequest = oldGearRequest;
+						oldGearRequest = OD_RAM.x2000_gear;
 						if (OD_RAM.x2000_gear == 0)
 						{
-							XF_post(gearProcess, E_GOTO2, 0);
+							XF_post(gearProcess, E_GOTO1, 0);
 						}else
 						{
-							XF_post(gearProcess, E_GOTO1, 0);
+							XF_post(gearProcess, E_GOTO2, 0);
 						}
 					}
-					XF_post(gearProcess, E_REACHED, 10);
+					else
+					{
+						XF_post(gearProcess, E_REACHED, 10);
+					}
 					break;
 				//-------------------------------------------
 				case GEARERROR:
@@ -144,8 +160,76 @@ bool gearProcess(Event* ev){
 				//-------------------------------------------
 			}
 		}
-
-
-
-		return true;
+//		return true;
+		//***********************************************
+		// 		Loop state machine
+		//***********************************************
+		else
+		{
+			switch(gearState){
+				//-------------------------------------------
+				case INIT:
+					break;
+				//-------------------------------------------
+				case GO_TO1 :
+					if (gear.position <= MAXPOS0 && gear.position >= MINPOS0)
+					{
+						XF_post(gearProcess, E_REACHED, 0);
+					}
+					else if (OD_RAM.x2000_gear == 1)
+					{
+						XF_post(gearProcess, E_GOTO2, 0);
+					}
+					else
+					{
+						XF_post(gearProcess, E_GOTO1, 10);
+					}
+					break;
+				case GO_TO2 :
+					if (gear.position <= MAXPOS1 && gear.position >= MINPOS1)
+					{
+						XF_post(gearProcess, E_REACHED, 0);
+					}
+					else if (OD_RAM.x2000_gear == 0)
+					{
+						XF_post(gearProcess, E_GOTO1, 0);
+					}
+					else
+					{
+						XF_post(gearProcess, E_GOTO2, 10);
+					}
+					break;
+				case REACHED :
+					if (OD_RAM.x2000_gear != oldGearRequest)
+					{
+						oldGearRequest = oldGearRequest;
+						if (OD_RAM.x2000_gear == 0)
+						{
+							XF_post(gearProcess, E_GOTO2, 0);
+						}else
+						{
+							XF_post(gearProcess, E_GOTO1, 0);
+						}
+					}
+					else
+					{
+						XF_post(gearProcess, E_REACHED, 10);
+					}
+					break;
+				//-------------------------------------------
+				case GEARERROR:
+					gear.in_error = 1;
+					//go in old gear
+					if (GEAR_REQUESTED == 0)
+						{
+							XF_post(gearProcess, E_GOTO2, 0);
+						}else
+						{
+							XF_post(gearProcess, E_GOTO1, 0);
+						}
+					break;
+				//-------------------------------------------
+			}
+		}
+//		return true;
 }
