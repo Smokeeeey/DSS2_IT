@@ -53,16 +53,18 @@
 
 typedef enum {
 	E_INIT = 1,
-	E_GEAR_ENGAGED = 2,
-	E_GEAR_TRANSIT = 3,
-	E_GEAR_ERROR = 4,
+	E_GOTO1 = 2,
+	E_GOTO2 = 3,
+	E_REACHED = 4,
+	E_GEAR_ERROR = 5,
 }EventList;
 
 typedef enum {
 	INIT = 1,
-	ENGAGED = 2,
-	TRANSITION = 3,
-	GEARERROR = 4,
+	GO_TO1 = 2,
+	GO_TO2 = 3,
+	REACHED = 4,
+	GEARERROR = 5,
 }StateControl;
 
 //---------------------------Structures---------------------------

@@ -21,37 +21,56 @@ bool gearProcess(Event* ev){
 		switch(gearState){
 			//-------------------------------------------
 			case INIT:
-				stateNum=1;
 				if (ev->id == E_INIT) {
-						gearState = TRANSITION;
+						gearState = GO_TO1;
 				}
 				break;
 			//-------------------------------------------
-			case ENGAGED:
-				stateNum=2;
-				if (ev->id == E_GEAR_TRANSIT) {
-					gearState = TRANSITION;
+			case GO_TO1:
+				if (ev->id == E_REACHED) {
+					gearState = REACHED;
+				}
+				if (ev->id == E_GOTO2) {
+					gearState = GO_TO2;
 				}
 				if (ev->id == E_GEAR_ERROR) {
 					gearState = GEARERROR;
 				}
 				break;
 			//-------------------------------------------
-			case TRANSITION:
-				stateNum=3;
-				if (ev->id == E_GEAR_ENGAGED) {
-					gearState = ENGAGED;
+			case GO_TO2:
+				if (ev->id == E_REACHED) {
+					gearState = REACHED;
 				}
-				//if in this state for too long send error
+				if (ev->id == E_GOTO1) {
+					gearState = GO_TO1;
+				}
+				if (ev->id == E_GEAR_ERROR) {
+					gearState = GEARERROR;
+				}
+				break;
+				//-------------------------------------------
+			case REACHED:
+				if (ev->id == E_GOTO1) {
+					gearState = GO_TO1;
+				}
+				if (ev->id == E_GOTO2) {
+					gearState = GO_TO2;
+				}
 				if (ev->id == E_GEAR_ERROR) {
 					gearState = GEARERROR;
 				}
 				break;
 			//-------------------------------------------
 			case GEARERROR:
-				stateNum=4;
-				if (ev->id == E_GEAR_ENGAGED) {
-					gearState = ENGAGED;
+				if (ev->id == E_REACHED) {
+					gearState = REACHED;
+				}
+				if (ev->id == E_GOTO1) {
+					gearState = GO_TO1;
+				}
+				if (ev->id == E_GOTO2) {
+					gearState = GO_TO2;
 				}
 				break;
 		}
@@ -67,59 +86,60 @@ bool gearProcess(Event* ev){
 				//-------------------------------------------
 				case INIT:
 					gear.actual_gear = 0;
+					gear.in_error = 0;
 					break;
 				//-------------------------------------------
-				case ENGAGED:
-					OD_RAM.x2004_gearTransition = 0 ;
+				case GO_TO1 :
+					OD_RAM.x2004_gearTransition = 1;
 					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
-					//check if gear engaged is actually gear requested
-					if(gear.actual_gear != GEAR_REQUESTED)
+					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2001_gearPos0);
+					//check if pos1 reached
+					if (gear.position <= MAXPOS0 && gear.position >= MINPOS0)
 					{
-						XF_post(gearProcess, E_GEAR_TRANSIT, 0);
+						CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
+						XF_post(gearProcess, E_REACHED, 0);
 					}
-					//check if driver requested gear change
-					//if (gear.change_gear)
-					if (OD_RAM.x2000_gear != oldGearRequest)
-					{
-						oldGearRequest = OD_RAM.x2000_gear;
-						//request the other gear of what is currently engaged
-						if (gear.actual_gear == 0)
-						{
-							HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2002_gearPos1);
-							XF_post(gearProcess, E_GEAR_TRANSIT, 0);
-						}else
-						{
-							HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2001_gearPos0);
-							XF_post(gearProcess, E_GEAR_TRANSIT, 0);
-						}
-					}
-
+					XF_post(gearProcess, E_GOTO1, 10);
 					break;
-				//-------------------------------------------
-				case TRANSITION:
-					OD_RAM.x2004_gearTransition = 1 ;
+				case GO_TO2 :
+					OD_RAM.x2004_gearTransition = 1;
 					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
-					//check position to allow engaged state
-					//delay to wait for gear to reach
+					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2001_gearPos0);
+					//check if pos2 reached
 					if (gear.position <= MAXPOS1 && gear.position >= MINPOS1)
 					{
-						gear.actual_gear = 1;
-						OD_RAM.x2000_gear = gear.actual_gear; 								//write in dictionary
-						CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);		//send on can
-					//	XF_post(gearProcess, E_GEAR_ENGAGED, 0);
-					}else if (gear.position <= MINPOS0 && gear.position >= MAXPOS0)
-					{
-						gear.actual_gear = 0;
-						OD_RAM.x2000_gear = gear.actual_gear; 								//write in dictionary
-						CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);		//send on can
-					//	XF_post(gearProcess, E_GEAR_ENGAGED, 0);
+						CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
+						XF_post(gearProcess, E_REACHED, 0);
 					}
-					//if over ...s post error
-					XF_post(gearProcess, E_GEAR_ENGAGED, 10);
+					XF_post(gearProcess, E_GOTO2, 10);
+					break;
+				case REACHED :
+					OD_RAM.x2004_gearTransition = 0 ;
+					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
+					if (OD_RAM.x2000_gear != oldGearRequest)
+					{
+						oldGearRequest = oldGearRequest;
+						if (OD_RAM.x2000_gear == 0)
+						{
+							XF_post(gearProcess, E_GOTO2, 0);
+						}else
+						{
+							XF_post(gearProcess, E_GOTO1, 0);
+						}
+					}
+					XF_post(gearProcess, E_REACHED, 10);
 					break;
 				//-------------------------------------------
 				case GEARERROR:
 					gear.in_error = 1;
+					//go in old gear
+					if (GEAR_REQUESTED == 0)
+						{
+							XF_post(gearProcess, E_GOTO2, 0);
+						}else
+						{
+							XF_post(gearProcess, E_GOTO1, 0);
+						}
 					break;
 				//-------------------------------------------
 			}
