@@ -156,6 +156,12 @@ bool steeringProcess(Event* ev)
 							OD_RAM.x2035_steeringControlWord = 0x000F;
 							CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
 
+							//Revenir au milieu
+							target_position(10000);
+							OD_RAM.x2035_steeringControlWord = 0x3F;
+							CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+
+
 							// On a terminé le homing
 							XF_post(steeringProcess, E_REACHED, 50);
 						}
@@ -223,6 +229,10 @@ bool steeringProcess(Event* ev)
 
 				//-----------------------------------------------------------------------
 				case REACHED:
+
+					//Remets sur 0 l'envoi
+					OD_RAM.x2035_steeringControlWord = 0x2F;
+					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
 
 				    // Ici le moteur est homé
 				    // et déjà revenu en Profile Position Mode
@@ -309,6 +319,13 @@ void target_position(int32_t target){
 	OD_RAM.x2038_steeringPosition = target;
 	//Envoie sur le can
 	CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
+
+	//2F = 0
+	//3F = 1
+
+	//Envoi la pos
+	OD_RAM.x2035_steeringControlWord = 0x3F;
+	CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
 
 }
 
