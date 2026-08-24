@@ -24,7 +24,7 @@
 
 
 //1000 = 100%
-#define powerMotor 500
+#define powerMotor 1000
 
 //---------------------Emplacements Flash---------------------
 

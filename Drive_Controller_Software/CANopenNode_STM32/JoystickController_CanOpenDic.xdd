@@ -15,7 +15,7 @@
         <ProfileTechnology>CANopen</ProfileTechnology>
       </ISO15745Reference>
     </ProfileHeader>
-    <ProfileBody xmlns:q1="http://www.canopen.org/xml/1.1" xsi:type="q1:ProfileBody_Device_CANopen" formatName="CANopen" formatVersion="1.0" fileName="JoystickController_CanOpenDic.xdd" fileCreator="" fileCreationDate="2026-05-19" fileCreationTime="15:00:18.0000000+02:00" fileModifiedBy="" fileModificationDate="2026-08-24" fileModificationTime="10:20:28.7865929+02:00" fileVersion="1" supportedLanguages="en" xmlns="">
+    <ProfileBody xmlns:q1="http://www.canopen.org/xml/1.1" xsi:type="q1:ProfileBody_Device_CANopen" formatName="CANopen" formatVersion="1.0" fileName="JoystickController_CanOpenDic.xdd" fileCreator="" fileCreationDate="2026-05-19" fileCreationTime="15:00:18.0000000+02:00" fileModifiedBy="" fileModificationDate="2026-08-24" fileModificationTime="14:33:17.3063130+02:00" fileVersion="1" supportedLanguages="en" xmlns="">
       <q1:DeviceIdentity>
         <q1:vendorName></q1:vendorName>
         <q1:vendorID></q1:vendorID>
@@ -204,6 +204,20 @@
               <UINT />
             </q1:varDeclaration>
           </q1:struct>
+          <q1:struct name="RPDO communication parameter" uniqueID="UID_REC_1402">
+            <q1:varDeclaration name="Highest sub-index supported" uniqueID="UID_RECSUB_140200">
+              <USINT />
+            </q1:varDeclaration>
+            <q1:varDeclaration name="COB-ID used by RPDO" uniqueID="UID_RECSUB_140201">
+              <UDINT />
+            </q1:varDeclaration>
+            <q1:varDeclaration name="Transmission type" uniqueID="UID_RECSUB_140202">
+              <USINT />
+            </q1:varDeclaration>
+            <q1:varDeclaration name="Event timer" uniqueID="UID_RECSUB_140205">
+              <UINT />
+            </q1:varDeclaration>
+          </q1:struct>
           <q1:struct name="RPDO communication parameter" uniqueID="UID_REC_1404">
             <q1:varDeclaration name="Highest sub-index supported" uniqueID="UID_RECSUB_140400">
               <USINT />
@@ -287,6 +301,35 @@
               <UDINT />
             </q1:varDeclaration>
             <q1:varDeclaration name="Application object 8" uniqueID="UID_RECSUB_160108">
+              <UDINT />
+            </q1:varDeclaration>
+          </q1:struct>
+          <q1:struct name="RPDO mapping parameter" uniqueID="UID_REC_1602">
+            <q1:varDeclaration name="Number of mapped application objects in PDO" uniqueID="UID_RECSUB_160200">
+              <USINT />
+            </q1:varDeclaration>
+            <q1:varDeclaration name="Application object 1" uniqueID="UID_RECSUB_160201">
+              <UDINT />
+            </q1:varDeclaration>
+            <q1:varDeclaration name="Application object 2" uniqueID="UID_RECSUB_160202">
+              <UDINT />
+            </q1:varDeclaration>
+            <q1:varDeclaration name="Application object 3" uniqueID="UID_RECSUB_160203">
+              <UDINT />
+            </q1:varDeclaration>
+            <q1:varDeclaration name="Application object 4" uniqueID="UID_RECSUB_160204">
+              <UDINT />
+            </q1:varDeclaration>
+            <q1:varDeclaration name="Application object 5" uniqueID="UID_RECSUB_160205">
+              <UDINT />
+            </q1:varDeclaration>
+            <q1:varDeclaration name="Application object 6" uniqueID="UID_RECSUB_160206">
+              <UDINT />
+            </q1:varDeclaration>
+            <q1:varDeclaration name="Application object 7" uniqueID="UID_RECSUB_160207">
+              <UDINT />
+            </q1:varDeclaration>
+            <q1:varDeclaration name="Application object 8" uniqueID="UID_RECSUB_160208">
               <UDINT />
             </q1:varDeclaration>
           </q1:struct>
@@ -1413,6 +1456,32 @@ The life time factor multiplied with the guard time gives the life time for the 
             <UINT />
             <q1:defaultValue value="0" />
           </q1:parameter>
+          <q1:parameter uniqueID="UID_OBJ_1402">
+            <label lang="en">RPDO communication parameter</label>
+            <q1:dataTypeIDRef uniqueIDRef="UID_REC_1402" />
+            <q1:property name="CO_countLabel" value="RPDO" />
+            <q1:property name="CO_storageGroup" value="PERSIST_COMM" />
+          </q1:parameter>
+          <q1:parameter uniqueID="UID_SUB_140200">
+            <label lang="en">Highest sub-index supported</label>
+            <USINT />
+            <q1:defaultValue value="0x05" />
+          </q1:parameter>
+          <q1:parameter uniqueID="UID_SUB_140201" access="readWrite">
+            <label lang="en">COB-ID used by RPDO</label>
+            <UDINT />
+            <q1:defaultValue value="$NODEID+0x188" />
+          </q1:parameter>
+          <q1:parameter uniqueID="UID_SUB_140202" access="readWrite">
+            <label lang="en">Transmission type</label>
+            <USINT />
+            <q1:defaultValue value="254" />
+          </q1:parameter>
+          <q1:parameter uniqueID="UID_SUB_140205" access="readWrite">
+            <label lang="en">Event timer</label>
+            <UINT />
+            <q1:defaultValue value="0" />
+          </q1:parameter>
           <q1:parameter uniqueID="UID_OBJ_1404">
             <label lang="en">RPDO communication parameter</label>
             <q1:dataTypeIDRef uniqueIDRef="UID_REC_1404" />
@@ -1575,6 +1644,56 @@ The life time factor multiplied with the guard time gives the life time for the 
             <q1:defaultValue value="0x00000000" />
           </q1:parameter>
           <q1:parameter uniqueID="UID_SUB_160108" access="readWrite">
+            <label lang="en">Application object 8</label>
+            <UDINT />
+            <q1:defaultValue value="0x00000000" />
+          </q1:parameter>
+          <q1:parameter uniqueID="UID_OBJ_1602">
+            <label lang="en">RPDO mapping parameter</label>
+            <q1:dataTypeIDRef uniqueIDRef="UID_REC_1602" />
+            <q1:property name="CO_storageGroup" value="PERSIST_COMM" />
+          </q1:parameter>
+          <q1:parameter uniqueID="UID_SUB_160200" access="readWrite">
+            <label lang="en">Number of mapped application objects in PDO</label>
+            <USINT />
+            <q1:defaultValue value="1" />
+          </q1:parameter>
+          <q1:parameter uniqueID="UID_SUB_160201" access="readWrite">
+            <label lang="en">Application object 1</label>
+            <UDINT />
+            <q1:defaultValue value="0x20200208" />
+          </q1:parameter>
+          <q1:parameter uniqueID="UID_SUB_160202" access="readWrite">
+            <label lang="en">Application object 2</label>
+            <UDINT />
+            <q1:defaultValue value="0x00000000" />
+          </q1:parameter>
+          <q1:parameter uniqueID="UID_SUB_160203" access="readWrite">
+            <label lang="en">Application object 3</label>
+            <UDINT />
+            <q1:defaultValue value="0x00000000" />
+          </q1:parameter>
+          <q1:parameter uniqueID="UID_SUB_160204" access="readWrite">
+            <label lang="en">Application object 4</label>
+            <UDINT />
+            <q1:defaultValue value="0x00000000" />
+          </q1:parameter>
+          <q1:parameter uniqueID="UID_SUB_160205" access="readWrite">
+            <label lang="en">Application object 5</label>
+            <UDINT />
+            <q1:defaultValue value="0x00000000" />
+          </q1:parameter>
+          <q1:parameter uniqueID="UID_SUB_160206" access="readWrite">
+            <label lang="en">Application object 6</label>
+            <UDINT />
+            <q1:defaultValue value="0x00000000" />
+          </q1:parameter>
+          <q1:parameter uniqueID="UID_SUB_160207" access="readWrite">
+            <label lang="en">Application object 7</label>
+            <UDINT />
+            <q1:defaultValue value="0x00000000" />
+          </q1:parameter>
+          <q1:parameter uniqueID="UID_SUB_160208" access="readWrite">
             <label lang="en">Application object 8</label>
             <UDINT />
             <q1:defaultValue value="0x00000000" />
@@ -2392,12 +2511,12 @@ The life time factor multiplied with the guard time gives the life time for the 
             <USINT />
             <q1:defaultValue value="0x03" />
           </q1:parameter>
-          <q1:parameter uniqueID="UID_SUB_202001" access="readWriteInput">
+          <q1:parameter uniqueID="UID_SUB_202001" access="readWriteOutput">
             <label lang="en">posX</label>
             <SINT />
             <q1:defaultValue value="0" />
           </q1:parameter>
-          <q1:parameter uniqueID="UID_SUB_202002" access="readWriteInput">
+          <q1:parameter uniqueID="UID_SUB_202002" access="readWriteOutput">
             <label lang="en">posY</label>
             <SINT />
             <q1:defaultValue value="0" />
@@ -2408,7 +2527,7 @@ The life time factor multiplied with the guard time gives the life time for the 
               </q1:range>
             </q1:allowedValues>
           </q1:parameter>
-          <q1:parameter uniqueID="UID_SUB_202003" access="readWriteInput">
+          <q1:parameter uniqueID="UID_SUB_202003" access="readWriteOutput">
             <label lang="en">Button</label>
             <SINT />
             <q1:defaultValue value="0" />
@@ -2518,7 +2637,7 @@ The life time factor multiplied with the guard time gives the life time for the 
         <ProfileTechnology>CANopen</ProfileTechnology>
       </ISO15745Reference>
     </ProfileHeader>
-    <ProfileBody xmlns:q2="http://www.canopen.org/xml/1.1" xsi:type="q2:ProfileBody_CommunicationNetwork_CANopen" formatName="CANopen" formatVersion="1.0" fileName="JoystickController_CanOpenDic.xdd" fileCreator="" fileCreationDate="2026-05-19" fileCreationTime="15:00:18.0000000+02:00" fileModificationDate="2026-08-24" fileModificationTime="10:20:28.7865929+02:00" fileVersion="1" supportedLanguages="en" xmlns="">
+    <ProfileBody xmlns:q2="http://www.canopen.org/xml/1.1" xsi:type="q2:ProfileBody_CommunicationNetwork_CANopen" formatName="CANopen" formatVersion="1.0" fileName="JoystickController_CanOpenDic.xdd" fileCreator="" fileCreationDate="2026-05-19" fileCreationTime="15:00:18.0000000+02:00" fileModificationDate="2026-08-24" fileModificationTime="14:33:17.3063130+02:00" fileVersion="1" supportedLanguages="en" xmlns="">
       <ApplicationLayers>
         <q2:CANopenObjectList>
           <CANopenObject index="1000" name="Device type" objectType="7" PDOmapping="no" uniqueIDRef="UID_OBJ_1000" />
@@ -2664,6 +2783,12 @@ The life time factor multiplied with the guard time gives the life time for the 
             <CANopenSubObject subIndex="02" name="Transmission type" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_140102" />
             <CANopenSubObject subIndex="05" name="Event timer" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_140105" />
           </CANopenObject>
+          <CANopenObject index="1402" name="RPDO communication parameter" objectType="9" uniqueIDRef="UID_OBJ_1402" subNumber="4">
+            <CANopenSubObject subIndex="00" name="Highest sub-index supported" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_140200" />
+            <CANopenSubObject subIndex="01" name="COB-ID used by RPDO" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_140201" />
+            <CANopenSubObject subIndex="02" name="Transmission type" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_140202" />
+            <CANopenSubObject subIndex="05" name="Event timer" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_140205" />
+          </CANopenObject>
           <CANopenObject index="1404" name="RPDO communication parameter" objectType="9" uniqueIDRef="UID_OBJ_1404" subNumber="4">
             <CANopenSubObject subIndex="00" name="Highest sub-index supported" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_140400" />
             <CANopenSubObject subIndex="01" name="COB-ID used by RPDO" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_140401" />
@@ -2697,6 +2822,17 @@ The life time factor multiplied with the guard time gives the life time for the 
             <CANopenSubObject subIndex="06" name="Application object 6" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_160106" />
             <CANopenSubObject subIndex="07" name="Application object 7" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_160107" />
             <CANopenSubObject subIndex="08" name="Application object 8" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_160108" />
+          </CANopenObject>
+          <CANopenObject index="1602" name="RPDO mapping parameter" objectType="9" uniqueIDRef="UID_OBJ_1602" subNumber="9">
+            <CANopenSubObject subIndex="00" name="Number of mapped application objects in PDO" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_160200" />
+            <CANopenSubObject subIndex="01" name="Application object 1" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_160201" />
+            <CANopenSubObject subIndex="02" name="Application object 2" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_160202" />
+            <CANopenSubObject subIndex="03" name="Application object 3" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_160203" />
+            <CANopenSubObject subIndex="04" name="Application object 4" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_160204" />
+            <CANopenSubObject subIndex="05" name="Application object 5" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_160205" />
+            <CANopenSubObject subIndex="06" name="Application object 6" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_160206" />
+            <CANopenSubObject subIndex="07" name="Application object 7" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_160207" />
+            <CANopenSubObject subIndex="08" name="Application object 8" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_160208" />
           </CANopenObject>
           <CANopenObject index="1604" name="RPDO mapping parameter" objectType="9" uniqueIDRef="UID_OBJ_1604" subNumber="9">
             <CANopenSubObject subIndex="00" name="Number of mapped application objects in PDO" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_160400" />
@@ -2867,9 +3003,9 @@ The life time factor multiplied with the guard time gives the life time for the 
           <CANopenObject index="2004" name="Treshold_NewValue" objectType="7" PDOmapping="no" uniqueIDRef="UID_OBJ_2004" />
           <CANopenObject index="2020" name="Joystick" objectType="8" uniqueIDRef="UID_OBJ_2020" subNumber="4">
             <CANopenSubObject subIndex="00" name="Highest sub-index supported" objectType="7" PDOmapping="no" uniqueIDRef="UID_SUB_202000" />
-            <CANopenSubObject subIndex="01" name="posX" objectType="7" PDOmapping="TPDO" uniqueIDRef="UID_SUB_202001" />
-            <CANopenSubObject subIndex="02" name="posY" objectType="7" PDOmapping="TPDO" uniqueIDRef="UID_SUB_202002" />
-            <CANopenSubObject subIndex="03" name="Button" objectType="7" PDOmapping="TPDO" uniqueIDRef="UID_SUB_202003" />
+            <CANopenSubObject subIndex="01" name="posX" objectType="7" PDOmapping="RPDO" uniqueIDRef="UID_SUB_202001" />
+            <CANopenSubObject subIndex="02" name="posY" objectType="7" PDOmapping="RPDO" uniqueIDRef="UID_SUB_202002" />
+            <CANopenSubObject subIndex="03" name="Button" objectType="7" PDOmapping="RPDO" uniqueIDRef="UID_SUB_202003" />
           </CANopenObject>
           <CANopenObject index="2030" name="DriveStatusWord" objectType="7" PDOmapping="RPDO" uniqueIDRef="UID_OBJ_2030" />
           <CANopenObject index="2031" name="DriveMotorSpeed" objectType="7" PDOmapping="RPDO" uniqueIDRef="UID_OBJ_2031" />
@@ -2902,7 +3038,7 @@ The life time factor multiplied with the guard time gives the life time for the 
         </PhysicalLayer>
       </TransportLayers>
       <NetworkManagement>
-        <CANopenGeneralFeatures granularity="8" nrOfRxPDO="4" nrOfTxPDO="7" />
+        <CANopenGeneralFeatures granularity="8" nrOfRxPDO="5" nrOfTxPDO="7" />
         <CANopenMasterFeatures />
       </NetworkManagement>
     </ProfileBody>
