@@ -16,6 +16,9 @@ int32_t tempPosMotor = 0;
 int32_t position0 = 0;
 int8_t waitingMotorMove = 0;
 
+bool temp3264;
+bool startHoming = true;
+
 
 bool steeringProcess(Event* ev)
 	{
@@ -75,10 +78,21 @@ bool steeringProcess(Event* ev)
 				break;
 		//-----------------------------------------------------------------------
 		case STEERING_ENABLE:
-			if (ev->id == E_FIND0){
-				steeringState = FIND0;
-			}
-				break;
+
+		    if (ev->id == E_SINUS_MOVE){
+		        steeringState = SINUS_MOVE;
+		    }
+
+		    break;
+		//-----------------------------------------------------------------------
+		case SINUS_MOVE:
+
+		    if (ev->id == E_FIND0)
+		    {
+		        steeringState = FIND0;
+		    }
+
+		    break;
 		//-----------------------------------------------------------------------
 		case FIND0:
 			if (ev->id == E_REACHED){
@@ -174,95 +188,74 @@ bool steeringProcess(Event* ev)
 					break;
 
 				//-----------------------------------------------------------------------
+				case SINUS_MOVE:
 
+				    int32_t currentPos = OD_RAM.x203A_steeringMotorCurrentPosition;
+
+				    // Le moteur a bougé d'au moins 10 ?
+				    if (currentPos >= tempPosMotor + 150 ||
+				        currentPos <= tempPosMotor - 150)
+				    {
+				        // Le moteur a suffisamment bougé
+				        waitingMotorMove = false;
+
+				        // Petit délai avant de passer en homing
+				        XF_post(steeringProcess, E_FIND0, 50);
+				    }
+				    else
+				    {
+				        // Le moteur n'a pas encore assez bougé
+				        sendSinus();
+
+				        // On vérifie à nouveau dans 1 ms
+				        XF_post(steeringProcess, E_SINUS_MOVE, 1);
+				    }
+
+				    break;
+				//-----------------------------------------------------------------------
 				case FIND0:
 
-					//Le homing est déjà lancé
-					if (OD_RAM.x2036_steeringMode == 0x06)
+					if(startHoming)
 					{
-
 					    // Démarrage du homing
 					    OD_RAM.x2035_steeringControlWord = 0x001F;
 					    CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
 
-						// Homing terminé ?
-						if (OD_RAM.x2039_steeringStatusWord & (1 << 12))
-						{
-							// Passage en Profile Position Mode
-							OD_RAM.x2036_steeringMode = 0x01;
-							CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[3]);
-
-							// EPOS reste en Enable Operation
-							OD_RAM.x2035_steeringControlWord = 0x000F;
-							CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
-
-							//Revenir au milieu
-							target_position(10000);
-							OD_RAM.x2035_steeringControlWord = 0x3F;
-							CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
-
-
-							// On a terminé le homing
-							XF_post(steeringProcess, E_REACHED, 50);
-						}
-						else
-						{
-							// Homing toujours en cours
-							XF_post(steeringProcess, E_FIND0, 50);
-						}
-						break;
+					    startHoming = false;
 					}
 
 
-					// On attend de voir si le moteur a bougé
-					if (waitingMotorMove)
-					{
+					temp3264 = OD_RAM.x2039_steeringStatusWord & (1 << 12);
 
-						int32_t currentPos = OD_RAM.x203A_steeringMotorCurrentPosition;
+				    // Homing terminé ?
+				    if (temp3264)
+				    {
+				        // Passage en Profile Position Mode
+				        OD_RAM.x2036_steeringMode = 0x01;
 
-						// Le moteur a bougé d'au moins 10 ?
-						if (currentPos >= tempPosMotor + 10 ||
-						currentPos <= tempPosMotor - 10)
-						{
+				        CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[3]);
 
-							// Oui : le moteur a bien réagi à notre commande
-							waitingMotorMove = false;
+				        // Enable Operation
+				        OD_RAM.x2035_steeringControlWord = 0x000F;
 
-							// Passage en Homing Mode
-							OD_RAM.x2036_steeringMode = 0x06;
-							CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[3]);
+				        CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
 
+				        // Revenir au milieu
+				        target_position(10000);
 
-							// On revient surveiller le homing
-							XF_post(steeringProcess, E_FIND0, 50);
-						}
-						else
-						{
+				        // Nouveau positionnement
+				        OD_RAM.x2035_steeringControlWord = 0x3F;
 
-						    // Le moteur n'a pas encore assez bougé
-						    sendSinus();
+				        CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
 
-							// Le moteur n'a pas encore assez bougé.
-							// On attend encore une nouvelle position.
-							XF_post(steeringProcess, E_FIND0, 1);
-						}
+				        XF_post(steeringProcess, E_REACHED, 100);
+				    }
+				    else
+				    {
+				        XF_post(steeringProcess, E_FIND0, 10);
+				    }
 
-						break;
-
-					}
-
-					// Première exécution, mémoriser la position
-					tempPosMotor = OD_RAM.x203A_steeringMotorCurrentPosition;
-
-					// Envoyer la commande de couple sinus
-					sendSinus();
-
-					// On attend que l'EPOS ait eu le temps de bouger
-					waitingMotorMove = true;
-					XF_post(steeringProcess, E_FIND0, 1);
-
-					break;
-
+				    break;
 
 				//-----------------------------------------------------------------------
 				case REACHED:
@@ -318,7 +311,7 @@ bool steeringProcess(Event* ev)
 			CO_NMT_sendCommand(canOpenNodeSTM32.canOpenStack->NMT, CO_NMT_ENTER_OPERATIONAL,2);
 
 			//Envoyer pour faire un fault reset
-		    XF_post(steeringProcess, E_FAULT_RESET, 1000);
+		    XF_post(steeringProcess, E_FAULT_RESET, 3000);
 			break;
 		//-----------------------------------------------------------------------
 		case FAULT_RESET:
@@ -352,12 +345,40 @@ bool steeringProcess(Event* ev)
 
 			count = 0.0f;
 
-			XF_post(steeringProcess, E_FIND0, 200);
+			XF_post(steeringProcess, E_SINUS_MOVE, 200);
+			break;
+
+		//-----------------------------------------------------------------------
+		case SINUS_MOVE:
+
+			// Mémoriser la position de départ
+			tempPosMotor = OD_RAM.x203A_steeringMotorCurrentPosition;
+
+			// Mode Torque
+			OD_RAM.x2036_steeringMode = 0x0A;
+
+			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[3]);
+
+			// Premier couple sinusoidal
+			sendSinus();
+
+			// Vérifier le déplacement dans 1 ms
+			XF_post(steeringProcess, E_SINUS_MOVE, 1);
+
 			break;
 		//-----------------------------------------------------------------------
 		case FIND0:
-			XF_post(steeringProcess, E_FIND0, 200);
-			break;
+
+		    // Passage en Homing Mode
+		    OD_RAM.x2036_steeringMode = 0x06;
+		    CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[3]);
+
+
+
+		    // Vérifier le homing
+		    XF_post(steeringProcess, E_FIND0, 100);
+
+		    break;
 		//-----------------------------------------------------------------------
 		case REACHED:
 			break;
@@ -395,11 +416,6 @@ void sendSinus()
 {
 	//Increase count
 	count = count + (2.0f * 3.1416f / 8.0f);
-
-	//Mode 10 torque
-	OD_RAM.x2036_steeringMode = 0x0A;
-	//Envoie sur le can
-	CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[3]);
 
 	//Envoie sinus
 	OD_RAM.x2037_steeringTorque = (int16_t) (sin(count) * powerMotor);

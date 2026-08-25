@@ -68,6 +68,7 @@ typedef enum {
 	SHUTDOWN			= 40,
 	SWITCH_ON			= 50,
 	STEERING_ENABLE		= 60,
+	SINUS_MOVE          = 65,
 	FIND0				= 70,
 	REACHED				= 80,
 	MOVE				= 90
@@ -81,6 +82,7 @@ typedef enum{
 	E_SHUTDOWN,
 	E_SWITCH_ON,
 	E_STEERING_ENABLE,
+	E_SINUS_MOVE,
 	E_FIND0,
 	E_REACHED,
 	E_MOVE
