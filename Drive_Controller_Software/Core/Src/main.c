@@ -250,6 +250,7 @@ int main(void)
   //Affectation du pointer sur l'adresse de l'i2c pour avoir accès depuis tout les fichiers
   phi2c1 = &hi2c1;
 
+
   /* USER CODE END 2 */
 
   /* Infinite loop */

@@ -25,10 +25,26 @@ bool steeringProcess(Event* ev)
 	switch(steeringState){                  // this is the transition state machine
 		//-----------------------------------------------------------------------
 		case INIT_STEERING:
-			if (ev->id == E_SWITCH_ON_DISABLED){
+
+			if (ev->id == E_FAULT_RESET)
+			{
+				steeringState = FAULT_RESET;
+			}
+			else if (ev->id == E_SWITCH_ON_DISABLED)
+			{
 				steeringState = SWITCH_ON_DISABLED;
 			}
-				break;
+
+			break;
+		//-----------------------------------------------------------------------
+		case FAULT_RESET:
+
+		    if (ev->id == E_SWITCH_ON_DISABLED)
+		    {
+		        steeringState = SWITCH_ON_DISABLED;
+		    }
+
+		    break;
 		//-----------------------------------------------------------------------
 		case SWITCH_ON_DISABLED:
 			if (ev->id == E_SHUTDOWN){
@@ -83,16 +99,25 @@ bool steeringProcess(Event* ev)
 					//Reveil de l'epos vu qu'on est master
 					CO_NMT_sendCommand(canOpenNodeSTM32.canOpenStack->NMT, CO_NMT_ENTER_OPERATIONAL,2);
 
-					if ((OD_RAM.x2039_steeringStatusWord & 0x006F) == 0x0040)
-					{
-						XF_post(steeringProcess, E_SWITCH_ON_DISABLED, 100);
-					}
-					else
-					{
-						XF_post(steeringProcess, E_SWITCH_ON_DISABLED, 100);
-					}
+					//Envoyer pour faire un fault reset
+				    XF_post(steeringProcess, E_FAULT_RESET, 100);
+				    break;
+				//-----------------------------------------------------------------------
+				case FAULT_RESET:
 
-					break;
+				    // Fault toujours présent ?
+				    if (OD_RAM.x2039_steeringStatusWord & (1 << 3))
+				    {
+				        // On attend encore
+				        XF_post(steeringProcess, E_FAULT_RESET, 50);
+				    }
+				    else
+				    {
+				        // Fault Reset réussi
+				        XF_post(steeringProcess, E_SWITCH_ON_DISABLED, 50);
+				    }
+
+				    break;
 
 				//-----------------------------------------------------------------------
 				case SWITCH_ON_DISABLED:
@@ -145,6 +170,11 @@ bool steeringProcess(Event* ev)
 					//Le homing est déjà lancé
 					if (OD_RAM.x2036_steeringMode == 0x06)
 					{
+
+					    // Démarrage du homing
+					    OD_RAM.x2035_steeringControlWord = 0x001F;
+					    CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+
 						// Homing terminé ?
 						if (OD_RAM.x2039_steeringStatusWord & (1 << 12))
 						{
@@ -192,9 +222,6 @@ bool steeringProcess(Event* ev)
 							OD_RAM.x2036_steeringMode = 0x06;
 							CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[3]);
 
-							// Démarrage du homing
-							OD_RAM.x2035_steeringControlWord = 0x001F;
-							CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
 
 							// On revient surveiller le homing
 							XF_post(steeringProcess, E_FIND0, 50);
@@ -207,7 +234,7 @@ bool steeringProcess(Event* ev)
 
 							// Le moteur n'a pas encore assez bougé.
 							// On attend encore une nouvelle position.
-							XF_post(steeringProcess, E_FIND0, 50);
+							XF_post(steeringProcess, E_FIND0, 1);
 						}
 
 						break;
@@ -222,7 +249,7 @@ bool steeringProcess(Event* ev)
 
 					// On attend que l'EPOS ait eu le temps de bouger
 					waitingMotorMove = true;
-					XF_post(steeringProcess, E_FIND0, 50);
+					XF_post(steeringProcess, E_FIND0, 1);
 
 					break;
 
@@ -272,11 +299,21 @@ bool steeringProcess(Event* ev)
 		case INIT_STEERING:
 			break;
 		//-----------------------------------------------------------------------
+		case FAULT_RESET:
+
+		    // Fault Reset
+		    OD_RAM.x2035_steeringControlWord = 0x0080;
+		    CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+		    XF_post(steeringProcess, E_FAULT_RESET, 200);
+
+		    break;
+		//-----------------------------------------------------------------------
 		case SWITCH_ON_DISABLED:
 			OD_RAM.x2035_steeringControlWord = 0x0006; //6
 			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
 			XF_post(steeringProcess, E_SWITCH_ON_DISABLED, 200);
 			break;
+		//-----------------------------------------------------------------------
 		case SHUTDOWN:
 			OD_RAM.x2035_steeringControlWord = 0x0007; //7
 			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
@@ -290,6 +327,9 @@ bool steeringProcess(Event* ev)
 			break;
 		//-----------------------------------------------------------------------
 		case STEERING_ENABLE:
+
+			count = 0.0f;
+
 			XF_post(steeringProcess, E_FIND0, 200);
 			break;
 		//-----------------------------------------------------------------------

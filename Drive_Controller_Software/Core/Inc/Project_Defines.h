@@ -24,7 +24,7 @@
 
 
 //1000 = 100%
-#define powerMotor 1000
+#define powerMotor 600
 
 //---------------------Emplacements Flash---------------------
 
@@ -56,17 +56,19 @@ typedef enum{
 
 typedef enum {
 	INIT_STEERING		= 10,
-	SWITCH_ON_DISABLED	= 20,
-	SHUTDOWN			= 30,
-	SWITCH_ON			= 40,
-	STEERING_ENABLE		= 50,
-	FIND0				= 60,
-	REACHED				= 70,
-	MOVE				= 80
+	FAULT_RESET			= 20,
+	SWITCH_ON_DISABLED	= 30,
+	SHUTDOWN			= 40,
+	SWITCH_ON			= 50,
+	STEERING_ENABLE		= 60,
+	FIND0				= 70,
+	REACHED				= 80,
+	MOVE				= 90
 }StateSteeringControl;
 
 typedef enum{
 	E_INIT_STEERING = 1,			// must be not 0 !!!
+	E_FAULT_RESET,
 	E_SWITCH_ON_DISABLED,
 	E_SHUTDOWN,
 	E_SWITCH_ON,
