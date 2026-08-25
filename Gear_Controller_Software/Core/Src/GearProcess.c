@@ -13,6 +13,8 @@ bool gearProcess(Event* ev){
 		// keep old value
 		static StateControl oldGearState;
 		static uint8_t oldGearRequest = 0;
+		static uint32_t counter_pos1 = 0;
+		static uint32_t counter_pos2 = 0;
 
 		//***********************************************
 		// 		Transition state machine
@@ -71,6 +73,9 @@ bool gearProcess(Event* ev){
 				if (ev->id == E_GOTO2) {
 					gearState = GO_TO2;
 				}
+				if (ev->id == E_INIT){
+					gearState = INIT;
+				}
 				break;
 		}
 
@@ -86,10 +91,12 @@ bool gearProcess(Event* ev){
 				case INIT:
 					gear.actual_gear = 0;
 					gear.in_error = 0;
+					XF_post(gearProcess, E_INIT, 10);
 					break;
 				//-------------------------------------------
 				case GO_TO1 :
 					OD_RAM.x2004_gearTransition = 1;
+					counter_pos1 = 0;
 					//CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
 					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2001_gearPos0);
 					//check if pos1 reached
@@ -108,6 +115,7 @@ bool gearProcess(Event* ev){
 					}
 					break;
 				case GO_TO2 :
+					counter_pos2 = 0;
 					OD_RAM.x2004_gearTransition = 1;
 					//CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
 					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2002_gearPos1);
@@ -151,16 +159,19 @@ bool gearProcess(Event* ev){
 					//go in old gear
 					if (GEAR_REQUESTED == 0)
 						{
+							OD_RAM.x2000_gear = 1;
+							oldGearRequest = OD_RAM.x2000_gear;
 							XF_post(gearProcess, E_GOTO2, 0);
 						}else
 						{
+							OD_RAM.x2000_gear = 1;
+							oldGearRequest = OD_RAM.x2000_gear;
 							XF_post(gearProcess, E_GOTO1, 0);
 						}
 					break;
 				//-------------------------------------------
 			}
 		}
-//		return true;
 		//***********************************************
 		// 		Loop state machine
 		//***********************************************
@@ -172,6 +183,7 @@ bool gearProcess(Event* ev){
 					break;
 				//-------------------------------------------
 				case GO_TO1 :
+					counter_pos1++;
 					if (gear.position <= MAXPOS0 && gear.position >= MINPOS0)
 					{
 						XF_post(gearProcess, E_REACHED, 0);
@@ -182,10 +194,16 @@ bool gearProcess(Event* ev){
 					}
 					else
 					{
+						//if after delay pos not right, post error
+						if(counter_pos1 == ERRORTIME){
+							counter_pos1 = 0;
+							XF_post(gearProcess, E_GEAR_ERROR, 0);
+						}
 						XF_post(gearProcess, E_GOTO1, 10);
 					}
 					break;
 				case GO_TO2 :
+					counter_pos2++;
 					if (gear.position <= MAXPOS1 && gear.position >= MINPOS1)
 					{
 						XF_post(gearProcess, E_REACHED, 0);
@@ -196,7 +214,12 @@ bool gearProcess(Event* ev){
 					}
 					else
 					{
-						XF_post(gearProcess, E_GOTO2, 10);
+						//if after delay pos not right, post error
+						if(counter_pos2 == ERRORTIME){
+							counter_pos2 = 0;
+							XF_post(gearProcess, E_GEAR_ERROR, 0);
+						}
+						XF_post(gearProcess, E_GOTO1, 10);
 					}
 					break;
 				case REACHED :
@@ -218,18 +241,10 @@ bool gearProcess(Event* ev){
 					break;
 				//-------------------------------------------
 				case GEARERROR:
-					gear.in_error = 1;
-					//go in old gear
-					if (GEAR_REQUESTED == 0)
-						{
-							XF_post(gearProcess, E_GOTO2, 0);
-						}else
-						{
-							XF_post(gearProcess, E_GOTO1, 0);
-						}
+					XF_post(gearProcess, E_INIT, 10);
 					break;
 				//-------------------------------------------
 			}
 		}
-//		return true;
+
 }

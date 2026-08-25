@@ -40,6 +40,7 @@
 #define MINPOS1 1200
 #define MAXPOS0 2400
 #define MINPOS0 2300
+#define ERRORTIME 20
 
 //----------------------------Flash---------------------------
 
