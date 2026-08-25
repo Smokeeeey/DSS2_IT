@@ -7,45 +7,45 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
   1 .text         000114b0  08000190  08000190  00001190  2**4
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .rodata       00000ee8  08011640  08011640  00012640  2**3
+  2 .rodata       00000fa0  08011640  08011640  00012640  2**3
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  3 .ARM.extab    00000000  08012528  08012528  00014684  2**0
+  3 .ARM.extab    00000000  080125e0  080125e0  000146dc  2**0
                   CONTENTS, READONLY
-  4 .ARM          00000008  08012528  08012528  00013528  2**2
+  4 .ARM          00000008  080125e0  080125e0  000135e0  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  5 .preinit_array 00000000  08012530  08012530  00014684  2**0
+  5 .preinit_array 00000000  080125e8  080125e8  000146dc  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  6 .init_array   00000004  08012530  08012530  00013530  2**2
+  6 .init_array   00000004  080125e8  080125e8  000135e8  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  7 .fini_array   00000004  08012534  08012534  00013534  2**2
+  7 .fini_array   00000004  080125ec  080125ec  000135ec  2**2
                   CONTENTS, ALLOC, LOAD, READONLY, DATA
-  8 .data         00000684  20000000  08012538  00014000  2**2
+  8 .data         000006dc  20000000  080125f0  00014000  2**3
                   CONTENTS, ALLOC, LOAD, DATA
-  9 .bss          00000624  20000688  08012bbc  00014688  2**3
+  9 .bss          0000061c  200006dc  08012ccc  000146dc  2**2
                   ALLOC
- 10 ._user_heap_stack 00000604  20000cac  08012bbc  00014cac  2**0
+ 10 ._user_heap_stack 00000600  20000cf8  08012ccc  00014cf8  2**0
                   ALLOC
- 11 .ARM.attributes 00000030  00000000  00000000  00014684  2**0
+ 11 .ARM.attributes 00000030  00000000  00000000  000146dc  2**0
                   CONTENTS, READONLY
- 12 .debug_info   00030eee  00000000  00000000  000146b4  2**0
+ 12 .debug_info   00031118  00000000  00000000  0001470c  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 13 .debug_abbrev 00006282  00000000  00000000  000455a2  2**0
+ 13 .debug_abbrev 00006282  00000000  00000000  00045824  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 14 .debug_aranges 00001f20  00000000  00000000  0004b828  2**3
+ 14 .debug_aranges 00001f20  00000000  00000000  0004baa8  2**3
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 15 .debug_rnglists 000018b9  00000000  00000000  0004d748  2**0
+ 15 .debug_rnglists 000018b9  00000000  00000000  0004d9c8  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 16 .debug_macro  00029fc6  00000000  00000000  0004f001  2**0
+ 16 .debug_macro  00029fe2  00000000  00000000  0004f281  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0002c7b6  00000000  00000000  00078fc7  2**0
+ 17 .debug_line   0002c7b6  00000000  00000000  00079263  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000f145d  00000000  00000000  000a577d  2**0
+ 18 .debug_str    000f157c  00000000  00000000  000a5a19  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  00196bda  2**0
+ 19 .comment      00000043  00000000  00000000  00196f95  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00008f58  00000000  00000000  00196c20  2**2
+ 20 .debug_frame  00008f58  00000000  00000000  00196fd8  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 0000006e  00000000  00000000  0019fb78  2**0
+ 21 .debug_line_str 0000006e  00000000  00000000  0019ff30  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -62,7 +62,7 @@ Disassembly of section .text:
  80001a2:	2301      	movs	r3, #1
  80001a4:	7023      	strb	r3, [r4, #0]
  80001a6:	bd10      	pop	{r4, pc}
- 80001a8:	20000688 	.word	0x20000688
+ 80001a8:	200006dc 	.word	0x200006dc
  80001ac:	00000000 	.word	0x00000000
  80001b0:	08011628 	.word	0x08011628
 
@@ -75,7 +75,7 @@ Disassembly of section .text:
  80001be:	f3af 8000 	nop.w
  80001c2:	bd08      	pop	{r3, pc}
  80001c4:	00000000 	.word	0x00000000
- 80001c8:	2000068c 	.word	0x2000068c
+ 80001c8:	200006e0 	.word	0x200006e0
  80001cc:	08011628 	.word	0x08011628
 
 080001d0 <strlen>:
@@ -16427,7 +16427,7 @@ CO_new(CO_config_t* config, uint32_t* heapMemoryUsed) {
         if (CO_GET_CNT(TPDO) > 0U) {
             CO_alloc_break_on_fail(co->TPDO, CO_GET_CNT(TPDO), sizeof(*co->TPDO));
  8006bd6:	f44f 71c6 	mov.w	r1, #396	@ 0x18c
- 8006bda:	2007      	movs	r0, #7
+ 8006bda:	2008      	movs	r0, #8
  8006bdc:	f008 fd12 	bl	800f604 <calloc>
  8006be0:	4603      	mov	r3, r0
  8006be2:	461a      	mov	r2, r3
@@ -16438,7 +16438,7 @@ CO_new(CO_config_t* config, uint32_t* heapMemoryUsed) {
  8006bec:	2b00      	cmp	r3, #0
  8006bee:	d054      	beq.n	8006c9a <CO_new+0x22e>
  8006bf0:	693b      	ldr	r3, [r7, #16]
- 8006bf2:	f603 23d4 	addw	r3, r3, #2772	@ 0xad4
+ 8006bf2:	f503 6346 	add.w	r3, r3, #3168	@ 0xc60
  8006bf6:	613b      	str	r3, [r7, #16]
         }
 #endif
@@ -16521,7 +16521,7 @@ CO_new(CO_config_t* config, uint32_t* heapMemoryUsed) {
         /* CAN TX blocks */
         CO_alloc_break_on_fail(co->CANtx, CO_GET_CO(CNT_ALL_TX_MSGS), sizeof(*co->CANtx));
  8006c70:	2118      	movs	r1, #24
- 8006c72:	200d      	movs	r0, #13
+ 8006c72:	200e      	movs	r0, #14
  8006c74:	f008 fcc6 	bl	800f604 <calloc>
  8006c78:	4603      	mov	r3, r0
  8006c7a:	461a      	mov	r2, r3
@@ -16532,7 +16532,7 @@ CO_new(CO_config_t* config, uint32_t* heapMemoryUsed) {
  8006c84:	2b00      	cmp	r3, #0
  8006c86:	d008      	beq.n	8006c9a <CO_new+0x22e>
  8006c88:	693b      	ldr	r3, [r7, #16]
- 8006c8a:	f503 739c 	add.w	r3, r3, #312	@ 0x138
+ 8006c8a:	f503 73a8 	add.w	r3, r3, #336	@ 0x150
  8006c8e:	613b      	str	r3, [r7, #16]
 
         /* finish successfully, set other parameters */
@@ -16762,7 +16762,7 @@ CO_CANinit(CO_t* co, void* CANptr, uint16_t bitRate) {
  8006dac:	68db      	ldr	r3, [r3, #12]
  8006dae:	88fa      	ldrh	r2, [r7, #6]
  8006db0:	9202      	str	r2, [sp, #8]
- 8006db2:	220d      	movs	r2, #13
+ 8006db2:	220e      	movs	r2, #14
  8006db4:	9201      	str	r2, [sp, #4]
  8006db6:	9300      	str	r3, [sp, #0]
  8006db8:	2312      	movs	r3, #18
@@ -16814,7 +16814,7 @@ CO_LSSinit(CO_t* co, CO_LSS_address_t* lssAddress, uint8_t* pendingNodeID, uint1
  8006df6:	6852      	ldr	r2, [r2, #4]
  8006df8:	f240 71e4 	movw	r1, #2020	@ 0x7e4
  8006dfc:	9105      	str	r1, [sp, #20]
- 8006dfe:	210c      	movs	r1, #12
+ 8006dfe:	210d      	movs	r1, #13
  8006e00:	9104      	str	r1, [sp, #16]
  8006e02:	9203      	str	r2, [sp, #12]
  8006e04:	f240 72e5 	movw	r2, #2021	@ 0x7e5
@@ -17030,7 +17030,7 @@ CO_CANopenInit(CO_t* co, CO_NMT_t* NMT, CO_EM_t* em, OD_t* od, OD_entry_t* OD_st
  8006f2a:	6cfc      	ldr	r4, [r7, #76]	@ 0x4c
  8006f2c:	940b      	str	r4, [sp, #44]	@ 0x2c
  8006f2e:	900a      	str	r0, [sp, #40]	@ 0x28
- 8006f30:	200b      	movs	r0, #11
+ 8006f30:	200c      	movs	r0, #12
  8006f32:	9009      	str	r0, [sp, #36]	@ 0x24
  8006f34:	9108      	str	r1, [sp, #32]
  8006f36:	2100      	movs	r1, #0
@@ -17134,7 +17134,7 @@ CO_CANopenInit(CO_t* co, CO_NMT_t* NMT, CO_EM_t* em, OD_t* od, OD_entry_t* OD_st
  8006fd4:	68f9      	ldr	r1, [r7, #12]
  8006fd6:	6849      	ldr	r1, [r1, #4]
  8006fd8:	8a78      	ldrh	r0, [r7, #18]
- 8006fda:	300a      	adds	r0, #10
+ 8006fda:	300b      	adds	r0, #11
  8006fdc:	b280      	uxth	r0, r0
  8006fde:	f897 6048 	ldrb.w	r6, [r7, #72]	@ 0x48
  8006fe2:	6cfc      	ldr	r4, [r7, #76]	@ 0x4c
@@ -17277,7 +17277,7 @@ CO_CANopenInit(CO_t* co, CO_NMT_t* NMT, CO_EM_t* em, OD_t* od, OD_entry_t* OD_st
  80070b6:	371c      	adds	r7, #28
  80070b8:	46bd      	mov	sp, r7
  80070ba:	bdf0      	pop	{r4, r5, r6, r7, pc}
- 80070bc:	20000614 	.word	0x20000614
+ 80070bc:	20000660 	.word	0x20000660
 
 080070c0 <CO_CANopenInitPDO>:
 
@@ -17434,7 +17434,7 @@ CO_CANopenInitPDO(CO_t* co, CO_EM_t* em, OD_t* od, uint8_t nodeId, uint32_t* err
  80071ae:	4b28      	ldr	r3, [pc, #160]	@ (8007250 <CO_CANopenInitPDO+0x190>)
  80071b0:	681b      	ldr	r3, [r3, #0]
  80071b2:	685b      	ldr	r3, [r3, #4]
- 80071b4:	f503 73cc 	add.w	r3, r3, #408	@ 0x198
+ 80071b4:	f503 73d2 	add.w	r3, r3, #420	@ 0x1a4
  80071b8:	61fb      	str	r3, [r7, #28]
         for (uint16_t i = 0; i < CO_GET_CNT(TPDO); i++) {
  80071ba:	2300      	movs	r3, #0
@@ -17519,7 +17519,7 @@ CO_CANopenInitPDO(CO_t* co, CO_EM_t* em, OD_t* od, uint8_t nodeId, uint32_t* err
  800723a:	3301      	adds	r3, #1
  800723c:	837b      	strh	r3, [r7, #26]
  800723e:	8b7b      	ldrh	r3, [r7, #26]
- 8007240:	2b06      	cmp	r3, #6
+ 8007240:	2b07      	cmp	r3, #7
  8007242:	d9bd      	bls.n	80071c0 <CO_CANopenInitPDO+0x100>
         }
     }
@@ -17533,7 +17533,7 @@ CO_CANopenInitPDO(CO_t* co, CO_EM_t* em, OD_t* od, uint8_t nodeId, uint32_t* err
  800724a:	46bd      	mov	sp, r7
  800724c:	bd90      	pop	{r4, r7, pc}
  800724e:	bf00      	nop
- 8007250:	20000614 	.word	0x20000614
+ 8007250:	20000660 	.word	0x20000660
 
 08007254 <CO_process>:
     return CO_ERROR_NO;
@@ -18064,7 +18064,7 @@ CO_process_TPDO(CO_t* co, bool_t syncWas, uint32_t timeDifference_us, uint32_t* 
  8007586:	3301      	adds	r3, #1
  8007588:	82fb      	strh	r3, [r7, #22]
  800758a:	8afb      	ldrh	r3, [r7, #22]
- 800758c:	2b06      	cmp	r3, #6
+ 800758c:	2b07      	cmp	r3, #7
  800758e:	d9ea      	bls.n	8007566 <CO_process_TPDO+0x34>
  8007590:	e000      	b.n	8007594 <CO_process_TPDO+0x62>
         return;
@@ -18157,8 +18157,8 @@ canopen_app_init(CANopenNodeSTM32* _canopenNodeSTM32) {
  80075ee:	3710      	adds	r7, #16
  80075f0:	46bd      	mov	sp, r7
  80075f2:	bd80      	pop	{r7, pc}
- 80075f4:	200006a4 	.word	0x200006a4
- 80075f8:	200006a8 	.word	0x200006a8
+ 80075f4:	200006f8 	.word	0x200006f8
+ 80075f8:	200006fc 	.word	0x200006fc
  80075fc:	08011640 	.word	0x08011640
  8007600:	08011660 	.word	0x08011660
 
@@ -18470,21 +18470,21 @@ canopen_app_resetCommunication() {
  8007808:	bd90      	pop	{r4, r7, pc}
  800780a:	bf00      	nop
  800780c:	0801168c 	.word	0x0801168c
- 8007810:	200006a8 	.word	0x200006a8
- 8007814:	200006a4 	.word	0x200006a4
- 8007818:	200006b4 	.word	0x200006b4
+ 8007810:	200006fc 	.word	0x200006fc
+ 8007814:	200006f8 	.word	0x200006f8
+ 8007818:	20000708 	.word	0x20000708
  800781c:	080116b4 	.word	0x080116b4
  8007820:	20000000 	.word	0x20000000
  8007824:	080116dc 	.word	0x080116dc
- 8007828:	20000614 	.word	0x20000614
+ 8007828:	20000660 	.word	0x20000660
  800782c:	08011708 	.word	0x08011708
  8007830:	08011730 	.word	0x08011730
  8007834:	0801175c 	.word	0x0801175c
  8007838:	08011784 	.word	0x08011784
  800783c:	080117ac 	.word	0x080117ac
- 8007840:	20000634 	.word	0x20000634
- 8007844:	200006b0 	.word	0x200006b0
- 8007848:	200006ac 	.word	0x200006ac
+ 8007840:	2000068c 	.word	0x2000068c
+ 8007844:	20000704 	.word	0x20000704
+ 8007848:	20000700 	.word	0x20000700
 
 0800784c <canopen_app_process>:
 
@@ -18605,10 +18605,10 @@ canopen_app_process() {
  8007906:	46bd      	mov	sp, r7
  8007908:	bd80      	pop	{r7, pc}
  800790a:	bf00      	nop
- 800790c:	200006b0 	.word	0x200006b0
- 8007910:	200006ac 	.word	0x200006ac
- 8007914:	200006a8 	.word	0x200006a8
- 8007918:	200006a4 	.word	0x200006a4
+ 800790c:	20000704 	.word	0x20000704
+ 8007910:	20000700 	.word	0x20000700
+ 8007914:	200006fc 	.word	0x200006fc
+ 8007918:	200006f8 	.word	0x200006f8
  800791c:	080117c8 	.word	0x080117c8
  8007920:	080117f0 	.word	0x080117f0
 
@@ -18701,7 +18701,7 @@ canopen_app_interrupt(void) {
  800799e:	3710      	adds	r7, #16
  80079a0:	46bd      	mov	sp, r7
  80079a2:	bd80      	pop	{r7, pc}
- 80079a4:	200006a8 	.word	0x200006a8
+ 80079a4:	200006fc 	.word	0x200006fc
 
 080079a8 <CO_CANsetConfigurationMode>:
 #define CANID_MASK 0x07FF /*!< CAN standard ID mask */
@@ -19040,7 +19040,7 @@ CO_CANmodule_init(CO_CANmodule_t* CANmodule, void* CANptr, CO_CANrx_t rxArray[],
  8007b66:	46bd      	mov	sp, r7
  8007b68:	bd80      	pop	{r7, pc}
  8007b6a:	bf00      	nop
- 8007b6c:	200006b8 	.word	0x200006b8
+ 8007b6c:	2000070c 	.word	0x2000070c
 
 08007b70 <CO_CANmodule_disable>:
 
@@ -19365,7 +19365,7 @@ prv_send_can_message(CO_CANmodule_t* CANmodule, CO_CANtx_t* buffer) {
  8007d42:	3710      	adds	r7, #16
  8007d44:	46bd      	mov	sp, r7
  8007d46:	bd80      	pop	{r7, pc}
- 8007d48:	200006bc 	.word	0x200006bc
+ 8007d48:	20000710 	.word	0x20000710
 
 08007d4c <CO_CANsend>:
 
@@ -19870,8 +19870,8 @@ prv_read_can_received_msg(CAN_HandleTypeDef* hcan, uint32_t fifo, uint32_t fifo_
  8008002:	46bd      	mov	sp, r7
  8008004:	bd80      	pop	{r7, pc}
  8008006:	bf00      	nop
- 8008008:	200006d4 	.word	0x200006d4
- 800800c:	200006b8 	.word	0x200006b8
+ 8008008:	20000728 	.word	0x20000728
+ 800800c:	2000070c 	.word	0x2000070c
 
 08008010 <HAL_CAN_RxFifo0MsgPendingCallback>:
  * \brief           Rx FIFO 0 callback.
@@ -20052,7 +20052,7 @@ HAL_CAN_TxMailbox0CompleteCallback(CAN_HandleTypeDef* hcan) {
  80080f6:	3708      	adds	r7, #8
  80080f8:	46bd      	mov	sp, r7
  80080fa:	bd80      	pop	{r7, pc}
- 80080fc:	200006b8 	.word	0x200006b8
+ 80080fc:	2000070c 	.word	0x2000070c
 
 08008100 <HAL_CAN_TxMailbox1CompleteCallback>:
 
@@ -20073,7 +20073,7 @@ HAL_CAN_TxMailbox1CompleteCallback(CAN_HandleTypeDef* hcan) {
  8008116:	3708      	adds	r7, #8
  8008118:	46bd      	mov	sp, r7
  800811a:	bd80      	pop	{r7, pc}
- 800811c:	200006b8 	.word	0x200006b8
+ 800811c:	2000070c 	.word	0x2000070c
 
 08008120 <HAL_CAN_TxMailbox2CompleteCallback>:
 
@@ -20094,7 +20094,7 @@ HAL_CAN_TxMailbox2CompleteCallback(CAN_HandleTypeDef* hcan) {
  8008136:	3708      	adds	r7, #8
  8008138:	46bd      	mov	sp, r7
  800813a:	bd80      	pop	{r7, pc}
- 800813c:	200006b8 	.word	0x200006b8
+ 800813c:	2000070c 	.word	0x2000070c
 
 08008140 <CO_TPDOsendRequest>:
  * expires. See also @ref OD_requestTPDO() and @ref OD_TPDOtransmitted().
@@ -20477,8 +20477,8 @@ bool steeringProcess(Event* ev)
  80083ee:	2b00      	cmp	r3, #0
  80083f0:	dc72      	bgt.n	80084d8 <steeringProcess+0x374>
  80083f2:	e1b4      	b.n	800875e <steeringProcess+0x5fa>
- 80083f4:	20000618 	.word	0x20000618
- 80083f8:	20000619 	.word	0x20000619
+ 80083f4:	20000664 	.word	0x20000664
+ 80083f8:	20000665 	.word	0x20000665
  80083fc:	3b28      	subs	r3, #40	@ 0x28
  80083fe:	2b32      	cmp	r3, #50	@ 0x32
  8008400:	f200 81ad 	bhi.w	800875e <steeringProcess+0x5fa>
@@ -20737,15 +20737,15 @@ bool steeringProcess(Event* ev)
  8008630:	f001 fb78 	bl	8009d24 <XF_post>
 
 				        // On vérifie à nouveau dans 1 ms
-				        XF_post(steeringProcess, E_SINUS_MOVE, 1);
+				        XF_post(steeringProcess, E_SINUS_MOVE, 50);
 				    }
 
 				    break;
  8008634:	e093      	b.n	800875e <steeringProcess+0x5fa>
 				        sendSinus();
  8008636:	f000 fa2b 	bl	8008a90 <sendSinus>
-				        XF_post(steeringProcess, E_SINUS_MOVE, 1);
- 800863a:	2201      	movs	r2, #1
+				        XF_post(steeringProcess, E_SINUS_MOVE, 50);
+ 800863a:	2232      	movs	r2, #50	@ 0x32
  800863c:	2108      	movs	r1, #8
  800863e:	4886      	ldr	r0, [pc, #536]	@ (8008858 <steeringProcess+0x6f4>)
  8008640:	f001 fb70 	bl	8009d24 <XF_post>
@@ -20765,11 +20765,11 @@ bool steeringProcess(Event* ev)
  800864e:	4b81      	ldr	r3, [pc, #516]	@ (8008854 <steeringProcess+0x6f0>)
  8008650:	221f      	movs	r2, #31
  8008652:	f8a3 2046 	strh.w	r2, [r3, #70]	@ 0x46
-					    CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+					    CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
  8008656:	4b84      	ldr	r3, [pc, #528]	@ (8008868 <steeringProcess+0x704>)
  8008658:	695b      	ldr	r3, [r3, #20]
  800865a:	6b5b      	ldr	r3, [r3, #52]	@ 0x34
- 800865c:	f203 73bc 	addw	r3, r3, #1980	@ 0x7bc
+ 800865c:	f603 1348 	addw	r3, r3, #2376	@ 0x948
  8008660:	4618      	mov	r0, r3
  8008662:	f7ff fd6d 	bl	8008140 <CO_TPDOsendRequest>
 
@@ -20819,11 +20819,11 @@ bool steeringProcess(Event* ev)
  80086a6:	220f      	movs	r2, #15
  80086a8:	f8a3 2046 	strh.w	r2, [r3, #70]	@ 0x46
 
-				        CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+				        CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
  80086ac:	4b6e      	ldr	r3, [pc, #440]	@ (8008868 <steeringProcess+0x704>)
  80086ae:	695b      	ldr	r3, [r3, #20]
  80086b0:	6b5b      	ldr	r3, [r3, #52]	@ 0x34
- 80086b2:	f203 73bc 	addw	r3, r3, #1980	@ 0x7bc
+ 80086b2:	f603 1348 	addw	r3, r3, #2376	@ 0x948
  80086b6:	4618      	mov	r0, r3
  80086b8:	f7ff fd42 	bl	8008140 <CO_TPDOsendRequest>
 
@@ -20838,11 +20838,11 @@ bool steeringProcess(Event* ev)
  80086c6:	223f      	movs	r2, #63	@ 0x3f
  80086c8:	f8a3 2046 	strh.w	r2, [r3, #70]	@ 0x46
 
-				        CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+				        CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
  80086cc:	4b66      	ldr	r3, [pc, #408]	@ (8008868 <steeringProcess+0x704>)
  80086ce:	695b      	ldr	r3, [r3, #20]
  80086d0:	6b5b      	ldr	r3, [r3, #52]	@ 0x34
- 80086d2:	f203 73bc 	addw	r3, r3, #1980	@ 0x7bc
+ 80086d2:	f603 1348 	addw	r3, r3, #2376	@ 0x948
  80086d6:	4618      	mov	r0, r3
  80086d8:	f7ff fd32 	bl	8008140 <CO_TPDOsendRequest>
 
@@ -20874,11 +20874,11 @@ bool steeringProcess(Event* ev)
  80086f4:	4b57      	ldr	r3, [pc, #348]	@ (8008854 <steeringProcess+0x6f0>)
  80086f6:	222f      	movs	r2, #47	@ 0x2f
  80086f8:	f8a3 2046 	strh.w	r2, [r3, #70]	@ 0x46
-					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
  80086fc:	4b5a      	ldr	r3, [pc, #360]	@ (8008868 <steeringProcess+0x704>)
  80086fe:	695b      	ldr	r3, [r3, #20]
  8008700:	6b5b      	ldr	r3, [r3, #52]	@ 0x34
- 8008702:	f203 73bc 	addw	r3, r3, #1980	@ 0x7bc
+ 8008702:	f603 1348 	addw	r3, r3, #2376	@ 0x948
  8008706:	4618      	mov	r0, r3
  8008708:	f7ff fd1a 	bl	8008140 <CO_TPDOsendRequest>
 
@@ -21017,15 +21017,15 @@ bool steeringProcess(Event* ev)
  8008848:	08008a2b 	.word	0x08008a2b
  800884c:	08008a2b 	.word	0x08008a2b
  8008850:	08008a2b 	.word	0x08008a2b
- 8008854:	200002d0 	.word	0x200002d0
+ 8008854:	20000304 	.word	0x20000304
  8008858:	08008165 	.word	0x08008165
- 800885c:	200006f8 	.word	0x200006f8
- 8008860:	200006fc 	.word	0x200006fc
- 8008864:	2000061a 	.word	0x2000061a
- 8008868:	20000920 	.word	0x20000920
- 800886c:	200006fd 	.word	0x200006fd
- 8008870:	20000618 	.word	0x20000618
- 8008874:	20000619 	.word	0x20000619
+ 800885c:	20000744 	.word	0x20000744
+ 8008860:	20000748 	.word	0x20000748
+ 8008864:	20000670 	.word	0x20000670
+ 8008868:	2000096c 	.word	0x2000096c
+ 800886c:	20000749 	.word	0x20000749
+ 8008870:	20000664 	.word	0x20000664
+ 8008874:	20000665 	.word	0x20000665
  8008878:	3b01      	subs	r3, #1
  800887a:	2b1d      	cmp	r3, #29
  800887c:	f200 80d5 	bhi.w	8008a2a <steeringProcess+0x8c6>
@@ -21097,11 +21097,11 @@ bool steeringProcess(Event* ev)
  800892c:	4b43      	ldr	r3, [pc, #268]	@ (8008a3c <steeringProcess+0x8d8>)
  800892e:	2280      	movs	r2, #128	@ 0x80
  8008930:	f8a3 2046 	strh.w	r2, [r3, #70]	@ 0x46
-		    CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+		    CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
  8008934:	4b3f      	ldr	r3, [pc, #252]	@ (8008a34 <steeringProcess+0x8d0>)
  8008936:	695b      	ldr	r3, [r3, #20]
  8008938:	6b5b      	ldr	r3, [r3, #52]	@ 0x34
- 800893a:	f203 73bc 	addw	r3, r3, #1980	@ 0x7bc
+ 800893a:	f603 1348 	addw	r3, r3, #2376	@ 0x948
  800893e:	4618      	mov	r0, r3
  8008940:	f7ff fbfe 	bl	8008140 <CO_TPDOsendRequest>
 		    XF_post(steeringProcess, E_FAULT_RESET, 200);
@@ -21118,11 +21118,11 @@ bool steeringProcess(Event* ev)
  8008950:	4b3a      	ldr	r3, [pc, #232]	@ (8008a3c <steeringProcess+0x8d8>)
  8008952:	2206      	movs	r2, #6
  8008954:	f8a3 2046 	strh.w	r2, [r3, #70]	@ 0x46
-			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
  8008958:	4b36      	ldr	r3, [pc, #216]	@ (8008a34 <steeringProcess+0x8d0>)
  800895a:	695b      	ldr	r3, [r3, #20]
  800895c:	6b5b      	ldr	r3, [r3, #52]	@ 0x34
- 800895e:	f203 73bc 	addw	r3, r3, #1980	@ 0x7bc
+ 800895e:	f603 1348 	addw	r3, r3, #2376	@ 0x948
  8008962:	4618      	mov	r0, r3
  8008964:	f7ff fbec 	bl	8008140 <CO_TPDOsendRequest>
 			XF_post(steeringProcess, E_SWITCH_ON_DISABLED, 200);
@@ -21138,11 +21138,11 @@ bool steeringProcess(Event* ev)
  8008974:	4b31      	ldr	r3, [pc, #196]	@ (8008a3c <steeringProcess+0x8d8>)
  8008976:	2207      	movs	r2, #7
  8008978:	f8a3 2046 	strh.w	r2, [r3, #70]	@ 0x46
-			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
  800897c:	4b2d      	ldr	r3, [pc, #180]	@ (8008a34 <steeringProcess+0x8d0>)
  800897e:	695b      	ldr	r3, [r3, #20]
  8008980:	6b5b      	ldr	r3, [r3, #52]	@ 0x34
- 8008982:	f203 73bc 	addw	r3, r3, #1980	@ 0x7bc
+ 8008982:	f603 1348 	addw	r3, r3, #2376	@ 0x948
  8008986:	4618      	mov	r0, r3
  8008988:	f7ff fbda 	bl	8008140 <CO_TPDOsendRequest>
 			XF_post(steeringProcess, E_SHUTDOWN, 200);
@@ -21158,11 +21158,11 @@ bool steeringProcess(Event* ev)
  8008998:	4b28      	ldr	r3, [pc, #160]	@ (8008a3c <steeringProcess+0x8d8>)
  800899a:	220f      	movs	r2, #15
  800899c:	f8a3 2046 	strh.w	r2, [r3, #70]	@ 0x46
-			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
  80089a0:	4b24      	ldr	r3, [pc, #144]	@ (8008a34 <steeringProcess+0x8d0>)
  80089a2:	695b      	ldr	r3, [r3, #20]
  80089a4:	6b5b      	ldr	r3, [r3, #52]	@ 0x34
- 80089a6:	f203 73bc 	addw	r3, r3, #1980	@ 0x7bc
+ 80089a6:	f603 1348 	addw	r3, r3, #2376	@ 0x948
  80089aa:	4618      	mov	r0, r3
  80089ac:	f7ff fbc8 	bl	8008140 <CO_TPDOsendRequest>
 			XF_post(steeringProcess, E_SWITCH_ON, 200);
@@ -21253,11 +21253,11 @@ bool steeringProcess(Event* ev)
 
 		    break;
  8008a28:	bf00      	nop
-		//-----------------------------------------------------------------------
-		case MOVE:
+	// Mode Torque
+	//OD_RAM.x203C_steeringStateMachine = (int8_t) steeringState;
+	//CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
 
-			break;
-	}
+
 	return true;
  8008a2a:	2301      	movs	r3, #1
 }
@@ -21265,11 +21265,11 @@ bool steeringProcess(Event* ev)
  8008a2e:	3710      	adds	r7, #16
  8008a30:	46bd      	mov	sp, r7
  8008a32:	bd80      	pop	{r7, pc}
- 8008a34:	20000920 	.word	0x20000920
+ 8008a34:	2000096c 	.word	0x2000096c
  8008a38:	08008165 	.word	0x08008165
- 8008a3c:	200002d0 	.word	0x200002d0
- 8008a40:	200006f0 	.word	0x200006f0
- 8008a44:	200006f8 	.word	0x200006f8
+ 8008a3c:	20000304 	.word	0x20000304
+ 8008a40:	20000668 	.word	0x20000668
+ 8008a44:	20000744 	.word	0x20000744
 
 08008a48 <target_position>:
 
@@ -21290,11 +21290,11 @@ void target_position(int32_t target){
  8008a52:	687b      	ldr	r3, [r7, #4]
  8008a54:	64d3      	str	r3, [r2, #76]	@ 0x4c
 	//Envoie sur le can
-	CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
+	CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[7]);
  8008a56:	4b0d      	ldr	r3, [pc, #52]	@ (8008a8c <target_position+0x44>)
  8008a58:	695b      	ldr	r3, [r3, #20]
  8008a5a:	6b5b      	ldr	r3, [r3, #52]	@ 0x34
- 8008a5c:	f603 1348 	addw	r3, r3, #2376	@ 0x948
+ 8008a5c:	f603 23d4 	addw	r3, r3, #2772	@ 0xad4
  8008a60:	4618      	mov	r0, r3
  8008a62:	f7ff fb6d 	bl	8008140 <CO_TPDOsendRequest>
 
@@ -21306,11 +21306,11 @@ void target_position(int32_t target){
  8008a66:	4b08      	ldr	r3, [pc, #32]	@ (8008a88 <target_position+0x40>)
  8008a68:	223f      	movs	r2, #63	@ 0x3f
  8008a6a:	f8a3 2046 	strh.w	r2, [r3, #70]	@ 0x46
-	CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+	CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
  8008a6e:	4b07      	ldr	r3, [pc, #28]	@ (8008a8c <target_position+0x44>)
  8008a70:	695b      	ldr	r3, [r3, #20]
  8008a72:	6b5b      	ldr	r3, [r3, #52]	@ 0x34
- 8008a74:	f203 73bc 	addw	r3, r3, #1980	@ 0x7bc
+ 8008a74:	f603 1348 	addw	r3, r3, #2376	@ 0x948
  8008a78:	4618      	mov	r0, r3
  8008a7a:	f7ff fb61 	bl	8008140 <CO_TPDOsendRequest>
 
@@ -21320,8 +21320,8 @@ void target_position(int32_t target){
  8008a82:	46bd      	mov	sp, r7
  8008a84:	bd80      	pop	{r7, pc}
  8008a86:	bf00      	nop
- 8008a88:	200002d0 	.word	0x200002d0
- 8008a8c:	20000920 	.word	0x20000920
+ 8008a88:	20000304 	.word	0x20000304
+ 8008a8c:	2000096c 	.word	0x2000096c
 
 08008a90 <sendSinus>:
 
@@ -21361,6 +21361,7 @@ void sendSinus()
  8008adc:	b21a      	sxth	r2, r3
  8008ade:	4b0a      	ldr	r3, [pc, #40]	@ (8008b08 <sendSinus+0x78>)
  8008ae0:	f8a3 204a 	strh.w	r2, [r3, #74]	@ 0x4a
+	//OD_RAM.x2037_steeringTorque = (int16_t) (sin(count));
 	//Envoie sur le can
 	CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[4]);
  8008ae4:	4b09      	ldr	r3, [pc, #36]	@ (8008b0c <sendSinus+0x7c>)
@@ -21374,10 +21375,10 @@ void sendSinus()
  8008af6:	bd80      	pop	{r7, pc}
  8008af8:	20000000 	.word	0x20000000
  8008afc:	3fe921ff 	.word	0x3fe921ff
- 8008b00:	200006f0 	.word	0x200006f0
- 8008b04:	4082c000 	.word	0x4082c000
- 8008b08:	200002d0 	.word	0x200002d0
- 8008b0c:	20000920 	.word	0x20000920
+ 8008b00:	20000668 	.word	0x20000668
+ 8008b04:	408f4000 	.word	0x408f4000
+ 8008b08:	20000304 	.word	0x20000304
+ 8008b0c:	2000096c 	.word	0x2000096c
 
 08008b10 <Event_init>:
 #include "event.h"
@@ -21570,7 +21571,7 @@ void mapCallbacks(OD_t *od) {
  8008c02:	46bd      	mov	sp, r7
  8008c04:	bd80      	pop	{r7, pc}
  8008c06:	bf00      	nop
- 8008c08:	20000938 	.word	0x20000938
+ 8008c08:	20000984 	.word	0x20000984
 
 08008c0c <HAL_TIM_PeriodElapsedCallback>:
 
@@ -21627,8 +21628,8 @@ void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef* hadc){
  8008c58:	46bd      	mov	sp, r7
  8008c5a:	bd80      	pop	{r7, pc}
  8008c5c:	50040000 	.word	0x50040000
- 8008c60:	20000910 	.word	0x20000910
- 8008c64:	20000914 	.word	0x20000914
+ 8008c60:	2000095c 	.word	0x2000095c
+ 8008c64:	20000960 	.word	0x20000960
 
 08008c68 <main>:
 /**
@@ -21721,8 +21722,8 @@ int main(void)
 
 
   //Initialise les machines d'état
-  XF_post(steeringProcess, E_INIT_STEERING, 2500);
- 8008ccc:	f640 12c4 	movw	r2, #2500	@ 0x9c4
+  XF_post(steeringProcess, E_INIT_STEERING, 6000);
+ 8008ccc:	f241 7270 	movw	r2, #6000	@ 0x1770
  8008cd0:	2102      	movs	r1, #2
  8008cd2:	480f      	ldr	r0, [pc, #60]	@ (8008d10 <main+0xa8>)
  8008cd4:	f001 f826 	bl	8009d24 <XF_post>
@@ -21765,16 +21766,16 @@ int main(void)
  8008cf8:	701a      	strb	r2, [r3, #0]
 	  canopen_app_process();
  8008cfa:	e7f0      	b.n	8008cde <main+0x76>
- 8008cfc:	2000083c 	.word	0x2000083c
- 8008d00:	20000920 	.word	0x20000920
- 8008d04:	200007ac 	.word	0x200007ac
+ 8008cfc:	20000888 	.word	0x20000888
+ 8008d00:	2000096c 	.word	0x2000096c
+ 8008d04:	200007f8 	.word	0x200007f8
  8008d08:	08008ed5 	.word	0x08008ed5
- 8008d0c:	20000614 	.word	0x20000614
+ 8008d0c:	20000660 	.word	0x20000660
  8008d10:	08008165 	.word	0x08008165
- 8008d14:	2000091c 	.word	0x2000091c
- 8008d18:	200007e8 	.word	0x200007e8
- 8008d1c:	20000918 	.word	0x20000918
- 8008d20:	20000700 	.word	0x20000700
+ 8008d14:	20000968 	.word	0x20000968
+ 8008d18:	20000834 	.word	0x20000834
+ 8008d1c:	20000964 	.word	0x20000964
+ 8008d20:	2000074c 	.word	0x2000074c
 
 08008d24 <SystemClock_Config>:
 /**
@@ -22080,7 +22081,7 @@ static void MX_ADC1_Init(void)
  8008ebe:	46bd      	mov	sp, r7
  8008ec0:	bd80      	pop	{r7, pc}
  8008ec2:	bf00      	nop
- 8008ec4:	20000700 	.word	0x20000700
+ 8008ec4:	2000074c 	.word	0x2000074c
  8008ec8:	50040000 	.word	0x50040000
  8008ecc:	19200040 	.word	0x19200040
  8008ed0:	21800100 	.word	0x21800100
@@ -22164,7 +22165,7 @@ static void MX_CAN1_Init(void)
 }
  8008f34:	bf00      	nop
  8008f36:	bd80      	pop	{r7, pc}
- 8008f38:	200007ac 	.word	0x200007ac
+ 8008f38:	200007f8 	.word	0x200007f8
  8008f3c:	40006400 	.word	0x40006400
 
 08008f40 <MX_DAC1_Init>:
@@ -22248,7 +22249,7 @@ static void MX_DAC1_Init(void)
  8008f96:	46bd      	mov	sp, r7
  8008f98:	bd80      	pop	{r7, pc}
  8008f9a:	bf00      	nop
- 8008f9c:	200007d4 	.word	0x200007d4
+ 8008f9c:	20000820 	.word	0x20000820
  8008fa0:	40007400 	.word	0x40007400
 
 08008fa4 <MX_I2C1_Init>:
@@ -22347,7 +22348,7 @@ static void MX_I2C1_Init(void)
  8009012:	bf00      	nop
  8009014:	bd80      	pop	{r7, pc}
  8009016:	bf00      	nop
- 8009018:	200007e8 	.word	0x200007e8
+ 8009018:	20000834 	.word	0x20000834
  800901c:	40005400 	.word	0x40005400
  8009020:	00712989 	.word	0x00712989
 
@@ -22460,7 +22461,7 @@ static void MX_TIM2_Init(void)
  80090b6:	46bd      	mov	sp, r7
  80090b8:	bd80      	pop	{r7, pc}
  80090ba:	bf00      	nop
- 80090bc:	2000083c 	.word	0x2000083c
+ 80090bc:	20000888 	.word	0x20000888
 
 080090c0 <MX_USART2_UART_Init>:
   * @brief USART2 Initialization Function
@@ -22534,7 +22535,7 @@ static void MX_USART2_UART_Init(void)
  8009112:	bf00      	nop
  8009114:	bd80      	pop	{r7, pc}
  8009116:	bf00      	nop
- 8009118:	20000888 	.word	0x20000888
+ 8009118:	200008d4 	.word	0x200008d4
  800911c:	40004400 	.word	0x40004400
 
 08009120 <MX_DMA_Init>:
@@ -22995,7 +22996,7 @@ void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
  80093ba:	bf00      	nop
  80093bc:	50040000 	.word	0x50040000
  80093c0:	40021000 	.word	0x40021000
- 80093c4:	20000764 	.word	0x20000764
+ 80093c4:	200007b0 	.word	0x200007b0
  80093c8:	40020008 	.word	0x40020008
 
 080093cc <HAL_CAN_MspInit>:
@@ -23682,7 +23683,7 @@ void DMA1_Channel1_IRQHandler(void)
  800972a:	bf00      	nop
  800972c:	bd80      	pop	{r7, pc}
  800972e:	bf00      	nop
- 8009730:	20000764 	.word	0x20000764
+ 8009730:	200007b0 	.word	0x200007b0
 
 08009734 <ADC1_IRQHandler>:
 
@@ -23706,7 +23707,7 @@ void ADC1_IRQHandler(void)
  800973e:	bf00      	nop
  8009740:	bd80      	pop	{r7, pc}
  8009742:	bf00      	nop
- 8009744:	20000700 	.word	0x20000700
+ 8009744:	2000074c 	.word	0x2000074c
 
 08009748 <CAN1_TX_IRQHandler>:
 
@@ -23730,7 +23731,7 @@ void CAN1_TX_IRQHandler(void)
  8009752:	bf00      	nop
  8009754:	bd80      	pop	{r7, pc}
  8009756:	bf00      	nop
- 8009758:	200007ac 	.word	0x200007ac
+ 8009758:	200007f8 	.word	0x200007f8
 
 0800975c <CAN1_RX0_IRQHandler>:
 
@@ -23754,7 +23755,7 @@ void CAN1_RX0_IRQHandler(void)
  8009766:	bf00      	nop
  8009768:	bd80      	pop	{r7, pc}
  800976a:	bf00      	nop
- 800976c:	200007ac 	.word	0x200007ac
+ 800976c:	200007f8 	.word	0x200007f8
 
 08009770 <TIM2_IRQHandler>:
 
@@ -23778,7 +23779,7 @@ void TIM2_IRQHandler(void)
  800977a:	bf00      	nop
  800977c:	bd80      	pop	{r7, pc}
  800977e:	bf00      	nop
- 8009780:	2000083c 	.word	0x2000083c
+ 8009780:	20000888 	.word	0x20000888
 
 08009784 <_read>:
   _kill(status, -1);
@@ -24030,8 +24031,8 @@ void *_sbrk(ptrdiff_t incr)
  80098ba:	bd80      	pop	{r7, pc}
  80098bc:	2000c000 	.word	0x2000c000
  80098c0:	00000400 	.word	0x00000400
- 80098c4:	20000948 	.word	0x20000948
- 80098c8:	20000cb0 	.word	0x20000cb0
+ 80098c4:	20000994 	.word	0x20000994
+ 80098c8:	20000cf8 	.word	0x20000cf8
 
 080098cc <SystemInit>:
   * @brief  Setup the microcontroller system.
@@ -24170,7 +24171,7 @@ void XF_init()
  800997e:	3708      	adds	r7, #8
  8009980:	46bd      	mov	sp, r7
  8009982:	bd80      	pop	{r7, pc}
- 8009984:	2000094c 	.word	0x2000094c
+ 8009984:	20000998 	.word	0x20000998
 
 08009988 <XF_pushEvent>:
 /*                inISR - (true if called in an ISR, else false)              */
@@ -24300,7 +24301,7 @@ bool XF_pushEvent(Event ev, bool inISR, TimerID* tmid)
  8009a66:	371c      	adds	r7, #28
  8009a68:	46bd      	mov	sp, r7
  8009a6a:	bd90      	pop	{r4, r7, pc}
- 8009a6c:	2000094c 	.word	0x2000094c
+ 8009a6c:	20000998 	.word	0x20000998
  8009a70:	88888889 	.word	0x88888889
 
 08009a74 <XF_popEvent>:
@@ -24401,7 +24402,7 @@ Event XF_popEvent(bool inISR)
  8009b2a:	46bd      	mov	sp, r7
  8009b2c:	bd90      	pop	{r4, r7, pc}
  8009b2e:	bf00      	nop
- 8009b30:	2000094c 	.word	0x2000094c
+ 8009b30:	20000998 	.word	0x20000998
  8009b34:	88888889 	.word	0x88888889
 
 08009b38 <XF_scheduleTimer>:
@@ -24508,7 +24509,7 @@ TimerID XF_scheduleTimer(Time tm, Event ev, bool inISR)
  8009be2:	46bd      	mov	sp, r7
  8009be4:	bd90      	pop	{r4, r7, pc}
  8009be6:	bf00      	nop
- 8009be8:	2000094c 	.word	0x2000094c
+ 8009be8:	20000998 	.word	0x20000998
 
 08009bec <XF_unscheduleTimer>:
 /*                inISR - (true if called in an ISR, else false)              */
@@ -24560,7 +24561,7 @@ void XF_unscheduleTimer(TimerID id, bool inISR)
  8009c3a:	3708      	adds	r7, #8
  8009c3c:	46bd      	mov	sp, r7
  8009c3e:	bd80      	pop	{r7, pc}
- 8009c40:	2000094c 	.word	0x2000094c
+ 8009c40:	20000998 	.word	0x20000998
 
 08009c44 <XF_decrementAndQueueTimers>:
 /* INPUT        : -                                                           */
@@ -24662,7 +24663,7 @@ void XF_decrementAndQueueTimers()
  8009cce:	46bd      	mov	sp, r7
  8009cd0:	bd80      	pop	{r7, pc}
  8009cd2:	bf00      	nop
- 8009cd4:	2000094c 	.word	0x2000094c
+ 8009cd4:	20000998 	.word	0x20000998
 
 08009cd8 <ENTERCRITICAL>:
 /* INPUT        : -                                                           */
@@ -24906,13 +24907,13 @@ LoopForever:
   ldr r0, =_sdata
  8009de8:	20000000 	.word	0x20000000
   ldr r1, =_edata
- 8009dec:	20000684 	.word	0x20000684
+ 8009dec:	200006dc 	.word	0x200006dc
   ldr r2, =_sidata
- 8009df0:	08012538 	.word	0x08012538
+ 8009df0:	080125f0 	.word	0x080125f0
   ldr r2, =_sbss
- 8009df4:	20000688 	.word	0x20000688
+ 8009df4:	200006dc 	.word	0x200006dc
   ldr r4, =_ebss
- 8009df8:	20000cac 	.word	0x20000cac
+ 8009df8:	20000cf8 	.word	0x20000cf8
 
 08009dfc <CAN1_RX1_IRQHandler>:
  * @retval : None
@@ -25062,9 +25063,9 @@ __weak HAL_StatusTypeDef HAL_InitTick(uint32_t TickPriority)
  8009e96:	46bd      	mov	sp, r7
  8009e98:	bd80      	pop	{r7, pc}
  8009e9a:	bf00      	nop
- 8009e9c:	20000624 	.word	0x20000624
- 8009ea0:	2000061c 	.word	0x2000061c
- 8009ea4:	20000620 	.word	0x20000620
+ 8009e9c:	2000067c 	.word	0x2000067c
+ 8009ea0:	20000674 	.word	0x20000674
+ 8009ea4:	20000678 	.word	0x20000678
 
 08009ea8 <HAL_IncTick>:
  * @note This function is declared as __weak to be overwritten in case of other
@@ -25090,8 +25091,8 @@ __weak void HAL_IncTick(void)
  8009ec0:	f85d 7b04 	ldr.w	r7, [sp], #4
  8009ec4:	4770      	bx	lr
  8009ec6:	bf00      	nop
- 8009ec8:	20000624 	.word	0x20000624
- 8009ecc:	20000b5c 	.word	0x20000b5c
+ 8009ec8:	2000067c 	.word	0x2000067c
+ 8009ecc:	20000ba8 	.word	0x20000ba8
 
 08009ed0 <HAL_GetTick>:
   * @note This function is declared as __weak to be overwritten in case of other
@@ -25111,7 +25112,7 @@ __weak uint32_t HAL_GetTick(void)
  8009edc:	f85d 7b04 	ldr.w	r7, [sp], #4
  8009ee0:	4770      	bx	lr
  8009ee2:	bf00      	nop
- 8009ee4:	20000b5c 	.word	0x20000b5c
+ 8009ee4:	20000ba8 	.word	0x20000ba8
 
 08009ee8 <HAL_Delay>:
   *       implementations in user file.
@@ -25164,7 +25165,7 @@ __weak void HAL_Delay(uint32_t Delay)
  8009f26:	46bd      	mov	sp, r7
  8009f28:	bd80      	pop	{r7, pc}
  8009f2a:	bf00      	nop
- 8009f2c:	20000624 	.word	0x20000624
+ 8009f2c:	2000067c 	.word	0x2000067c
 
 08009f30 <LL_ADC_SetCommonClock>:
   *         @arg @ref LL_ADC_CLOCK_ASYNC_DIV128
@@ -25972,7 +25973,7 @@ HAL_StatusTypeDef HAL_ADC_Init(ADC_HandleTypeDef *hadc)
  800a35e:	3720      	adds	r7, #32
  800a360:	46bd      	mov	sp, r7
  800a362:	bd80      	pop	{r7, pc}
- 800a364:	2000061c 	.word	0x2000061c
+ 800a364:	20000674 	.word	0x20000674
  800a368:	053e2d63 	.word	0x053e2d63
  800a36c:	50040000 	.word	0x50040000
  800a370:	50040300 	.word	0x50040300
@@ -26906,7 +26907,7 @@ HAL_StatusTypeDef ADC_Enable(ADC_HandleTypeDef *hadc)
  800a816:	bf00      	nop
  800a818:	8000003f 	.word	0x8000003f
  800a81c:	50040300 	.word	0x50040300
- 800a820:	2000061c 	.word	0x2000061c
+ 800a820:	20000674 	.word	0x20000674
  800a824:	053e2d63 	.word	0x053e2d63
 
 0800a828 <LL_ADC_SetCommonPathInternalCh>:
@@ -29048,7 +29049,7 @@ HAL_StatusTypeDef HAL_ADCEx_InjectedConfigChannel(ADC_HandleTypeDef *hadc,
  800b5c8:	50040300 	.word	0x50040300
  800b5cc:	c7520000 	.word	0xc7520000
  800b5d0:	50040000 	.word	0x50040000
- 800b5d4:	2000061c 	.word	0x2000061c
+ 800b5d4:	20000674 	.word	0x20000674
  800b5d8:	053e2d63 	.word	0x053e2d63
  800b5dc:	cb840000 	.word	0xcb840000
  800b5e0:	80000001 	.word	0x80000001
@@ -34194,7 +34195,7 @@ HAL_StatusTypeDef HAL_PWREx_ControlVoltageScaling(uint32_t VoltageScaling)
  800d184:	4770      	bx	lr
  800d186:	bf00      	nop
  800d188:	40007000 	.word	0x40007000
- 800d18c:	2000061c 	.word	0x2000061c
+ 800d18c:	20000674 	.word	0x20000674
  800d190:	431bde83 	.word	0x431bde83
 
 0800d194 <HAL_RCC_OscConfig>:
@@ -34615,9 +34616,9 @@ HAL_StatusTypeDef HAL_RCC_OscConfig(RCC_OscInitTypeDef  *RCC_OscInitStruct)
  800d400:	6013      	str	r3, [r2, #0]
  800d402:	e013      	b.n	800d42c <HAL_RCC_OscConfig+0x298>
  800d404:	40021000 	.word	0x40021000
- 800d408:	080122d4 	.word	0x080122d4
- 800d40c:	2000061c 	.word	0x2000061c
- 800d410:	20000620 	.word	0x20000620
+ 800d408:	08012388 	.word	0x08012388
+ 800d40c:	20000674 	.word	0x20000674
+ 800d410:	20000678 	.word	0x20000678
  800d414:	4ba0      	ldr	r3, [pc, #640]	@ (800d698 <HAL_RCC_OscConfig+0x504>)
  800d416:	681b      	ldr	r3, [r3, #0]
  800d418:	4a9f      	ldr	r2, [pc, #636]	@ (800d698 <HAL_RCC_OscConfig+0x504>)
@@ -36005,9 +36006,9 @@ HAL_StatusTypeDef HAL_RCC_ClockConfig(const RCC_ClkInitTypeDef  *RCC_ClkInitStru
  800dba6:	bd80      	pop	{r7, pc}
  800dba8:	40022000 	.word	0x40022000
  800dbac:	40021000 	.word	0x40021000
- 800dbb0:	080122d4 	.word	0x080122d4
- 800dbb4:	2000061c 	.word	0x2000061c
- 800dbb8:	20000620 	.word	0x20000620
+ 800dbb0:	08012388 	.word	0x08012388
+ 800dbb4:	20000674 	.word	0x20000674
+ 800dbb8:	20000678 	.word	0x20000678
 
 0800dbbc <HAL_RCC_GetSysClockFreq>:
   *
@@ -36210,7 +36211,7 @@ uint32_t HAL_RCC_GetSysClockFreq(void)
  800dcc0:	4770      	bx	lr
  800dcc2:	bf00      	nop
  800dcc4:	40021000 	.word	0x40021000
- 800dcc8:	080122ec 	.word	0x080122ec
+ 800dcc8:	080123a0 	.word	0x080123a0
  800dccc:	00f42400 	.word	0x00f42400
  800dcd0:	007a1200 	.word	0x007a1200
 
@@ -36232,7 +36233,7 @@ uint32_t HAL_RCC_GetHCLKFreq(void)
  800dce0:	f85d 7b04 	ldr.w	r7, [sp], #4
  800dce4:	4770      	bx	lr
  800dce6:	bf00      	nop
- 800dce8:	2000061c 	.word	0x2000061c
+ 800dce8:	20000674 	.word	0x20000674
 
 0800dcec <HAL_RCC_GetPCLK1Freq>:
   * @note   Each time PCLK1 changes, this function must be called to update the
@@ -36259,7 +36260,7 @@ uint32_t HAL_RCC_GetPCLK1Freq(void)
  800dd0c:	4618      	mov	r0, r3
  800dd0e:	bd80      	pop	{r7, pc}
  800dd10:	40021000 	.word	0x40021000
- 800dd14:	080122e4 	.word	0x080122e4
+ 800dd14:	08012398 	.word	0x08012398
 
 0800dd18 <HAL_RCC_GetPCLK2Freq>:
   * @note   Each time PCLK2 changes, this function must be called to update the
@@ -36286,7 +36287,7 @@ uint32_t HAL_RCC_GetPCLK2Freq(void)
  800dd38:	4618      	mov	r0, r3
  800dd3a:	bd80      	pop	{r7, pc}
  800dd3c:	40021000 	.word	0x40021000
- 800dd40:	080122e4 	.word	0x080122e4
+ 800dd40:	08012398 	.word	0x08012398
 
 0800dd44 <RCC_SetFlashLatencyFromMSIRange>:
             voltage range.
@@ -40762,7 +40763,7 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  800f608:	4601      	mov	r1, r0
  800f60a:	6818      	ldr	r0, [r3, #0]
  800f60c:	f000 b802 	b.w	800f614 <_calloc_r>
- 800f610:	20000634 	.word	0x20000634
+ 800f610:	2000068c 	.word	0x2000068c
 
 0800f614 <_calloc_r>:
  800f614:	b570      	push	{r4, r5, r6, lr}
@@ -40789,7 +40790,7 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  800f640:	6818      	ldr	r0, [r3, #0]
  800f642:	f000 bc2f 	b.w	800fea4 <_free_r>
  800f646:	bf00      	nop
- 800f648:	20000634 	.word	0x20000634
+ 800f648:	2000068c 	.word	0x2000068c
 
 0800f64c <sbrk_aligned>:
  800f64c:	b570      	push	{r4, r5, r6, lr}
@@ -40819,7 +40820,7 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  800f686:	d1f2      	bne.n	800f66e <sbrk_aligned+0x22>
  800f688:	e7ef      	b.n	800f66a <sbrk_aligned+0x1e>
  800f68a:	bf00      	nop
- 800f68c:	20000b60 	.word	0x20000b60
+ 800f68c:	20000bac 	.word	0x20000bac
 
 0800f690 <_malloc_r>:
  800f690:	e92d 43f8 	stmdb	sp!, {r3, r4, r5, r6, r7, r8, r9, lr}
@@ -40929,19 +40930,19 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  800f786:	6005      	str	r5, [r0, #0]
  800f788:	e7d6      	b.n	800f738 <_malloc_r+0xa8>
  800f78a:	bf00      	nop
- 800f78c:	20000b64 	.word	0x20000b64
+ 800f78c:	20000bb0 	.word	0x20000bb0
 
 0800f790 <__malloc_lock>:
  800f790:	4801      	ldr	r0, [pc, #4]	@ (800f798 <__malloc_lock+0x8>)
  800f792:	f000 bb76 	b.w	800fe82 <__retarget_lock_acquire_recursive>
  800f796:	bf00      	nop
- 800f798:	20000ca8 	.word	0x20000ca8
+ 800f798:	20000cf4 	.word	0x20000cf4
 
 0800f79c <__malloc_unlock>:
  800f79c:	4801      	ldr	r0, [pc, #4]	@ (800f7a4 <__malloc_unlock+0x8>)
  800f79e:	f000 bb71 	b.w	800fe84 <__retarget_lock_release_recursive>
  800f7a2:	bf00      	nop
- 800f7a4:	20000ca8 	.word	0x20000ca8
+ 800f7a4:	20000cf4 	.word	0x20000cf4
 
 0800f7a8 <__sflush_r>:
  800f7a8:	f9b1 200c 	ldrsh.w	r2, [r1, #12]
@@ -41111,10 +41112,10 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  800f910:	6818      	ldr	r0, [r3, #0]
  800f912:	f7ff bfcd 	b.w	800f8b0 <_fflush_r>
  800f916:	bf00      	nop
- 800f918:	20000628 	.word	0x20000628
+ 800f918:	20000680 	.word	0x20000680
  800f91c:	0800f8b1 	.word	0x0800f8b1
- 800f920:	20000638 	.word	0x20000638
- 800f924:	20000634 	.word	0x20000634
+ 800f920:	20000690 	.word	0x20000690
+ 800f924:	2000068c 	.word	0x2000068c
 
 0800f928 <std>:
  800f928:	2300      	movs	r3, #0
@@ -41158,7 +41159,7 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  800f984:	0800fbaf 	.word	0x0800fbaf
  800f988:	0800fbe7 	.word	0x0800fbe7
  800f98c:	0800fc0b 	.word	0x0800fc0b
- 800f990:	20000b68 	.word	0x20000b68
+ 800f990:	20000bb4 	.word	0x20000bb4
 
 0800f994 <stdio_exit_handler>:
  800f994:	4a02      	ldr	r2, [pc, #8]	@ (800f9a0 <stdio_exit_handler+0xc>)
@@ -41166,9 +41167,9 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  800f998:	4803      	ldr	r0, [pc, #12]	@ (800f9a8 <stdio_exit_handler+0x14>)
  800f99a:	f000 b869 	b.w	800fa70 <_fwalk_sglue>
  800f99e:	bf00      	nop
- 800f9a0:	20000628 	.word	0x20000628
+ 800f9a0:	20000680 	.word	0x20000680
  800f9a4:	0800f8b1 	.word	0x0800f8b1
- 800f9a8:	20000638 	.word	0x20000638
+ 800f9a8:	20000690 	.word	0x20000690
 
 0800f9ac <cleanup_stdio>:
  800f9ac:	6841      	ldr	r1, [r0, #4]
@@ -41193,9 +41194,9 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  800f9d8:	f7ff bf6a 	b.w	800f8b0 <_fflush_r>
  800f9dc:	bd10      	pop	{r4, pc}
  800f9de:	bf00      	nop
- 800f9e0:	20000b68 	.word	0x20000b68
- 800f9e4:	20000bd0 	.word	0x20000bd0
- 800f9e8:	20000c38 	.word	0x20000c38
+ 800f9e0:	20000bb4 	.word	0x20000bb4
+ 800f9e4:	20000c1c 	.word	0x20000c1c
+ 800f9e8:	20000c84 	.word	0x20000c84
 
 0800f9ec <global_stdio_init.part.0>:
  800f9ec:	b510      	push	{r4, lr}
@@ -41216,21 +41217,21 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  800fa12:	e8bd 4010 	ldmia.w	sp!, {r4, lr}
  800fa16:	2112      	movs	r1, #18
  800fa18:	f7ff bf86 	b.w	800f928 <std>
- 800fa1c:	20000ca0 	.word	0x20000ca0
- 800fa20:	20000b68 	.word	0x20000b68
+ 800fa1c:	20000cec 	.word	0x20000cec
+ 800fa20:	20000bb4 	.word	0x20000bb4
  800fa24:	0800f995 	.word	0x0800f995
 
 0800fa28 <__sfp_lock_acquire>:
  800fa28:	4801      	ldr	r0, [pc, #4]	@ (800fa30 <__sfp_lock_acquire+0x8>)
  800fa2a:	f000 ba2a 	b.w	800fe82 <__retarget_lock_acquire_recursive>
  800fa2e:	bf00      	nop
- 800fa30:	20000ca9 	.word	0x20000ca9
+ 800fa30:	20000cf5 	.word	0x20000cf5
 
 0800fa34 <__sfp_lock_release>:
  800fa34:	4801      	ldr	r0, [pc, #4]	@ (800fa3c <__sfp_lock_release+0x8>)
  800fa36:	f000 ba25 	b.w	800fe84 <__retarget_lock_release_recursive>
  800fa3a:	bf00      	nop
- 800fa3c:	20000ca9 	.word	0x20000ca9
+ 800fa3c:	20000cf5 	.word	0x20000cf5
 
 0800fa40 <__sinit>:
  800fa40:	b510      	push	{r4, lr}
@@ -41250,7 +41251,7 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  800fa64:	e7f2      	b.n	800fa4c <__sinit+0xc>
  800fa66:	bf00      	nop
  800fa68:	0800f9ad 	.word	0x0800f9ad
- 800fa6c:	20000ca0 	.word	0x20000ca0
+ 800fa6c:	20000cec 	.word	0x20000cec
 
 0800fa70 <_fwalk_sglue>:
  800fa70:	e92d 43f8 	stmdb	sp!, {r3, r4, r5, r6, r7, r8, r9, lr}
@@ -41293,7 +41294,7 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  800fac4:	f85d eb04 	ldr.w	lr, [sp], #4
  800fac8:	b004      	add	sp, #16
  800faca:	4770      	bx	lr
- 800facc:	20000634 	.word	0x20000634
+ 800facc:	2000068c 	.word	0x2000068c
 
 0800fad0 <_puts_r>:
  800fad0:	6a03      	ldr	r3, [r0, #32]
@@ -41381,7 +41382,7 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  800fb80:	6818      	ldr	r0, [r3, #0]
  800fb82:	f7ff bfa5 	b.w	800fad0 <_puts_r>
  800fb86:	bf00      	nop
- 800fb88:	20000634 	.word	0x20000634
+ 800fb88:	2000068c 	.word	0x2000068c
 
 0800fb8c <__sread>:
  800fb8c:	b510      	push	{r4, lr}
@@ -41573,7 +41574,7 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  800fd32:	e7f4      	b.n	800fd1e <__swsetup_r+0x8e>
  800fd34:	2000      	movs	r0, #0
  800fd36:	e7f7      	b.n	800fd28 <__swsetup_r+0x98>
- 800fd38:	20000634 	.word	0x20000634
+ 800fd38:	2000068c 	.word	0x2000068c
 
 0800fd3c <memmove>:
  800fd3c:	4288      	cmp	r0, r1
@@ -41621,7 +41622,7 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  800fd96:	b103      	cbz	r3, 800fd9a <_close_r+0x1a>
  800fd98:	6023      	str	r3, [r4, #0]
  800fd9a:	bd38      	pop	{r3, r4, r5, pc}
- 800fd9c:	20000ca4 	.word	0x20000ca4
+ 800fd9c:	20000cf0 	.word	0x20000cf0
 
 0800fda0 <_lseek_r>:
  800fda0:	b538      	push	{r3, r4, r5, lr}
@@ -41639,7 +41640,7 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  800fdba:	b103      	cbz	r3, 800fdbe <_lseek_r+0x1e>
  800fdbc:	6023      	str	r3, [r4, #0]
  800fdbe:	bd38      	pop	{r3, r4, r5, pc}
- 800fdc0:	20000ca4 	.word	0x20000ca4
+ 800fdc0:	20000cf0 	.word	0x20000cf0
 
 0800fdc4 <_read_r>:
  800fdc4:	b538      	push	{r3, r4, r5, lr}
@@ -41657,7 +41658,7 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  800fdde:	b103      	cbz	r3, 800fde2 <_read_r+0x1e>
  800fde0:	6023      	str	r3, [r4, #0]
  800fde2:	bd38      	pop	{r3, r4, r5, pc}
- 800fde4:	20000ca4 	.word	0x20000ca4
+ 800fde4:	20000cf0 	.word	0x20000cf0
 
 0800fde8 <_sbrk_r>:
  800fde8:	b538      	push	{r3, r4, r5, lr}
@@ -41673,7 +41674,7 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  800fdfe:	b103      	cbz	r3, 800fe02 <_sbrk_r+0x1a>
  800fe00:	6023      	str	r3, [r4, #0]
  800fe02:	bd38      	pop	{r3, r4, r5, pc}
- 800fe04:	20000ca4 	.word	0x20000ca4
+ 800fe04:	20000cf0 	.word	0x20000cf0
 
 0800fe08 <_write_r>:
  800fe08:	b538      	push	{r3, r4, r5, lr}
@@ -41691,14 +41692,14 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  800fe22:	b103      	cbz	r3, 800fe26 <_write_r+0x1e>
  800fe24:	6023      	str	r3, [r4, #0]
  800fe26:	bd38      	pop	{r3, r4, r5, pc}
- 800fe28:	20000ca4 	.word	0x20000ca4
+ 800fe28:	20000cf0 	.word	0x20000cf0
 
 0800fe2c <__errno>:
  800fe2c:	4b01      	ldr	r3, [pc, #4]	@ (800fe34 <__errno+0x8>)
  800fe2e:	6818      	ldr	r0, [r3, #0]
  800fe30:	4770      	bx	lr
  800fe32:	bf00      	nop
- 800fe34:	20000634 	.word	0x20000634
+ 800fe34:	2000068c 	.word	0x2000068c
 
 0800fe38 <__libc_init_array>:
  800fe38:	b570      	push	{r4, r5, r6, lr}
@@ -41726,10 +41727,10 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  800fe6a:	4798      	blx	r3
  800fe6c:	3601      	adds	r6, #1
  800fe6e:	e7f2      	b.n	800fe56 <__libc_init_array+0x1e>
- 800fe70:	08012530 	.word	0x08012530
- 800fe74:	08012530 	.word	0x08012530
- 800fe78:	08012530 	.word	0x08012530
- 800fe7c:	08012534 	.word	0x08012534
+ 800fe70:	080125e8 	.word	0x080125e8
+ 800fe74:	080125e8 	.word	0x080125e8
+ 800fe78:	080125e8 	.word	0x080125e8
+ 800fe7c:	080125ec 	.word	0x080125ec
 
 0800fe80 <__retarget_lock_init_recursive>:
  800fe80:	4770      	bx	lr
@@ -41823,7 +41824,7 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  800ff2e:	e7ca      	b.n	800fec6 <_free_r+0x22>
  800ff30:	bd38      	pop	{r3, r4, r5, pc}
  800ff32:	bf00      	nop
- 800ff34:	20000b64 	.word	0x20000b64
+ 800ff34:	20000bb0 	.word	0x20000bb0
 
 0800ff38 <__sfputc_r>:
  800ff38:	6893      	ldr	r3, [r2, #8]
@@ -42089,11 +42090,11 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  80101a0:	4630      	mov	r0, r6
  80101a2:	f000 f879 	bl	8010298 <_printf_i>
  80101a6:	e7e4      	b.n	8010172 <_vfiprintf_r+0x1e6>
- 80101a8:	0801231c 	.word	0x0801231c
- 80101ac:	08012326 	.word	0x08012326
+ 80101a8:	080123d0 	.word	0x080123d0
+ 80101ac:	080123da 	.word	0x080123da
  80101b0:	00000000 	.word	0x00000000
  80101b4:	0800ff67 	.word	0x0800ff67
- 80101b8:	08012322 	.word	0x08012322
+ 80101b8:	080123d6 	.word	0x080123d6
 
 080101bc <_printf_common>:
  80101bc:	e92d 47f0 	stmdb	sp!, {r4, r5, r6, r7, r8, r9, sl, lr}
@@ -42422,8 +42423,8 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  80104c4:	2500      	movs	r5, #0
  80104c6:	f104 0619 	add.w	r6, r4, #25
  80104ca:	e7f5      	b.n	80104b8 <_printf_i+0x220>
- 80104cc:	0801232d 	.word	0x0801232d
- 80104d0:	0801233e 	.word	0x0801233e
+ 80104cc:	080123e1 	.word	0x080123e1
+ 80104d0:	080123f2 	.word	0x080123f2
 
 080104d4 <__swhatbuf_r>:
  80104d4:	b570      	push	{r4, r5, r6, lr}
@@ -42523,7 +42524,7 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  80105b2:	6023      	str	r3, [r4, #0]
  80105b4:	bd38      	pop	{r3, r4, r5, pc}
  80105b6:	bf00      	nop
- 80105b8:	20000ca4 	.word	0x20000ca4
+ 80105b8:	20000cf0 	.word	0x20000cf0
 
 080105bc <_isatty_r>:
  80105bc:	b538      	push	{r3, r4, r5, lr}
@@ -42539,7 +42540,7 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  80105d2:	b103      	cbz	r3, 80105d6 <_isatty_r+0x1a>
  80105d4:	6023      	str	r3, [r4, #0]
  80105d6:	bd38      	pop	{r3, r4, r5, pc}
- 80105d8:	20000ca4 	.word	0x20000ca4
+ 80105d8:	20000cf0 	.word	0x20000cf0
  80105dc:	00000000 	.word	0x00000000
 
 080105e0 <sin>:
@@ -43171,7 +43172,7 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  8010cb8:	3ff921fb 	.word	0x3ff921fb
  8010cbc:	413921fb 	.word	0x413921fb
  8010cc0:	3fe00000 	.word	0x3fe00000
- 8010cc4:	08012350 	.word	0x08012350
+ 8010cc4:	08012404 	.word	0x08012404
  8010cc8:	7fefffff 	.word	0x7fefffff
  8010ccc:	ea4f 5528 	mov.w	r5, r8, asr #20
  8010cd0:	f2a5 4516 	subw	r5, r5, #1046	@ 0x416
@@ -43237,7 +43238,7 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  8010d7c:	e740      	b.n	8010c00 <__ieee754_rem_pio2+0x270>
  8010d7e:	bf00      	nop
  8010d80:	41700000 	.word	0x41700000
- 8010d84:	080123d0 	.word	0x080123d0
+ 8010d84:	08012484 	.word	0x08012484
 
 08010d88 <fabs>:
  8010d88:	ec51 0b10 	vmov	r0, r1, d0
@@ -43525,13 +43526,13 @@ static void UART_EndRxTransfer(UART_HandleTypeDef *huart)
  80110a4:	f3af 8000 	nop.w
 	...
  80110b4:	3ff00000 	.word	0x3ff00000
- 80110b8:	08012518 	.word	0x08012518
+ 80110b8:	080125d0 	.word	0x080125d0
  80110bc:	40200000 	.word	0x40200000
  80110c0:	3ff00000 	.word	0x3ff00000
  80110c4:	3e700000 	.word	0x3e700000
  80110c8:	41700000 	.word	0x41700000
  80110cc:	3fe00000 	.word	0x3fe00000
- 80110d0:	080124d8 	.word	0x080124d8
+ 80110d0:	08012590 	.word	0x08012590
  80110d4:	1acb      	subs	r3, r1, r3
  80110d6:	e7de      	b.n	8011096 <__kernel_rem_pio2+0x2fe>
  80110d8:	f108 32ff 	add.w	r2, r8, #4294967295

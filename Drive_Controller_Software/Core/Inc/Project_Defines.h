@@ -24,7 +24,7 @@
 
 
 //1000 = 100%
-#define powerMotor 600
+#define powerMotor 1000
 #define maskStatus 0x006F
 
 //---------------------Emplacements Flash---------------------

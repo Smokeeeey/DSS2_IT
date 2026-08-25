@@ -11,7 +11,7 @@
 
 StateSteeringControl steeringState = INIT;
 StateSteeringControl oldStateSteering = INIT;
-float64_t count = 0.0f;
+float64_t count = 1.0f;
 int32_t tempPosMotor = 0;
 int32_t position0 = 0;
 int8_t waitingMotorMove = 0;
@@ -208,7 +208,7 @@ bool steeringProcess(Event* ev)
 				        sendSinus();
 
 				        // On vérifie à nouveau dans 1 ms
-				        XF_post(steeringProcess, E_SINUS_MOVE, 1);
+				        XF_post(steeringProcess, E_SINUS_MOVE, 50);
 				    }
 
 				    break;
@@ -219,7 +219,7 @@ bool steeringProcess(Event* ev)
 					{
 					    // Démarrage du homing
 					    OD_RAM.x2035_steeringControlWord = 0x001F;
-					    CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+					    CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
 
 					    startHoming = false;
 					}
@@ -238,7 +238,7 @@ bool steeringProcess(Event* ev)
 				        // Enable Operation
 				        OD_RAM.x2035_steeringControlWord = 0x000F;
 
-				        CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+				        CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
 
 				        // Revenir au milieu
 				        target_position(10000);
@@ -246,7 +246,7 @@ bool steeringProcess(Event* ev)
 				        // Nouveau positionnement
 				        OD_RAM.x2035_steeringControlWord = 0x3F;
 
-				        CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+				        CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
 
 				        XF_post(steeringProcess, E_REACHED, 100);
 				    }
@@ -262,7 +262,7 @@ bool steeringProcess(Event* ev)
 
 					//Remets sur 0 l'envoi
 					OD_RAM.x2035_steeringControlWord = 0x2F;
-					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
 
 				    // Ici le moteur est homé
 				    // et déjà revenu en Profile Position Mode
@@ -318,26 +318,26 @@ bool steeringProcess(Event* ev)
 
 		    // Fault Reset
 		    OD_RAM.x2035_steeringControlWord = 0x0080;
-		    CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+		    CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
 		    XF_post(steeringProcess, E_FAULT_RESET, 200);
 
 		    break;
 		//-----------------------------------------------------------------------
 		case SWITCH_ON_DISABLED:
 			OD_RAM.x2035_steeringControlWord = 0x0006; //6
-			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
 			XF_post(steeringProcess, E_SWITCH_ON_DISABLED, 200);
 			break;
 		//-----------------------------------------------------------------------
 		case SHUTDOWN:
 			OD_RAM.x2035_steeringControlWord = 0x0007; //7
-			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
 			XF_post(steeringProcess, E_SHUTDOWN, 200);
 			break;
 		//-----------------------------------------------------------------------
 		case SWITCH_ON:
 			OD_RAM.x2035_steeringControlWord = 0x000F; //F
-			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
 			XF_post(steeringProcess, E_SWITCH_ON, 200);
 			break;
 		//-----------------------------------------------------------------------
@@ -387,6 +387,12 @@ bool steeringProcess(Event* ev)
 
 			break;
 	}
+
+	// Mode Torque
+	//OD_RAM.x203C_steeringStateMachine = (int8_t) steeringState;
+	//CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+
+
 	return true;
 }
 
@@ -401,14 +407,14 @@ void target_position(int32_t target){
 	//Write the steering position in dico
 	OD_RAM.x2038_steeringPosition = target;
 	//Envoie sur le can
-	CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
+	CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[7]);
 
 	//2F = 0
 	//3F = 1
 
 	//Envoi la pos
 	OD_RAM.x2035_steeringControlWord = 0x3F;
-	CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
+	CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
 
 }
 
@@ -419,6 +425,7 @@ void sendSinus()
 
 	//Envoie sinus
 	OD_RAM.x2037_steeringTorque = (int16_t) (sin(count) * powerMotor);
+	//OD_RAM.x2037_steeringTorque = (int16_t) (sin(count));
 	//Envoie sur le can
 	CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[4]);
 }
