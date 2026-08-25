@@ -8,16 +8,20 @@
 
 #include <SteeringProcess.h>
 
-
+//--------- Variables ---------
 StateSteeringControl steeringState = INIT;
 StateSteeringControl oldStateSteering = INIT;
+
 float64_t count = 1.0f;
+
 int32_t tempPosMotor = 0;
 int32_t position0 = 0;
 int8_t waitingMotorMove = 0;
 
-bool temp3264;
+bool endHoming;
 bool startHoming = true;
+
+//-------------------------------
 
 
 bool steeringProcess(Event* ev)
@@ -132,7 +136,6 @@ bool steeringProcess(Event* ev)
 				    // Fault toujours présent ?
 				    if (OD_RAM.x2039_steeringStatusWord & (1 << 3))
 				    {
-				        // On attend encore
 				        XF_post(steeringProcess, E_FAULT_RESET, 50);
 				    }
 				    else
@@ -218,34 +221,31 @@ bool steeringProcess(Event* ev)
 					if(startHoming)
 					{
 					    // Démarrage du homing
-					    OD_RAM.x2035_steeringControlWord = 0x001F;
+					    OD_RAM.x2035_steeringControlWord = homingStartOperation; 		//0x001F
 					    CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
 
 					    startHoming = false;
 					}
 
 
-					temp3264 = OD_RAM.x2039_steeringStatusWord & (1 << 12);
+					endHoming = OD_RAM.x2039_steeringStatusWord & (1 << 12);
 
 				    // Homing terminé ?
-				    if (temp3264)
+				    if (endHoming)
 				    {
 				        // Passage en Profile Position Mode
-				        OD_RAM.x2036_steeringMode = 0x01;
-
+				        OD_RAM.x2036_steeringMode = profilePositionMode;
 				        CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[3]);
 
 				        // Enable Operation
-				        OD_RAM.x2035_steeringControlWord = 0x000F;
-
+				        OD_RAM.x2035_steeringControlWord = enableOperation;
 				        CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
 
 				        // Revenir au milieu
-				        target_position(10000);
+				        target_position(OD_RAM.x203A_steeringMotorCurrentPosition + toCenterPosition);
 
 				        // Nouveau positionnement
-				        OD_RAM.x2035_steeringControlWord = 0x3F;
-
+				        OD_RAM.x2035_steeringControlWord = newSetpointImediatly;
 				        CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
 
 				        XF_post(steeringProcess, E_REACHED, 100);
@@ -261,7 +261,7 @@ bool steeringProcess(Event* ev)
 				case REACHED:
 
 					//Remets sur 0 l'envoi
-					OD_RAM.x2035_steeringControlWord = 0x2F;
+					OD_RAM.x2035_steeringControlWord = resetSetpoint;
 					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
 
 				    // Ici le moteur est homé
@@ -315,28 +315,26 @@ bool steeringProcess(Event* ev)
 			break;
 		//-----------------------------------------------------------------------
 		case FAULT_RESET:
-
-		    // Fault Reset
-		    OD_RAM.x2035_steeringControlWord = 0x0080;
+		    OD_RAM.x2035_steeringControlWord = faultReset;			//80
 		    CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
 		    XF_post(steeringProcess, E_FAULT_RESET, 200);
 
 		    break;
 		//-----------------------------------------------------------------------
 		case SWITCH_ON_DISABLED:
-			OD_RAM.x2035_steeringControlWord = 0x0006; //6
+			OD_RAM.x2035_steeringControlWord = switchOnDisabled; 	//6
 			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
 			XF_post(steeringProcess, E_SWITCH_ON_DISABLED, 200);
 			break;
 		//-----------------------------------------------------------------------
 		case SHUTDOWN:
-			OD_RAM.x2035_steeringControlWord = 0x0007; //7
+			OD_RAM.x2035_steeringControlWord = shutDown; 			//7
 			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
 			XF_post(steeringProcess, E_SHUTDOWN, 200);
 			break;
 		//-----------------------------------------------------------------------
 		case SWITCH_ON:
-			OD_RAM.x2035_steeringControlWord = 0x000F; //F
+			OD_RAM.x2035_steeringControlWord = switchOn; 			//F
 			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
 			XF_post(steeringProcess, E_SWITCH_ON, 200);
 			break;
@@ -355,8 +353,7 @@ bool steeringProcess(Event* ev)
 			tempPosMotor = OD_RAM.x203A_steeringMotorCurrentPosition;
 
 			// Mode Torque
-			OD_RAM.x2036_steeringMode = 0x0A;
-
+			OD_RAM.x2036_steeringMode = torqueMode;
 			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[3]);
 
 			// Premier couple sinusoidal
@@ -370,10 +367,8 @@ bool steeringProcess(Event* ev)
 		case FIND0:
 
 		    // Passage en Homing Mode
-		    OD_RAM.x2036_steeringMode = 0x06;
+		    OD_RAM.x2036_steeringMode = homingMode;
 		    CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[3]);
-
-
 
 		    // Vérifier le homing
 		    XF_post(steeringProcess, E_FIND0, 100);
@@ -387,10 +382,6 @@ bool steeringProcess(Event* ev)
 
 			break;
 	}
-
-	// Mode Torque
-	//OD_RAM.x203C_steeringStateMachine = (int8_t) steeringState;
-	//CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[5]);
 
 
 	return true;
@@ -413,7 +404,7 @@ void target_position(int32_t target){
 	//3F = 1
 
 	//Envoi la pos
-	OD_RAM.x2035_steeringControlWord = 0x3F;
+	OD_RAM.x2035_steeringControlWord = newSetpointImediatly;
 	CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
 
 }

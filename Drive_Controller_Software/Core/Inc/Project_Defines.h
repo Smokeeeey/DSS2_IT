@@ -24,8 +24,29 @@
 
 
 //1000 = 100%
-#define powerMotor 1000
-#define maskStatus 0x006F
+#define powerMotor 				1000
+#define maskStatus 				0x006F
+
+//Mode of operation
+#define torqueMode 				0x0A
+#define homingMode 				0x06
+#define profilePositionMode 	0x01
+
+//Control word
+#define newSetpointImediatly 	0x3F
+#define resetSetpoint 			0x2F
+#define homingStartOperation 	0x1F
+#define enableOperation 		0x0F
+#define faultReset 				0x80
+#define switchOnDisabled 		0x06
+#define shutDown				0x07
+#define switchOn				0x0F
+
+//Values
+#define toCenterPosition 		250
+
+
+
 
 //---------------------Emplacements Flash---------------------
 
