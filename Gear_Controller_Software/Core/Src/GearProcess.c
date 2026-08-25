@@ -89,8 +89,7 @@ bool gearProcess(Event* ev){
 			switch(gearState){
 				//-------------------------------------------
 				case INIT:
-					gear.actual_gear = 0;
-					gear.in_error = 0;
+					//gear.in_error = 0;
 					XF_post(gearProcess, E_INIT, 10);
 					break;
 				//-------------------------------------------
@@ -155,12 +154,13 @@ bool gearProcess(Event* ev){
 					break;
 				//-------------------------------------------
 				case GEARERROR:
-					gear.in_error = 1;
+					//gear.in_error = 1;
 					//go in old gear
-					if (GEAR_REQUESTED == 0)
+					if (GEAR == 0)
 						{
 							OD_RAM.x2000_gear = 1;
 							oldGearRequest = OD_RAM.x2000_gear;
+							//send to OD
 							XF_post(gearProcess, E_GOTO2, 0);
 						}else
 						{

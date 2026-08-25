@@ -20,34 +20,23 @@
 
 //---------------------------Defines---------------------------
 
+//if master
 //#define CO_CONFIG_SDO_CLI CO_CONFIG_SDO_CLI_ENABLE // Mandatory to act as SDO client !!!
 //#define CO_CONFIG_NMT (CO_CONFIG_GLOBAL_FLAG_CALLBACK_PRE | CO_CONFIG_GLOBAL_FLAG_TIMERNEXT|CO_CONFIG_NMT_MASTER)
 
 
 //---------------------------Values---------------------------
-//#define NUNCHUCK_ADRR (0x52 << 1)
-//#define MAX_JOYSTICK 905
-//#define MIN_JOYSTICK 85
-//#define MAX_NUNCHUCK 230
-//#define MIN_NUNCHUCK 30
-//#define COURSE_JOYSTICK 200
-//
-//#define TRESHOLD_NEW_VALUE 2
-#define POS_GEAR_1 0
-#define POS_GEAR_2 1
-#define GEAR_REQUESTED OD_RAM.x2000_gear
+
+#define GEAR OD_RAM.x2000_gear
 #define MAXPOS1	1400
 #define MINPOS1 1200
 #define MAXPOS0 2400
 #define MINPOS0 2300
-#define ERRORTIME 20
+#define ERRORTIME 10
 
 //----------------------------Flash---------------------------
 
-#define ZEROLIMIT_ADR 8
-#define NUNCHUCK_OFFSET_ADR 16
-#define JOYSTICK_OFFSET_ADR 32
-#define TRESHOLD_NEW_VALUE_ADR 48
+//#define ZEROLIMIT_ADR 8
 
 
 //---------------------------ENUM---------------------------
@@ -72,8 +61,6 @@ typedef enum {
 
 typedef struct{
 	int16_t position;		//exact pos
-	uint8_t actual_gear;	//gear num
-	uint8_t gear_requested; //requested gear (depends on old gear)
 	bool in_error;
 }Gear_ST;
 extern Gear_ST gear;
@@ -86,9 +73,6 @@ extern CANopenNodeSTM32 canOpenNodeSTM32;
 
 //---------------------------Variables GLobales---------------------------
 extern bool lectureADC;
-extern uint32_t adc_ch6; // Channel 6 of the ADC
-extern uint32_t adc_ch8; // Channel 8 of the ADC
-extern bool switch_Nunchuck_Joystick;
 extern I2C_HandleTypeDef *phi2c1;
 extern DAC_HandleTypeDef hdac1;
 
