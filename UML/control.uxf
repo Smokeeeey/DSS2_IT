@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="15.1">
-  <zoom_level>10</zoom_level>
+  <zoom_level>6</zoom_level>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>650</x>
-      <y>200</y>
-      <w>180</w>
-      <h>210</h>
+      <x>456</x>
+      <y>126</y>
+      <w>108</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>Init
 --
@@ -29,10 +29,10 @@ bg=cyan
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1010</x>
-      <y>520</y>
-      <w>180</w>
-      <h>170</h>
+      <x>672</x>
+      <y>318</y>
+      <w>108</w>
+      <h>102</h>
     </coordinates>
     <panel_attributes>GearChange
 --
@@ -50,10 +50,10 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>280</x>
-      <y>520</y>
-      <w>180</w>
-      <h>170</h>
+      <x>234</x>
+      <y>318</y>
+      <w>108</w>
+      <h>102</h>
     </coordinates>
     <panel_attributes>Reverse
 --
@@ -71,10 +71,10 @@ valign=top
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>730</x>
-      <y>110</y>
-      <w>20</w>
-      <h>20</h>
+      <x>504</x>
+      <y>72</y>
+      <w>12</w>
+      <h>12</h>
     </coordinates>
     <panel_attributes>type=initial</panel_attributes>
     <additional_attributes/>
@@ -82,10 +82,10 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>730</x>
-      <y>120</y>
-      <w>30</w>
-      <h>100</h>
+      <x>504</x>
+      <y>78</y>
+      <w>18</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
@@ -93,10 +93,10 @@ valign=top
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>0</x>
-      <y>60</y>
-      <w>1500</w>
-      <h>980</h>
+      <x>66</x>
+      <y>42</y>
+      <w>900</w>
+      <h>588</h>
     </coordinates>
     <panel_attributes>Drive control</panel_attributes>
     <additional_attributes/>
@@ -104,10 +104,10 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>650</x>
-      <y>520</y>
-      <w>180</w>
-      <h>170</h>
+      <x>456</x>
+      <y>318</y>
+      <w>108</w>
+      <h>102</h>
     </coordinates>
     <panel_attributes>Drive
 --
@@ -125,10 +125,10 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>730</x>
-      <y>400</y>
-      <w>200</w>
-      <h>140</h>
+      <x>504</x>
+      <y>246</y>
+      <w>120</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 E_MODE_D (séquence fini)</panel_attributes>
@@ -137,10 +137,10 @@ E_MODE_D (séquence fini)</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>650</x>
-      <y>780</y>
-      <w>180</w>
-      <h>170</h>
+      <x>456</x>
+      <y>474</y>
+      <w>108</w>
+      <h>102</h>
     </coordinates>
     <panel_attributes>Park
 --
@@ -159,10 +159,10 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>670</x>
-      <y>680</y>
-      <w>100</w>
-      <h>120</h>
+      <x>468</x>
+      <y>414</y>
+      <w>60</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 E_MODE_P</panel_attributes>
@@ -171,10 +171,10 @@ E_MODE_P</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
-      <y>570</y>
-      <w>220</w>
-      <h>40</h>
+      <x>336</x>
+      <y>348</y>
+      <w>132</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 E_MODE_D</panel_attributes>
@@ -183,10 +183,10 @@ E_MODE_D</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>820</x>
-      <y>580</y>
-      <w>210</w>
-      <h>40</h>
+      <x>558</x>
+      <y>354</y>
+      <w>126</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 E_MODE_G</panel_attributes>
@@ -195,10 +195,10 @@ E_MODE_G</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>450</x>
-      <y>620</y>
-      <w>220</w>
-      <h>40</h>
+      <x>336</x>
+      <y>378</y>
+      <w>132</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 E_MODE_R</panel_attributes>
@@ -207,10 +207,10 @@ E_MODE_R</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>760</x>
-      <y>680</y>
-      <w>110</w>
-      <h>120</h>
+      <x>522</x>
+      <y>414</y>
+      <w>66</w>
+      <h>72</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 E_MODE_D</panel_attributes>
@@ -219,10 +219,10 @@ E_MODE_D</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>820</x>
-      <y>610</y>
-      <w>210</w>
-      <h>40</h>
+      <x>558</x>
+      <y>372</y>
+      <w>126</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 E_MODE_D</panel_attributes>
@@ -231,10 +231,10 @@ E_MODE_D</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>330</x>
-      <y>680</y>
-      <w>340</w>
-      <h>210</h>
+      <x>264</x>
+      <y>414</y>
+      <w>204</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 E_MODE_P</panel_attributes>
@@ -243,10 +243,10 @@ E_MODE_P</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>820</x>
-      <y>680</y>
-      <w>290</w>
-      <h>210</h>
+      <x>558</x>
+      <y>414</y>
+      <w>174</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 E_MODE_P</panel_attributes>
@@ -255,10 +255,10 @@ E_MODE_P</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>500</x>
-      <y>1250</y>
-      <w>180</w>
-      <h>210</h>
+      <x>366</x>
+      <y>756</y>
+      <w>108</w>
+      <h>126</h>
     </coordinates>
     <panel_attributes>Init
 --
@@ -282,10 +282,10 @@ bg=cyan
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>860</x>
-      <y>1570</y>
-      <w>180</w>
-      <h>170</h>
+      <x>582</x>
+      <y>948</y>
+      <w>108</w>
+      <h>102</h>
     </coordinates>
     <panel_attributes>Move
 --
@@ -303,10 +303,10 @@ valign=top
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>580</x>
-      <y>1160</y>
-      <w>20</w>
-      <h>20</h>
+      <x>414</x>
+      <y>702</y>
+      <w>12</w>
+      <h>12</h>
     </coordinates>
     <panel_attributes>type=initial</panel_attributes>
     <additional_attributes/>
@@ -314,10 +314,10 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>580</x>
-      <y>1170</y>
-      <w>30</w>
-      <h>100</h>
+      <x>414</x>
+      <y>708</y>
+      <w>18</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
@@ -325,10 +325,10 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>500</x>
-      <y>1570</y>
-      <w>180</w>
-      <h>170</h>
+      <x>366</x>
+      <y>948</y>
+      <w>108</w>
+      <h>102</h>
     </coordinates>
     <panel_attributes>Reached
 --
@@ -346,10 +346,10 @@ valign=top
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>580</x>
-      <y>1450</y>
-      <w>110</w>
-      <h>140</h>
+      <x>414</x>
+      <y>876</y>
+      <w>66</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 E_REACHED</panel_attributes>
@@ -358,10 +358,10 @@ E_REACHED</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>670</x>
-      <y>1630</y>
-      <w>210</w>
-      <h>40</h>
+      <x>468</x>
+      <y>984</y>
+      <w>126</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 E_MOVE</panel_attributes>
@@ -370,10 +370,10 @@ E_MOVE</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>670</x>
-      <y>1660</y>
-      <w>210</w>
-      <h>40</h>
+      <x>468</x>
+      <y>1002</y>
+      <w>126</w>
+      <h>24</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 E_REACHED</panel_attributes>
@@ -382,10 +382,10 @@ E_REACHED</panel_attributes>
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>360</x>
-      <y>1110</y>
-      <w>770</w>
-      <h>710</h>
+      <x>282</x>
+      <y>672</y>
+      <w>462</w>
+      <h>426</h>
     </coordinates>
     <panel_attributes>Steering</panel_attributes>
     <additional_attributes/>
@@ -393,10 +393,10 @@ E_REACHED</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>820</x>
-      <y>290</y>
-      <w>670</w>
-      <h>640</h>
+      <x>558</x>
+      <y>180</y>
+      <w>402</w>
+      <h>384</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 E_MODE_P (séquence fini)</panel_attributes>
@@ -405,10 +405,10 @@ E_MODE_P (séquence fini)</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>380</x>
-      <y>680</y>
-      <w>290</w>
-      <h>170</h>
+      <x>294</x>
+      <y>414</y>
+      <w>174</w>
+      <h>102</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 E_MODE_R</panel_attributes>
@@ -417,10 +417,10 @@ E_MODE_R</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>820</x>
-      <y>680</y>
-      <w>260</w>
-      <h>170</h>
+      <x>558</x>
+      <y>414</y>
+      <w>156</w>
+      <h>102</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 E_MODE_G</panel_attributes>
@@ -429,10 +429,10 @@ E_MODE_G</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>250</x>
-      <y>210</y>
-      <w>180</w>
-      <h>170</h>
+      <x>216</x>
+      <y>132</y>
+      <w>108</w>
+      <h>102</h>
     </coordinates>
     <panel_attributes>Error
 --
@@ -450,10 +450,10 @@ bg=red</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1850</x>
-      <y>200</y>
-      <w>200</w>
-      <h>150</h>
+      <x>1176</x>
+      <y>126</y>
+      <w>120</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>Go to G1
 --
@@ -473,10 +473,10 @@ valign=top
   <element>
     <id>UMLSpecialState</id>
     <coordinates>
-      <x>1940</x>
-      <y>110</y>
-      <w>20</w>
-      <h>20</h>
+      <x>1230</x>
+      <y>72</y>
+      <w>12</w>
+      <h>12</h>
     </coordinates>
     <panel_attributes>type=initial</panel_attributes>
     <additional_attributes/>
@@ -484,10 +484,10 @@ valign=top
   <element>
     <id>Text</id>
     <coordinates>
-      <x>1890</x>
-      <y>100</y>
-      <w>40</w>
-      <h>30</h>
+      <x>1200</x>
+      <y>66</y>
+      <w>24</w>
+      <h>18</h>
     </coordinates>
     <panel_attributes>Init
 style=wordwrap</panel_attributes>
@@ -496,10 +496,10 @@ style=wordwrap</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1940</x>
-      <y>120</y>
-      <w>30</w>
-      <h>100</h>
+      <x>1230</x>
+      <y>78</y>
+      <w>18</w>
+      <h>60</h>
     </coordinates>
     <panel_attributes>lt=&lt;-</panel_attributes>
     <additional_attributes>10.0;80.0;10.0;10.0</additional_attributes>
@@ -507,10 +507,10 @@ style=wordwrap</panel_attributes>
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1850</x>
-      <y>720</y>
-      <w>200</w>
-      <h>160</h>
+      <x>1176</x>
+      <y>438</y>
+      <w>120</w>
+      <h>96</h>
     </coordinates>
     <panel_attributes>Go to G2
 --
@@ -530,10 +530,10 @@ valign=top
   <element>
     <id>UMLFrame</id>
     <coordinates>
-      <x>1730</x>
-      <y>60</y>
-      <w>1060</w>
-      <h>860</h>
+      <x>1014</x>
+      <y>42</y>
+      <w>726</w>
+      <h>588</h>
     </coordinates>
     <panel_attributes>Gear</panel_attributes>
     <additional_attributes/>
@@ -541,10 +541,10 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>2290</x>
-      <y>450</y>
-      <w>180</w>
-      <h>170</h>
+      <x>1440</x>
+      <y>276</y>
+      <w>108</w>
+      <h>102</h>
     </coordinates>
     <panel_attributes>Error
 --
@@ -563,10 +563,10 @@ valign=top
   <element>
     <id>UMLState</id>
     <coordinates>
-      <x>1860</x>
-      <y>460</y>
-      <w>180</w>
-      <h>150</h>
+      <x>1182</x>
+      <y>282</y>
+      <w>108</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>Ready
 --
@@ -585,10 +585,10 @@ bg=light_gray
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1880</x>
-      <y>340</y>
-      <w>90</w>
-      <h>140</h>
+      <x>1194</x>
+      <y>210</y>
+      <w>54</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 E_READY
@@ -598,10 +598,10 @@ adc=pos0</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>1880</x>
-      <y>600</y>
-      <w>90</w>
-      <h>140</h>
+      <x>1194</x>
+      <y>366</y>
+      <w>54</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 E_GOTO1
@@ -611,10 +611,10 @@ od = 1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2000</x>
-      <y>340</y>
-      <w>90</w>
-      <h>140</h>
+      <x>1266</x>
+      <y>210</y>
+      <w>54</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 E_GOTO1
@@ -624,10 +624,10 @@ od = 0</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2000</x>
-      <y>600</y>
-      <w>90</w>
-      <h>140</h>
+      <x>1266</x>
+      <y>366</y>
+      <w>54</w>
+      <h>84</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 E_READY
@@ -637,27 +637,55 @@ adc=pos1</panel_attributes>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2040</x>
-      <y>610</y>
-      <w>410</w>
-      <h>260</h>
+      <x>1290</x>
+      <y>372</y>
+      <w>258</w>
+      <h>162</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 E_GEAR_ERROR
-transition=1 for more than 3s</panel_attributes>
+transition=1 for more than 3s
+outside of physicaly possible range </panel_attributes>
     <additional_attributes>10.0;230.0;390.0;230.0;390.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>2040</x>
-      <y>230</y>
-      <w>410</w>
-      <h>240</h>
+      <x>1290</x>
+      <y>144</y>
+      <w>252</w>
+      <h>144</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 E_GEAR_ERROR
-transition=1 for more than 3s</panel_attributes>
+transition=1 for more than 3s
+outside of physicaly possible range </panel_attributes>
     <additional_attributes>10.0;20.0;390.0;20.0;390.0;220.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1056</x>
+      <y>132</y>
+      <w>132</w>
+      <h>402</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+E_GOTO2
+od= 1</panel_attributes>
+    <additional_attributes>200.0;650.0;10.0;650.0;10.0;10.0;200.0;10.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>1116</x>
+      <y>162</y>
+      <w>72</w>
+      <h>342</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+E_GOTO1
+od = 0</panel_attributes>
+    <additional_attributes>100.0;10.0;10.0;10.0;10.0;550.0;100.0;550.0</additional_attributes>
   </element>
 </diagram>
