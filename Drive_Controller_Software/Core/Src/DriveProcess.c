@@ -17,53 +17,53 @@ bool driveProcess(Event* ev)
 		//-----------------------------------------------------------------------
 		case INIT_DRIVE:
 			if (ev->id == E_MODE_D){
-				driveState = DRIVE;
+				driveState = MODE_D;
 			}
 
 			if (ev->id == E_MODE_P){
-				driveState = PARK;
+				driveState = MODE_P;
 			}
 			if (ev->id == E_ERROR){
 				driveState = ERROR_DRIVE;
 			}
 				break;
 		//-----------------------------------------------------------------------
-		case PARK:
+		case MODE_P:
 			if (ev->id == E_MODE_G){
-				driveState = GEARCHANGE;
+				driveState = MODE_G;
 			}
 			if (ev->id == E_MODE_D){
-				driveState = DRIVE;
+				driveState = MODE_D;
 			}
 			if (ev->id == E_MODE_R){
-				driveState = REVERSE;
+				driveState = MODE_R;
 			}
 			if (ev->id == E_ERROR){
 				driveState = ERROR_DRIVE;
 			}
 			break;
 		//-----------------------------------------------------------------------
-		case REVERSE:
+		case MODE_R:
 			if (ev->id == E_MODE_D){
-				driveState = DRIVE;
+				driveState = MODE_D;
 			}
 			if (ev->id == E_MODE_P){
-				driveState = PARK;
+				driveState = MODE_P;
 			}
 			if (ev->id == E_ERROR){
 				driveState = ERROR_DRIVE;
 			}
 			break;
 		//-----------------------------------------------------------------------
-		case DRIVE:
+		case MODE_D:
 			if (ev->id == E_MODE_P){
-				driveState = PARK;
+				driveState = MODE_P;
 			}
 			if (ev->id == E_MODE_R){
-				driveState = REVERSE;
+				driveState = MODE_R;
 			}
 			if (ev->id == E_MODE_G){
-				driveState = GEARCHANGE;
+				driveState = MODE_G;
 			}
 			if (ev->id == E_ERROR){
 				driveState = ERROR_DRIVE;
@@ -71,12 +71,12 @@ bool driveProcess(Event* ev)
 
 			break;
 		//-----------------------------------------------------------------------
-		case GEARCHANGE:
+		case MODE_G:
 			if (ev->id == E_MODE_P){
-				driveState = PARK;
+				driveState = MODE_P;
 			}
 			if (ev->id == E_MODE_D){
-				driveState = DRIVE;
+				driveState = MODE_D;
 			}
 			if (ev->id == E_ERROR){
 				driveState = ERROR_DRIVE;
@@ -102,18 +102,18 @@ bool driveProcess(Event* ev)
 		case INIT_DRIVE:
 			break;
 		//-----------------------------------------------------------------------
-		case PARK:
+		case MODE_P:
 			break;
 		//-----------------------------------------------------------------------
-		case REVERSE:
+		case MODE_R:
 
 			break;
 		//-----------------------------------------------------------------------
-		case GEARCHANGE:
+		case MODE_G:
 
 			break;
 		//-----------------------------------------------------------------------
-		case DRIVE:
+		case MODE_D:
 			XF_post(driveProcess, E_MODE_R, 0);
 			break;
 		//-----------------------------------------------------------------------

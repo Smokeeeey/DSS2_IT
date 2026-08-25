@@ -25,6 +25,7 @@
 
 //1000 = 100%
 #define powerMotor 600
+#define maskStatus 0x006F
 
 //---------------------Emplacements Flash---------------------
 
@@ -34,12 +35,17 @@
 
 
 typedef enum {
-	INIT_DRIVE,
-	PARK,
-	REVERSE,
-	GEARCHANGE,
-	DRIVE,
-	ERROR_DRIVE
+	INIT_DRIVE					= 10,
+	FAULT_RESET_DRIVE			= 20,
+	SWITCH_ON_DISABLED_DRIVE	= 30,
+	SHUTDOWN_DRIVE				= 40,
+	SWITCH_ON_DRIVE				= 50,
+	DRIVE_ENABLE				= 60,
+	MODE_P						= 70,
+	MODE_R						= 80,
+	MODE_G						= 90,
+	MODE_D						= 100,
+	ERROR_DRIVE					= 999
 }StateDriveControl;
 
 typedef enum{
@@ -55,6 +61,7 @@ typedef enum{
 
 
 typedef enum {
+	INIT				= 1,
 	INIT_STEERING		= 10,
 	FAULT_RESET			= 20,
 	SWITCH_ON_DISABLED	= 30,
@@ -67,7 +74,8 @@ typedef enum {
 }StateSteeringControl;
 
 typedef enum{
-	E_INIT_STEERING = 1,			// must be not 0 !!!
+	E_INIT			= 1,
+	E_INIT_STEERING,
 	E_FAULT_RESET,
 	E_SWITCH_ON_DISABLED,
 	E_SHUTDOWN,

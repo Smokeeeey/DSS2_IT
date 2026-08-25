@@ -9,8 +9,8 @@
 #include <SteeringProcess.h>
 
 
-StateSteeringControl steeringState = INIT_STEERING;
-StateSteeringControl oldStateSteering = INIT_STEERING;
+StateSteeringControl steeringState = INIT;
+StateSteeringControl oldStateSteering = INIT;
 float64_t count = 0.0f;
 int32_t tempPosMotor = 0;
 int32_t position0 = 0;
@@ -23,6 +23,16 @@ bool steeringProcess(Event* ev)
 
 	//****************************************************************************
 	switch(steeringState){                  // this is the transition state machine
+
+		//-----------------------------------------------------------------------
+		case INIT:
+
+			if (ev->id == E_INIT_STEERING)
+			{
+				steeringState = INIT_STEERING;
+			}
+
+			break;
 		//-----------------------------------------------------------------------
 		case INIT_STEERING:
 
@@ -94,13 +104,13 @@ bool steeringProcess(Event* ev)
 		switch(steeringState){
 
 				//-----------------------------------------------------------------------
+				case INIT:
+
+					break;
+
+				//-----------------------------------------------------------------------
 				case INIT_STEERING:
 
-					//Reveil de l'epos vu qu'on est master
-					CO_NMT_sendCommand(canOpenNodeSTM32.canOpenStack->NMT, CO_NMT_ENTER_OPERATIONAL,2);
-
-					//Envoyer pour faire un fault reset
-				    XF_post(steeringProcess, E_FAULT_RESET, 100);
 				    break;
 				//-----------------------------------------------------------------------
 				case FAULT_RESET:
@@ -122,7 +132,7 @@ bool steeringProcess(Event* ev)
 				//-----------------------------------------------------------------------
 				case SWITCH_ON_DISABLED:
 
-					if ((OD_RAM.x2039_steeringStatusWord & 0x006F) == 0x0021)
+					if ((OD_RAM.x2039_steeringStatusWord & maskStatus) == 0x0021)
 					{
 						XF_post(steeringProcess, E_SHUTDOWN, 100);
 					}
@@ -135,7 +145,7 @@ bool steeringProcess(Event* ev)
 				//-----------------------------------------------------------------------
 				case SHUTDOWN:
 
-					if ((OD_RAM.x2039_steeringStatusWord & 0x006F) == 0x0023)
+					if ((OD_RAM.x2039_steeringStatusWord & maskStatus) == 0x0023)
 					{
 						XF_post(steeringProcess, E_SWITCH_ON, 100);
 					}
@@ -147,7 +157,7 @@ bool steeringProcess(Event* ev)
 					break;
 				//-----------------------------------------------------------------------
 				case SWITCH_ON:
-					if ((OD_RAM.x2039_steeringStatusWord & 0x006F) == 0x0027)
+					if ((OD_RAM.x2039_steeringStatusWord & maskStatus) == 0x0027)
 					{
 						XF_post(steeringProcess, E_STEERING_ENABLE, 100);
 					}
@@ -296,7 +306,19 @@ bool steeringProcess(Event* ev)
 	switch(steeringState){                  // this is the entry action state machine
 
 		//-----------------------------------------------------------------------
+		case INIT:
+
+
+			break;
+
+		//-----------------------------------------------------------------------
 		case INIT_STEERING:
+
+			//Reveil de l'epos vu qu'on est master
+			CO_NMT_sendCommand(canOpenNodeSTM32.canOpenStack->NMT, CO_NMT_ENTER_OPERATIONAL,2);
+
+			//Envoyer pour faire un fault reset
+		    XF_post(steeringProcess, E_FAULT_RESET, 1000);
 			break;
 		//-----------------------------------------------------------------------
 		case FAULT_RESET:
