@@ -62,7 +62,6 @@ UART_HandleTypeDef huart2;
 /* USER CODE BEGIN PV */
 
 Car_ST Car_1;
-Steering_ST Steering_1;
 bool switch_Nunchuck_Joystick = false;
 
 uint32_t adc_ch6 = 0; // Channel 6 of the ADC

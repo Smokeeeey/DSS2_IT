@@ -1,4 +1,4 @@
 C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_PDO.h:354:1:CO_TPDOsendRequest	2
-../Core/Src/SteeringProcess.c:27:6:steeringProcess	63
-../Core/Src/SteeringProcess.c:395:6:target_position	1
-../Core/Src/SteeringProcess.c:412:6:sendSinus	1
+../Core/Src/SteeringProcess.c:30:6:steeringProcess	67
+../Core/Src/SteeringProcess.c:423:6:target_position	1
+../Core/Src/SteeringProcess.c:440:6:sendSinus	1

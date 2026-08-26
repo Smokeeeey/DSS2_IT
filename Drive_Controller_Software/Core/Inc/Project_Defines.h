@@ -43,7 +43,8 @@
 #define switchOn				0x0F
 
 //Values
-#define toCenterPosition 		250
+#define toCenterPosition 		750
+#define maxSteering				750
 
 
 
@@ -112,16 +113,12 @@ typedef enum{
 //---------------------------Structures---------------------------
 
 typedef struct{
+	int16_t positionSteering;
 	int16_t speed;
 	int16_t rpm;
 	bool r2d;
 }Car_ST;
 extern Car_ST Car_1;
-
-typedef struct {
-	int16_t position;
-}Steering_ST;
-extern Steering_ST Steering_1;
 
 //---------------------------CanOpen---------------------------
 

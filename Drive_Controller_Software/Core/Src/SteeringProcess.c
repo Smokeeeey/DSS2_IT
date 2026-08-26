@@ -18,8 +18,11 @@ int32_t tempPosMotor = 0;
 int32_t position0 = 0;
 int8_t waitingMotorMove = 0;
 
+int8_t oldJoystickx;
+
 bool endHoming;
 bool startHoming = true;
+bool flag1 = false;
 
 //-------------------------------
 
@@ -264,12 +267,16 @@ bool steeringProcess(Event* ev)
 					OD_RAM.x2035_steeringControlWord = resetSetpoint;
 					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
 
-				    // Ici le moteur est homé
-				    // et déjà revenu en Profile Position Mode
+				    //Ici le moteur est homé
+				    //et déjà revenu en Profile Position Mode
 
-					if (OD_RAM.x2020_joystick[0] != 0)
+					if (OD_RAM.x2020_joystick[0] != oldJoystickx)
 					{
-						XF_post(steeringProcess, E_MOVE, 50);
+						XF_post(steeringProcess, E_MOVE, 10);
+					}
+					else
+					{
+						XF_post(steeringProcess, E_REACHED, 10);
 					}
 
 
@@ -281,14 +288,32 @@ bool steeringProcess(Event* ev)
 					// Joy			|0		|  joy[posx]	| 100
 					// Moteur		|pos0	|    target		| 10000
 
-					target_position((OD_RAM.x2020_joystick[0] * 100));
 
-					if (OD_RAM.x203A_steeringMotorCurrentPosition == OD_RAM.x2020_joystick[0] * 100)
+					target_position( (int32_t) ((OD_RAM.x2020_joystick[0]) * 1000));
+
+
+					if (abs(OD_RAM.x203A_steeringMotorCurrentPosition - OD_RAM.x2038_steeringPosition) < 50)
 					{
-						XF_post(steeringProcess, E_REACHED, 50);
+						XF_post(steeringProcess, E_REACHED, 10);
+					}
+					else
+					{
+						if (flag1)
+						{
+							//Remets sur 0 l'envoi
+							OD_RAM.x2035_steeringControlWord = resetSetpoint;
+							CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
+							XF_post(steeringProcess, E_MOVE, 100);
+							flag1 = false;
+						}
+						else
+						{
+							flag1 = true;
+						}
 					}
 
 					break;
+
 			}
 
 		return false;
@@ -376,9 +401,12 @@ bool steeringProcess(Event* ev)
 		    break;
 		//-----------------------------------------------------------------------
 		case REACHED:
+			oldJoystickx = OD_RAM.x2020_joystick[0];
+			XF_post(steeringProcess, E_REACHED, 10);
 			break;
 		//-----------------------------------------------------------------------
 		case MOVE:
+			XF_post(steeringProcess, E_MOVE, 10);
 
 			break;
 	}
