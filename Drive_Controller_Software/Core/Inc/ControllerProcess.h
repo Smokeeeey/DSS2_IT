@@ -10,6 +10,9 @@
 
 #include "Project_Defines.h"
 
+void transformValue();
+void transmitValue();
+
 bool controllerProcess(Event* ev);
 
 #endif /* SRC_CONTROLLERPROCESS_H_ */

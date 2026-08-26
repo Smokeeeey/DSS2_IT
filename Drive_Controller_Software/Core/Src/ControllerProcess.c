@@ -125,4 +125,17 @@ bool controllerProcess(Event* ev)
 }
 
 
+/* ======== Functions ========== */
+void transformValue()
+{
+	Car_1.speed = OD_RAM.x2031_driveMotorSpeed / reductionDrive;
+}
+
+void transmitValue()
+{
+
+}
+
+
+
 
