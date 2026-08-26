@@ -16,13 +16,13 @@ float64_t count = 1.0f;
 
 int32_t tempPosMotor = 0;
 int32_t position0 = 0;
+int32_t rouesCentre = 0;
 int8_t waitingMotorMove = 0;
 
 int8_t oldJoystickx;
 
 bool endHoming;
 bool startHoming = true;
-bool flag1 = false;
 
 //-------------------------------
 
@@ -114,8 +114,17 @@ bool steeringProcess(Event* ev)
 			break;
 		//-----------------------------------------------------------------------
 		case MOVE:
+			if (ev->id == E_WAIT){
+				steeringState = WAIT;
+			}
+			break;
+		//-----------------------------------------------------------------------
+		case WAIT:
 			if (ev->id == E_REACHED){
 				steeringState = REACHED;
+			}
+			if (ev->id == E_MOVE){
+				steeringState = MOVE;
 			}
 			break;
 	}
@@ -244,8 +253,11 @@ bool steeringProcess(Event* ev)
 				        OD_RAM.x2035_steeringControlWord = enableOperation;
 				        CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
 
+				        //Sauvegarde du centre
+				        rouesCentre = OD_RAM.x203A_steeringMotorCurrentPosition + toCenterPosition;
+
 				        // Revenir au milieu
-				        target_position(OD_RAM.x203A_steeringMotorCurrentPosition + toCenterPosition);
+				        target_position(rouesCentre);
 
 				        // Nouveau positionnement
 				        OD_RAM.x2035_steeringControlWord = newSetpointImediatly;
@@ -289,28 +301,28 @@ bool steeringProcess(Event* ev)
 					// Moteur		|pos0	|    target		| 10000
 
 
-					target_position( (int32_t) ((OD_RAM.x2020_joystick[0]) * 1000));
+					target_position((int32_t) (rouesCentre + (OD_RAM.x2020_joystick[0]) * 1000));
+
+					XF_post(steeringProcess, E_WAIT, 10);
+
+					break;
+				//-----------------------------------------------------------------------
+				case WAIT:
 
 
-					if (abs(OD_RAM.x203A_steeringMotorCurrentPosition - OD_RAM.x2038_steeringPosition) < 50)
+					if ((int32_t) abs(OD_RAM.x203A_steeringMotorCurrentPosition - OD_RAM.x2038_steeringPosition) < 20)
 					{
 						XF_post(steeringProcess, E_REACHED, 10);
 					}
 					else
 					{
-						if (flag1)
-						{
-							//Remets sur 0 l'envoi
-							OD_RAM.x2035_steeringControlWord = resetSetpoint;
-							CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
-							XF_post(steeringProcess, E_MOVE, 100);
-							flag1 = false;
-						}
-						else
-						{
-							flag1 = true;
-						}
+						//Remets sur 0 l'envoi
+						OD_RAM.x2035_steeringControlWord = resetSetpoint;
+						CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
+
+						XF_post(steeringProcess, E_MOVE, 10);
 					}
+
 
 					break;
 
@@ -409,6 +421,17 @@ bool steeringProcess(Event* ev)
 			XF_post(steeringProcess, E_MOVE, 10);
 
 			break;
+
+		//-----------------------------------------------------------------------
+		case WAIT:
+			//Remets sur 0 l'envoi
+			OD_RAM.x2035_steeringControlWord = resetSetpoint;
+			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
+			XF_post(steeringProcess, E_WAIT, 10);
+
+			break;
+
+
 	}
 
 

@@ -93,7 +93,8 @@ typedef enum {
 	SINUS_MOVE          = 65,
 	FIND0				= 70,
 	REACHED				= 80,
-	MOVE				= 90
+	MOVE				= 90,
+	WAIT 				= 100
 }StateSteeringControl;
 
 typedef enum{
@@ -107,7 +108,8 @@ typedef enum{
 	E_SINUS_MOVE,
 	E_FIND0,
 	E_REACHED,
-	E_MOVE
+	E_MOVE,
+	E_WAIT
 }EventStateSteeringControl;
 
 //---------------------------Structures---------------------------
