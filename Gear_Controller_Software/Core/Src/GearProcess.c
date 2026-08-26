@@ -15,6 +15,10 @@ bool gearProcess(Event* ev){
 		static uint8_t oldGearRequest = 0;
 		static uint32_t counter_pos1 = 0;
 		static uint32_t counter_pos2 = 0;
+		//values to put in OD (test values)
+		gear.gear1 = 200;
+		gear.gear2 = 2650;
+		gear.gearN = 1200;
 
 		//***********************************************
 		// 		Transition state machine
@@ -34,6 +38,9 @@ bool gearProcess(Event* ev){
 				if (ev->id == E_GOTO2) {
 					gearState = GO_TO2;
 				}
+				if (ev->id == E_GOTO_N) {
+					gearState = GO_TO_N;
+				}
 				if (ev->id == E_GEAR_ERROR) {
 					gearState = GEARERROR;
 				}
@@ -46,10 +53,26 @@ bool gearProcess(Event* ev){
 				if (ev->id == E_GOTO1) {
 					gearState = GO_TO1;
 				}
+				if (ev->id == E_GOTO_N) {
+					gearState = GO_TO_N;
+				}
 				if (ev->id == E_GEAR_ERROR) {
 					gearState = GEARERROR;
 				}
 				break;
+			case GO_TO_N:
+				if (ev->id == E_REACHED) {
+					gearState = REACHED;
+				}
+				if (ev->id == E_GOTO1) {
+					gearState = GO_TO1;
+				}
+				if (ev->id == E_GOTO1) {
+					gearState = GO_TO2;
+				}
+				if (ev->id == E_GEAR_ERROR) {
+					gearState = GEARERROR;
+				}
 				//-------------------------------------------
 			case REACHED:
 				if (ev->id == E_GOTO1) {
@@ -89,24 +112,38 @@ bool gearProcess(Event* ev){
 			switch(gearState){
 				//-------------------------------------------
 				case INIT:
-					//gear.in_error = 0;
 					XF_post(gearProcess, E_INIT, 10);
 					break;
 				//-------------------------------------------
 				case GO_TO1 :
+					//notify car gear changing (not torque allowed) and send CAN
 					OD_RAM.x2004_gearTransition = 1;
+					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
+
+					//counter restart
 					counter_pos1 = 0;
-					//CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
-					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2001_gearPos0);
+
+					//send to can transition
+					OD_RAM.x2000_gear = 0;
+					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
+
+					//go to pos set by OD
+					//HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2001_gearPos0);
+					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear1);
+
 					//check if pos1 reached
 					if (gear.position <= MAXPOS0 && gear.position >= MINPOS0)
 					{
-						CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
+						//CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 						XF_post(gearProcess, E_REACHED, 0);
 					}
 					else if (OD_RAM.x2000_gear == 1)
 					{
 						XF_post(gearProcess, E_GOTO2, 0);
+					}
+					else if (OD_RAM.x2000_gear == 2)
+					{
+						XF_post(gearProcess, E_GOTO_N, 0);
 					}
 					else
 					{
@@ -114,37 +151,83 @@ bool gearProcess(Event* ev){
 					}
 					break;
 				case GO_TO2 :
-					counter_pos2 = 0;
+					//notify car gear changing (not torque allowed) and send CAN
 					OD_RAM.x2004_gearTransition = 1;
-					//CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
-					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2002_gearPos1);
+					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
+
+					//reset counter
+					counter_pos2 = 0;
+
+					//go to pos set by OD
+					//HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2002_gearPos1);
+					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear2);
+
 					//check if pos2 reached
 					if (gear.position <= MAXPOS1 && gear.position >= MINPOS1)
 					{
-						CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 						XF_post(gearProcess, E_REACHED, 0);
 					}
+					//check if new gear change requested
 					else if (OD_RAM.x2000_gear == 0)
 					{
 						XF_post(gearProcess, E_GOTO1, 0);
+					}
+					else if (OD_RAM.x2000_gear == 2)
+					{
+						XF_post(gearProcess, E_GOTO_N, 0);
 					}
 					else
 					{
 						XF_post(gearProcess, E_GOTO2, 10);
 					}
 					break;
+				case GO_TO_N :
+					//notify car gear changing (not torque allowed) and send CAN
+					OD_RAM.x2004_gearTransition = 1;
+					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
+
+					//go to pos set by OD
+					//HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2002_gearPos1);
+					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gearN);
+
+					//check if posN reached
+					if (gear.position <= MAXN && gear.position >= MINN)
+					{
+						XF_post(gearProcess, E_REACHED, 0);
+					}
+					//check if new gear change requested
+					else if (OD_RAM.x2000_gear == 0)
+					{
+						XF_post(gearProcess, E_GOTO1, 0);
+					}
+					else if (OD_RAM.x2000_gear == 1)
+					{
+						XF_post(gearProcess, E_GOTO2, 0);
+					}
+					else
+					{
+						XF_post(gearProcess, E_GOTO_N, 10);
+					}
+					break;
 				case REACHED :
+					//gear engaged, torque allowed
 					OD_RAM.x2004_gearTransition = 0 ;
-					//CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
+					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
+					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
+
+
 					if (OD_RAM.x2000_gear != oldGearRequest)
 					{
 						oldGearRequest = OD_RAM.x2000_gear;
 						if (OD_RAM.x2000_gear == 0)
 						{
 							XF_post(gearProcess, E_GOTO1, 0);
-						}else
+						}else if(OD_RAM.x2000_gear == 1)
 						{
 							XF_post(gearProcess, E_GOTO2, 0);
+						}else
+						{
+							XF_post(gearProcess, E_GOTO_N, 0);
 						}
 					}
 					else
@@ -154,18 +237,19 @@ bool gearProcess(Event* ev){
 					break;
 				//-------------------------------------------
 				case GEARERROR:
-					//gear.in_error = 1;
 					//go in old gear
 					if (GEAR == 0)
 						{
 							OD_RAM.x2000_gear = 1;
 							oldGearRequest = OD_RAM.x2000_gear;
 							//send to OD
+							CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 							XF_post(gearProcess, E_GOTO2, 0);
 						}else
 						{
 							OD_RAM.x2000_gear = 1;
 							oldGearRequest = OD_RAM.x2000_gear;
+							CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 							XF_post(gearProcess, E_GOTO1, 0);
 						}
 					break;
@@ -183,18 +267,27 @@ bool gearProcess(Event* ev){
 					break;
 				//-------------------------------------------
 				case GO_TO1 :
+					//count every time this state is looped, after X times, run error
 					counter_pos1++;
+
+					//continuously send pos requested
+					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear1);
 					if (gear.position <= MAXPOS0 && gear.position >= MINPOS0)
 					{
 						XF_post(gearProcess, E_REACHED, 0);
 					}
+					//if new gear request
 					else if (OD_RAM.x2000_gear == 1)
 					{
 						XF_post(gearProcess, E_GOTO2, 0);
 					}
+					else if (OD_RAM.x2000_gear == 2)
+					{
+						XF_post(gearProcess, E_GOTO_N, 0);
+					}
 					else
 					{
-						//if after delay pos not right, post error
+						//post error
 						if(counter_pos1 == ERRORTIME){
 							counter_pos1 = 0;
 							XF_post(gearProcess, E_GEAR_ERROR, 0);
@@ -203,7 +296,11 @@ bool gearProcess(Event* ev){
 					}
 					break;
 				case GO_TO2 :
+					//count every time this state is looped, after X times, run error
 					counter_pos2++;
+
+					//continuously send pos requested
+					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear2);
 					if (gear.position <= MAXPOS1 && gear.position >= MINPOS1)
 					{
 						XF_post(gearProcess, E_REACHED, 0);
@@ -211,6 +308,10 @@ bool gearProcess(Event* ev){
 					else if (OD_RAM.x2000_gear == 0)
 					{
 						XF_post(gearProcess, E_GOTO1, 0);
+					}
+					else if (OD_RAM.x2000_gear == 2)
+					{
+						XF_post(gearProcess, E_GOTO_N, 0);
 					}
 					else
 					{
@@ -223,14 +324,19 @@ bool gearProcess(Event* ev){
 					}
 					break;
 				case REACHED :
+					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
+
+					//continuously check if new request came in
 					if (OD_RAM.x2000_gear != oldGearRequest)
 					{
 						oldGearRequest = oldGearRequest;
 						if (OD_RAM.x2000_gear == 0)
 						{
+							CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 							XF_post(gearProcess, E_GOTO2, 0);
-						}else
+						}else if (OD_RAM.x2000_gear == 1)
 						{
+							CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 							XF_post(gearProcess, E_GOTO1, 0);
 						}
 					}

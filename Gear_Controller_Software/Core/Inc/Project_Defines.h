@@ -28,11 +28,13 @@
 //---------------------------Values---------------------------
 
 #define GEAR OD_RAM.x2000_gear
-#define MAXPOS1	1400
-#define MINPOS1 1200
-#define MAXPOS0 2400
-#define MINPOS0 2300
-#define ERRORTIME 10
+#define MAXPOS0 3800
+#define MINPOS0 3500
+#define MAXPOS1	1500
+#define MINPOS1 1100
+#define MAXN 2200
+#define MINN 1900
+#define ERRORTIME 400
 
 //----------------------------Flash---------------------------
 
@@ -46,7 +48,8 @@ typedef enum {
 	E_GOTO1 = 2,
 	E_GOTO2 = 3,
 	E_REACHED = 4,
-	E_GEAR_ERROR = 5,
+	E_GOTO_N = 5,
+	E_GEAR_ERROR = 6,
 }EventList;
 
 typedef enum {
@@ -54,7 +57,8 @@ typedef enum {
 	GO_TO1 = 2,
 	GO_TO2 = 3,
 	REACHED = 4,
-	GEARERROR = 5,
+	GO_TO_N = 5,
+	GEARERROR = 6,
 }StateControl;
 
 //---------------------------Structures---------------------------
@@ -62,6 +66,10 @@ typedef enum {
 typedef struct{
 	int16_t position;		//exact pos
 	bool in_error;
+	//used for tests
+	uint16_t gear1;
+	uint16_t gear2;
+	uint16_t gearN;
 }Gear_ST;
 extern Gear_ST gear;
 
