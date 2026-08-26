@@ -5,11 +5,15 @@
  *      Author: pinuela.loic
  */
 
-#ifndef SRC_DRIVEPROCESS_H_
-#define SRC_DRIVEPROCESS_H_
+#ifndef INC_DRIVEPROCESS_H_
+#define INC_DRIVEPROCESS_H_
 
 #include "Project_Defines.h"
+#include <math.h>
+
+
 
 bool driveProcess(Event* ev);
 
-#endif /* SRC_DRIVEPROCESS_H_ */
+
+#endif /* INC_DRIVEPROCESS_H_ */

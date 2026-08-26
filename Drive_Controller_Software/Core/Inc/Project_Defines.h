@@ -17,8 +17,9 @@
 #include "xf.h"
 #include "flash.h"
 #include "stdbool.h"
-#include "DriveProcess.h"
 #include "SteeringProcess.h"
+#include "DriveProcess.h"
+#include "ControllerProcess.h"
 
 //---------------------------Defines---------------------------
 
@@ -43,7 +44,7 @@
 #define switchOn				0x0F
 
 //Values
-#define toCenterPosition 		750
+#define toCenterPosition 		750		//A voir combien il faut pour etre au centre en partant du 0 du homing
 #define maxSteering				750
 
 
@@ -55,31 +56,27 @@
 
 //---------------------------ENUM---------------------------
 
+//------- Control controller-----
 
 typedef enum {
-	INIT_DRIVE					= 10,
-	FAULT_RESET_DRIVE			= 20,
-	SWITCH_ON_DISABLED_DRIVE	= 30,
-	SHUTDOWN_DRIVE				= 40,
-	SWITCH_ON_DRIVE				= 50,
-	DRIVE_ENABLE				= 60,
-	MODE_P						= 70,
-	MODE_R						= 80,
-	MODE_G						= 90,
-	MODE_D						= 100,
-	ERROR_DRIVE					= 999
-}StateDriveControl;
+	INIT_CONTROL				= 10,
+	MODE_P						= 20,
+	MODE_R						= 30,
+	MODE_G						= 40,
+	MODE_D						= 50,
+	ERROR_CONTOL				= 999
+}StateController;
 
 typedef enum{
-	E_INIT_DRIVE = 1,			// must be not 0 !!!
+	E_INIT_CONTROL = 1,			// must be not 0 !!!
 	E_MODE_P,
 	E_MODE_R,
 	E_MODE_G,
 	E_MODE_D,
 	E_ERROR
-}EventStateDriveControl;
+}EventStateController;
 
-//***
+//------- Steering controller------
 
 
 typedef enum {
@@ -111,6 +108,34 @@ typedef enum{
 	E_MOVE,
 	E_WAIT
 }EventStateSteeringControl;
+
+//------- Drive controller-------
+
+typedef enum {
+	INIT_D					= 1,
+	INIT_DRIVE				= 10,
+	FAULT_RESET_D			= 20,
+	SWITCH_ON_DISABLED_D	= 30,
+	SHUTDOWN_D				= 40,
+	SWITCH_ON_D				= 50,
+	DRIVE_ENABLE			= 60,
+	REACHED_DRIVE			= 70,
+	MOVE_DRIVE				= 80,
+	WAIT_DRIVE 				= 90
+}StateDriveControl;
+
+typedef enum{
+	E_INIT_D			= 1,
+	E_INIT_DRIVE,
+	E_FAULT_RESET_D,
+	E_SWITCH_ON_DISABLED_D,
+	E_SHUTDOWN_D,
+	E_SWITCH_ON_D,
+	E_DRIVE_ENABLE,
+	E_REACHED_DRIVE,
+	E_MOVE_DRIVE,
+	E_WAIT_DRIVE
+}EventStateDriveControl;
 
 //---------------------------Structures---------------------------
 

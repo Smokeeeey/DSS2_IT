@@ -5,6 +5,7 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../Core/Src/ControllerProcess.c \
 ../Core/Src/DriveProcess.c \
 ../Core/Src/SteeringProcess.c \
 ../Core/Src/event.c \
@@ -18,6 +19,7 @@ C_SRCS += \
 ../Core/Src/xf.c 
 
 OBJS += \
+./Core/Src/ControllerProcess.o \
 ./Core/Src/DriveProcess.o \
 ./Core/Src/SteeringProcess.o \
 ./Core/Src/event.o \
@@ -31,6 +33,7 @@ OBJS += \
 ./Core/Src/xf.o 
 
 C_DEPS += \
+./Core/Src/ControllerProcess.d \
 ./Core/Src/DriveProcess.d \
 ./Core/Src/SteeringProcess.d \
 ./Core/Src/event.d \
@@ -51,7 +54,7 @@ Core/Src/%.o Core/Src/%.su Core/Src/%.cyclo: ../Core/Src/%.c Core/Src/subdir.mk
 clean: clean-Core-2f-Src
 
 clean-Core-2f-Src:
-	-$(RM) ./Core/Src/DriveProcess.cyclo ./Core/Src/DriveProcess.d ./Core/Src/DriveProcess.o ./Core/Src/DriveProcess.su ./Core/Src/SteeringProcess.cyclo ./Core/Src/SteeringProcess.d ./Core/Src/SteeringProcess.o ./Core/Src/SteeringProcess.su ./Core/Src/event.cyclo ./Core/Src/event.d ./Core/Src/event.o ./Core/Src/event.su ./Core/Src/flash.cyclo ./Core/Src/flash.d ./Core/Src/flash.o ./Core/Src/flash.su ./Core/Src/main.cyclo ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/stm32l4xx_hal_msp.cyclo ./Core/Src/stm32l4xx_hal_msp.d ./Core/Src/stm32l4xx_hal_msp.o ./Core/Src/stm32l4xx_hal_msp.su ./Core/Src/stm32l4xx_it.cyclo ./Core/Src/stm32l4xx_it.d ./Core/Src/stm32l4xx_it.o ./Core/Src/stm32l4xx_it.su ./Core/Src/syscalls.cyclo ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.cyclo ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32l4xx.cyclo ./Core/Src/system_stm32l4xx.d ./Core/Src/system_stm32l4xx.o ./Core/Src/system_stm32l4xx.su ./Core/Src/xf.cyclo ./Core/Src/xf.d ./Core/Src/xf.o ./Core/Src/xf.su
+	-$(RM) ./Core/Src/ControllerProcess.cyclo ./Core/Src/ControllerProcess.d ./Core/Src/ControllerProcess.o ./Core/Src/ControllerProcess.su ./Core/Src/DriveProcess.cyclo ./Core/Src/DriveProcess.d ./Core/Src/DriveProcess.o ./Core/Src/DriveProcess.su ./Core/Src/SteeringProcess.cyclo ./Core/Src/SteeringProcess.d ./Core/Src/SteeringProcess.o ./Core/Src/SteeringProcess.su ./Core/Src/event.cyclo ./Core/Src/event.d ./Core/Src/event.o ./Core/Src/event.su ./Core/Src/flash.cyclo ./Core/Src/flash.d ./Core/Src/flash.o ./Core/Src/flash.su ./Core/Src/main.cyclo ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su ./Core/Src/stm32l4xx_hal_msp.cyclo ./Core/Src/stm32l4xx_hal_msp.d ./Core/Src/stm32l4xx_hal_msp.o ./Core/Src/stm32l4xx_hal_msp.su ./Core/Src/stm32l4xx_it.cyclo ./Core/Src/stm32l4xx_it.d ./Core/Src/stm32l4xx_it.o ./Core/Src/stm32l4xx_it.su ./Core/Src/syscalls.cyclo ./Core/Src/syscalls.d ./Core/Src/syscalls.o ./Core/Src/syscalls.su ./Core/Src/sysmem.cyclo ./Core/Src/sysmem.d ./Core/Src/sysmem.o ./Core/Src/sysmem.su ./Core/Src/system_stm32l4xx.cyclo ./Core/Src/system_stm32l4xx.d ./Core/Src/system_stm32l4xx.o ./Core/Src/system_stm32l4xx.su ./Core/Src/xf.cyclo ./Core/Src/xf.d ./Core/Src/xf.o ./Core/Src/xf.su
 
 .PHONY: clean-Core-2f-Src
 

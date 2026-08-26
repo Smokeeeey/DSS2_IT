@@ -1,5 +1,5 @@
-Core/Src/DriveProcess.o: ../Core/Src/DriveProcess.c \
- ../Core/Inc/DriveProcess.h ../Core/Inc/Project_Defines.h \
+Core/Src/ControllerProcess.o: ../Core/Src/ControllerProcess.c \
+ ../Core/Inc/ControllerProcess.h ../Core/Inc/Project_Defines.h \
  C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode_STM32/CO_app_STM32.h \
  C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode/CANopen.h \
  C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_driver.h \
@@ -75,7 +75,7 @@ Core/Src/DriveProcess.o: ../Core/Src/DriveProcess.c \
  ../Core/Inc/ireactive.h ../Core/Inc/flash.h \
  ../Core/Inc/SteeringProcess.h ../Core/Inc/DriveProcess.h \
  ../Core/Inc/ControllerProcess.h
-../Core/Inc/DriveProcess.h:
+../Core/Inc/ControllerProcess.h:
 ../Core/Inc/Project_Defines.h:
 C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode_STM32/CO_app_STM32.h:
 C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode/CANopen.h:

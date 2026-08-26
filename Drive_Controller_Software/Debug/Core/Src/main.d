@@ -72,8 +72,9 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/main.h \
  C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode/extra/CO_trace.h \
  C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode_STM32/OD.h \
  ../Core/Inc/xf.h ../Core/Inc/main.h ../Core/Inc/event.h \
- ../Core/Inc/ireactive.h ../Core/Inc/flash.h ../Core/Inc/DriveProcess.h \
- ../Core/Inc/Project_Defines.h ../Core/Inc/SteeringProcess.h
+ ../Core/Inc/ireactive.h ../Core/Inc/flash.h \
+ ../Core/Inc/SteeringProcess.h ../Core/Inc/Project_Defines.h \
+ ../Core/Inc/DriveProcess.h ../Core/Inc/ControllerProcess.h
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -152,6 +153,7 @@ C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode_STM3
 ../Core/Inc/event.h:
 ../Core/Inc/ireactive.h:
 ../Core/Inc/flash.h:
-../Core/Inc/DriveProcess.h:
-../Core/Inc/Project_Defines.h:
 ../Core/Inc/SteeringProcess.h:
+../Core/Inc/Project_Defines.h:
+../Core/Inc/DriveProcess.h:
+../Core/Inc/ControllerProcess.h:
