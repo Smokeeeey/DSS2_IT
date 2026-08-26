@@ -323,6 +323,26 @@ bool gearProcess(Event* ev){
 						XF_post(gearProcess, E_GOTO1, 10);
 					}
 					break;
+				case GO_TO_N :
+					//continuously send pos requested
+					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gearN);
+					if (gear.position <= MAXN && gear.position >= MINN)
+					{
+						XF_post(gearProcess, E_REACHED, 0);
+					}
+					else if (OD_RAM.x2000_gear == 0)
+					{
+						XF_post(gearProcess, E_GOTO1, 0);
+					}
+					else if (OD_RAM.x2000_gear == 1)
+					{
+						XF_post(gearProcess, E_GOTO2, 0);
+					}
+					else
+					{
+						XF_post(gearProcess, E_GOTO_N, 10);
+					}
+					break;
 				case REACHED :
 					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 
