@@ -11,6 +11,8 @@
 //--------- Variables ---------
 StateDriveControl driveState = INIT_D;
 StateDriveControl oldStateDrive = INIT_D;
+int8_t oldJoystickY;
+int16_t calculTorque;
 
 //-------------------------------
 
@@ -74,30 +76,21 @@ bool driveProcess(Event* ev)
 		//-----------------------------------------------------------------------
 		case DRIVE_ENABLE:
 
-		    if (ev->id == E_SINUS_MOVE){
-		        driveState = SINUS_MOVE;
+		    if (ev->id == E_STOP_DRIVE){
+		        driveState = STOP_DRIVE;
 		    }
 
 		    break;
 		//-----------------------------------------------------------------------
-		case REACHED_DRIVE:
+		case STOP_DRIVE:
 			if (ev->id == E_MOVE_DRIVE){
 				driveState = MOVE_DRIVE;
 			}
 			break;
 		//-----------------------------------------------------------------------
 		case MOVE_DRIVE:
-			if (ev->id == E_WAIT_DRIVE){
-				driveState = WAIT_DRIVE;
-			}
-			break;
-		//-----------------------------------------------------------------------
-		case WAIT_DRIVE:
-			if (ev->id == E_REACHED_DRIVE){
-				driveState = REACHED_DRIVE;
-			}
-			if (ev->id == E_MOVE_DRIVE){
-				driveState = MOVE_DRIVE;
+			if (ev->id == E_STOP_DRIVE){
+				driveState = STOP_DRIVE;
 			}
 			break;
 	}
@@ -171,25 +164,58 @@ bool driveProcess(Event* ev)
 					break;
 				//-----------------------------------------------------------------------
 				case DRIVE_ENABLE:
-
-
 					break;
 
 				//-----------------------------------------------------------------------
-				case REACHED_DRIVE:
-
+				case STOP_DRIVE:
+					if (OD_RAM.x2020_joystick[1] != 0)
+					{
+						XF_post(driveProcess, E_MOVE_DRIVE, 10);
+					}
+					else
+					{
+						XF_post(driveProcess, E_STOP_DRIVE, 10);
+					}
 
 					break;
 				//-----------------------------------------------------------------------
 				case MOVE_DRIVE:
 
+					if (OD_RAM.x2020_joystick[1] != oldJoystickY)
+					{
+						//Envoie torque
+						calculTorque = (int16_t) (OD_RAM.x2020_joystick[1] * 10);
+
+						if (calculTorque >= 1000)
+						{
+							OD_RAM.x2032_driveTorque = 1000;
+						}
+						else if (calculTorque <= -1000)
+						{
+							OD_RAM.x2032_driveTorque = -1000;
+						}
+						else
+						{
+							OD_RAM.x2032_driveTorque = calculTorque;
+						}
+
+						//Envoie sur le can
+						CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
+
+						oldJoystickY = OD_RAM.x2020_joystick[1];
+
+						XF_post(driveProcess, E_MOVE_DRIVE, 10);
+					}
+					else
+					{
+						XF_post(driveProcess, E_MOVE_DRIVE, 10);
+					}
+
+
+
+
 
 					break;
-				//-----------------------------------------------------------------------
-				case WAIT_DRIVE:
-
-					break;
-
 			}
 
 		return false;
@@ -217,37 +243,44 @@ bool driveProcess(Event* ev)
 		//-----------------------------------------------------------------------
 		case FAULT_RESET_D:
 		    OD_RAM.x2034_driveControlWord= faultReset;			//80
-		    CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
+		    CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
 		    XF_post(driveProcess, E_FAULT_RESET_D, 200);
 
 		    break;
 		//-----------------------------------------------------------------------
 		case SWITCH_ON_DISABLED_D:
 			OD_RAM.x2034_driveControlWord= switchOnDisabled; 	//6
-			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
+			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
 			XF_post(driveProcess, E_SWITCH_ON_DISABLED_D, 200);
 			break;
 		//-----------------------------------------------------------------------
 		case SHUTDOWN_D:
-			OD_RAM.x2034_driveControlWord= SHUTDOWN_D; 			//7
-			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
+			OD_RAM.x2034_driveControlWord = shutDown; 			//7
+			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
 			XF_post(driveProcess, E_SHUTDOWN_D, 200);
 			break;
 		//-----------------------------------------------------------------------
 		case SWITCH_ON_D:
 			OD_RAM.x2034_driveControlWord= switchOn; 			//F
-			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[6]);
+			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
 			XF_post(driveProcess, E_SWITCH_ON_D, 200);
 			break;
 		//-----------------------------------------------------------------------
 		case DRIVE_ENABLE:
 
-			XF_post(driveProcess, E_SINUS_MOVE, 200);
+			// Mode Torque
+			OD_RAM.x2033_driveMode = torqueMode;
+			CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[2]);
+
+			//Joystick init
+			oldJoystickY = OD_RAM.x2020_joystick[1];
+
+			XF_post(driveProcess, E_STOP_DRIVE, 100);
 			break;
 
 		//-----------------------------------------------------------------------
-		case REACHED_DRIVE:
-			XF_post(driveProcess, E_REACHED_DRIVE, 10);
+		case STOP_DRIVE:
+			XF_post(driveProcess, E_STOP_DRIVE, 10);
 			break;
 		//-----------------------------------------------------------------------
 		case MOVE_DRIVE:
@@ -255,11 +288,6 @@ bool driveProcess(Event* ev)
 
 			break;
 
-		//-----------------------------------------------------------------------
-		case WAIT_DRIVE:
-			XF_post(driveProcess, E_WAIT_DRIVE, 10);
-
-			break;
 
 
 	}

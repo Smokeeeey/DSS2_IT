@@ -119,9 +119,8 @@ typedef enum {
 	SHUTDOWN_D				= 40,
 	SWITCH_ON_D				= 50,
 	DRIVE_ENABLE			= 60,
-	REACHED_DRIVE			= 70,
+	STOP_DRIVE				= 70,
 	MOVE_DRIVE				= 80,
-	WAIT_DRIVE 				= 90
 }StateDriveControl;
 
 typedef enum{
@@ -132,9 +131,8 @@ typedef enum{
 	E_SHUTDOWN_D,
 	E_SWITCH_ON_D,
 	E_DRIVE_ENABLE,
-	E_REACHED_DRIVE,
-	E_MOVE_DRIVE,
-	E_WAIT_DRIVE
+	E_STOP_DRIVE,
+	E_MOVE_DRIVE
 }EventStateDriveControl;
 
 //---------------------------Structures---------------------------
