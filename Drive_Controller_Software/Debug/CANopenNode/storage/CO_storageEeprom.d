@@ -1,10 +1,10 @@
 CANopenNode/storage/CO_storageEeprom.o: \
  ../CANopenNode/storage/CO_storageEeprom.c \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode/storage/CO_storageEeprom.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode/storage/CO_storage.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_driver.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_config.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode_STM32/CO_driver_target.h \
+ C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode/storage/CO_storageEeprom.h \
+ C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode/storage/CO_storage.h \
+ C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_driver.h \
+ C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_config.h \
+ C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode_STM32/CO_driver_target.h \
  ../Core/Inc/main.h ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h \
  ../Core/Inc/stm32l4xx_hal_conf.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_rcc.h \
@@ -42,14 +42,14 @@ CANopenNode/storage/CO_storageEeprom.o: \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h \
  ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_ODinterface.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode/storage/CO_eeprom.h \
- C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode/301/crc16-ccitt.h
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode/storage/CO_storageEeprom.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode/storage/CO_storage.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_driver.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_config.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode_STM32/CO_driver_target.h:
+ C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_ODinterface.h \
+ C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode/storage/CO_eeprom.h \
+ C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode/301/crc16-ccitt.h
+C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode/storage/CO_storageEeprom.h:
+C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode/storage/CO_storage.h:
+C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_driver.h:
+C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_config.h:
+C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode_STM32/CO_driver_target.h:
 ../Core/Inc/main.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal.h:
 ../Core/Inc/stm32l4xx_hal_conf.h:
@@ -88,6 +88,6 @@ C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode_STM3
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_tim_ex.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart.h:
 ../Drivers/STM32L4xx_HAL_Driver/Inc/stm32l4xx_hal_uart_ex.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_ODinterface.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode/storage/CO_eeprom.h:
-C:/Users/loic.pinuela/Desktop/DSS2_IT/Drive_Controller_Software/CANopenNode/301/crc16-ccitt.h:
+C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_ODinterface.h:
+C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode/storage/CO_eeprom.h:
+C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode/301/crc16-ccitt.h:

@@ -12,7 +12,7 @@
 
 void transformValue();
 void transmitValue();
-bool handBreak();
+bool handBrake();
 void changingGear();
 void nextGear();
 
