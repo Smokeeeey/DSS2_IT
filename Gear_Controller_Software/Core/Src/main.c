@@ -94,7 +94,7 @@ static void MX_I2C1_Init(void);
 void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
 	pos = HAL_ADCEx_InjectedGetValue(hadc, ADC_INJECTED_RANK_1);
-	//OD_RAM.x2003_gearPos = pos;
+	OD_RAM.x2003_gearPos = pos;
 	gear.position = OD_RAM.x2003_gearPos;
 	HAL_ADCEx_InjectedStart_IT(&hadc1);
 }

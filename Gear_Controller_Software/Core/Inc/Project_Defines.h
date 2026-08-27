@@ -28,12 +28,12 @@
 //---------------------------Values---------------------------
 
 #define GEAR OD_RAM.x2000_gear
-#define MAXPOS0 3800
-#define MINPOS0 3500
+#define MAXPOS0 3900
+#define MINPOS0 3700
 #define MAXPOS1	1500
 #define MINPOS1 1100
-#define MAXN 2200
-#define MINN 1900
+#define MAXN 3000
+#define MINN 2700
 #define ERRORTIME 400
 
 //----------------------------Flash---------------------------

@@ -18,7 +18,7 @@ bool gearProcess(Event* ev){
 		//values to put in OD (test values)
 		gear.gear1 = 200;
 		gear.gear2 = 2650;
-		gear.gearN = 1200;
+		gear.gearN = 1300;
 
 		//***********************************************
 		// 		Transition state machine
@@ -81,6 +81,9 @@ bool gearProcess(Event* ev){
 				if (ev->id == E_GOTO2) {
 					gearState = GO_TO2;
 				}
+				if (ev->id == E_GOTO_N) {
+					gearState = GO_TO_N;
+				}
 				if (ev->id == E_GEAR_ERROR) {
 					gearState = GEARERROR;
 				}
@@ -124,7 +127,6 @@ bool gearProcess(Event* ev){
 					counter_pos1 = 0;
 
 					//send to can transition
-					OD_RAM.x2000_gear = 0;
 					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 
 					//go to pos set by OD
@@ -358,6 +360,11 @@ bool gearProcess(Event* ev){
 						{
 							CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 							XF_post(gearProcess, E_GOTO1, 0);
+						}
+						else
+						{
+							CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
+							XF_post(gearProcess, E_GOTO_N, 0);
 						}
 					}
 					else
