@@ -48,7 +48,7 @@ typedef enum {
 	E_GOTO1 = 2,
 	E_GOTO2 = 3,
 	E_REACHED = 4,
-	E_GOTO_N = 5,
+//	E_GOTO_N = 5,
 	E_GEAR_ERROR = 6,
 }EventList;
 
@@ -57,7 +57,7 @@ typedef enum {
 	GO_TO1 = 2,
 	GO_TO2 = 3,
 	REACHED = 4,
-	GO_TO_N = 5,
+//	GO_TO_N = 5,
 	GEARERROR = 6,
 }StateControl;
 
