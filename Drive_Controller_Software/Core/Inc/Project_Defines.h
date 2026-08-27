@@ -46,6 +46,7 @@
 //Values
 #define toCenterPosition 		750		//A voir combien il faut pour etre au centre en partant du 0 du homing
 #define maxSteering				750
+#define reductionDrive			200		// = reduction / (π × diam roue × 60 / 1000)​
 
 
 
@@ -138,10 +139,10 @@ typedef enum{
 //---------------------------Structures---------------------------
 
 typedef struct{
-	int16_t positionSteering;
+	int32_t positionSteering;
+	int16_t torqueDrive;
 	int16_t speed;
-	int16_t rpm;
-	bool r2d;
+	int8_t  gearPos;
 }Car_ST;
 extern Car_ST Car_1;
 
