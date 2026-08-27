@@ -133,25 +133,7 @@ bool gearProcess(Event* ev){
 					//HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2001_gearPos0);
 					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear1);
 
-					//check if pos1 reached
-					if (gear.position <= MAXPOS0 && gear.position >= MINPOS0)
-					{
-						//CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
-						XF_post(gearProcess, E_REACHED, 0);
-					}
-					else if (OD_RAM.x2000_gear == 1)
-					{
-						XF_post(gearProcess, E_GOTO2, 0);
-					}
-					//we do not go to neutral
-//					else if (OD_RAM.x2000_gear == 2)
-//					{
-//						XF_post(gearProcess, E_GOTO_N, 0);
-//					}
-					else
-					{
-						XF_post(gearProcess, E_GOTO1, 10);
-					}
+					XF_post(gearProcess, E_GOTO1, 10);
 					break;
 				case GO_TO2 :
 					//notify car gear changing (not torque allowed) and send CAN
@@ -165,25 +147,7 @@ bool gearProcess(Event* ev){
 					//HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2002_gearPos1);
 					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear2);
 
-					//check if pos2 reached
-					if (gear.position <= MAXPOS1 && gear.position >= MINPOS1)
-					{
-						XF_post(gearProcess, E_REACHED, 0);
-					}
-					//check if new gear change requested
-					else if (OD_RAM.x2000_gear == 0)
-					{
-						XF_post(gearProcess, E_GOTO1, 0);
-					}
-					//f neutral
-//					else if (OD_RAM.x2000_gear == 2)
-//					{
-//						XF_post(gearProcess, E_GOTO_N, 0);
-//					}
-					else
-					{
-						XF_post(gearProcess, E_GOTO2, 10);
-					}
+					XF_post(gearProcess, E_GOTO2, 10);
 					break;
 //				case GO_TO_N :
 //					//notify car gear changing (not torque allowed) and send CAN
@@ -220,25 +184,8 @@ bool gearProcess(Event* ev){
 					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 
 
-					if (OD_RAM.x2000_gear != oldGearRequest)
-					{
-						oldGearRequest = OD_RAM.x2000_gear;
-						if (OD_RAM.x2000_gear == 0)
-						{
-							XF_post(gearProcess, E_GOTO1, 0);
-						}else if(OD_RAM.x2000_gear == 1)
-						{
-							XF_post(gearProcess, E_GOTO2, 0);
-						}
-//						else
-//						{
-//							XF_post(gearProcess, E_GOTO_N, 0);
-//						}
-					}
-					else
-					{
-						XF_post(gearProcess, E_REACHED, 10);
-					}
+					XF_post(gearProcess, E_REACHED, 10);
+
 					break;
 				//-------------------------------------------
 				case GEARERROR:
