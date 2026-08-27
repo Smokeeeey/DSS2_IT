@@ -13,8 +13,8 @@ bool gearProcess(Event* ev){
 		// keep old value
 		static StateControl oldGearState;
 		static uint8_t oldGearRequest = 0;
-		static uint32_t counter_pos1 = 0;
-		static uint32_t counter_pos2 = 0;
+		uint32_t counter_pos1 = 0;
+		uint32_t counter_pos2 = 0;
 		//values to put in OD (test values)
 		gear.gear1 = 200;
 		gear.gear2 = 2650;
@@ -132,8 +132,20 @@ bool gearProcess(Event* ev){
 					//go to pos set by OD
 					//HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2001_gearPos0);
 					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear1);
+					if (gear.position <= MAXPOS0 && gear.position >= MINPOS0)
+					{
+						XF_post(gearProcess, E_REACHED, 0);
+					}
+					//if new gear request
+					else if (OD_RAM.x2000_gear == 1)
+					{
+						XF_post(gearProcess, E_GOTO2, 0);
+					}
+					else
+					{
+						XF_post(gearProcess, E_GOTO1, 10);
+					}
 
-					XF_post(gearProcess, E_GOTO1, 10);
 					break;
 				case GO_TO2 :
 					//notify car gear changing (not torque allowed) and send CAN
@@ -147,7 +159,18 @@ bool gearProcess(Event* ev){
 					//HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2002_gearPos1);
 					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear2);
 
-					XF_post(gearProcess, E_GOTO2, 10);
+					if (gear.position <= MAXPOS1 && gear.position >= MINPOS1)
+					{
+						XF_post(gearProcess, E_REACHED, 100);
+					}
+					else if (OD_RAM.x2000_gear == 0)
+					{
+						XF_post(gearProcess, E_GOTO1, 0);
+					}
+					else
+					{
+						XF_post(gearProcess, E_GOTO2, 10);
+					}
 					break;
 //				case GO_TO_N :
 //					//notify car gear changing (not torque allowed) and send CAN
@@ -223,7 +246,7 @@ bool gearProcess(Event* ev){
 					counter_pos1++;
 
 					//continuously send pos requested
-					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear1);
+					//HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear1);
 					if (gear.position <= MAXPOS0 && gear.position >= MINPOS0)
 					{
 						XF_post(gearProcess, E_REACHED, 0);
@@ -255,7 +278,7 @@ bool gearProcess(Event* ev){
 					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear2);
 					if (gear.position <= MAXPOS1 && gear.position >= MINPOS1)
 					{
-						XF_post(gearProcess, E_REACHED, 0);
+						XF_post(gearProcess, E_REACHED, 100);
 					}
 					else if (OD_RAM.x2000_gear == 0)
 					{
@@ -272,7 +295,7 @@ bool gearProcess(Event* ev){
 							counter_pos2 = 0;
 							XF_post(gearProcess, E_GEAR_ERROR, 0);
 						}
-						XF_post(gearProcess, E_GOTO1, 10);
+						XF_post(gearProcess, E_GOTO2, 10);
 					}
 					break;
 //				case GO_TO_N :
@@ -301,8 +324,8 @@ bool gearProcess(Event* ev){
 					//continuously check if new request came in
 					if (OD_RAM.x2000_gear != oldGearRequest)
 					{
-						oldGearRequest = oldGearRequest;
-						if (OD_RAM.x2000_gear == 0)
+						oldGearRequest = OD_RAM.x2000_gear;
+						if (OD_RAM.x2000_gear == 1)
 						{
 							CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 							XF_post(gearProcess, E_GOTO2, 0);
