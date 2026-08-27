@@ -16,7 +16,7 @@
 
         Created:      19.05.2026 15:00:18
         Created By:   
-        Modified:     26.08.2026 10:30:01
+        Modified:     27.08.2026 10:13:53
         Modified By:  
 
     Device Info:
@@ -44,8 +44,8 @@
 #define OD_CNT_HB_PROD 1
 #define OD_CNT_SDO_SRV 1
 #define OD_CNT_SDO_CLI 1
-#define OD_CNT_RPDO 5
-#define OD_CNT_TPDO 8
+#define OD_CNT_RPDO 7
+#define OD_CNT_TPDO 10
 
 
 /*******************************************************************************
@@ -111,6 +111,12 @@ typedef struct {
         uint32_t COB_IDUsedByRPDO;
         uint8_t transmissionType;
         uint16_t eventTimer;
+    } x1403_RPDOCommunicationParameter;
+    struct {
+        uint8_t highestSub_indexSupported;
+        uint32_t COB_IDUsedByRPDO;
+        uint8_t transmissionType;
+        uint16_t eventTimer;
     } x1404_RPDOCommunicationParameter;
     struct {
         uint8_t highestSub_indexSupported;
@@ -118,6 +124,12 @@ typedef struct {
         uint8_t transmissionType;
         uint16_t eventTimer;
     } x1405_RPDOCommunicationParameter;
+    struct {
+        uint8_t highestSub_indexSupported;
+        uint32_t COB_IDUsedByRPDO;
+        uint8_t transmissionType;
+        uint16_t eventTimer;
+    } x1406_RPDOCommunicationParameter;
     struct {
         uint8_t numberOfMappedApplicationObjectsInPDO;
         uint32_t applicationObject1;
@@ -161,6 +173,17 @@ typedef struct {
         uint32_t applicationObject6;
         uint32_t applicationObject7;
         uint32_t applicationObject8;
+    } x1603_RPDOMappingParameter;
+    struct {
+        uint8_t numberOfMappedApplicationObjectsInPDO;
+        uint32_t applicationObject1;
+        uint32_t applicationObject2;
+        uint32_t applicationObject3;
+        uint32_t applicationObject4;
+        uint32_t applicationObject5;
+        uint32_t applicationObject6;
+        uint32_t applicationObject7;
+        uint32_t applicationObject8;
     } x1604_RPDOMappingParameter;
     struct {
         uint8_t numberOfMappedApplicationObjectsInPDO;
@@ -173,6 +196,17 @@ typedef struct {
         uint32_t applicationObject7;
         uint32_t applicationObject8;
     } x1605_RPDOMappingParameter;
+    struct {
+        uint8_t numberOfMappedApplicationObjectsInPDO;
+        uint32_t applicationObject1;
+        uint32_t applicationObject2;
+        uint32_t applicationObject3;
+        uint32_t applicationObject4;
+        uint32_t applicationObject5;
+        uint32_t applicationObject6;
+        uint32_t applicationObject7;
+        uint32_t applicationObject8;
+    } x1606_RPDOMappingParameter;
     struct {
         uint8_t highestSub_indexSupported;
         uint32_t COB_IDUsedByTPDO;
@@ -228,6 +262,14 @@ typedef struct {
         uint16_t inhibitTime;
         uint16_t eventTimer;
         uint8_t SYNCStartValue;
+    } x1806_TPDOCommunicationParameter;
+    struct {
+        uint8_t highestSub_indexSupported;
+        uint32_t COB_IDUsedByTPDO;
+        uint8_t transmissionType;
+        uint16_t inhibitTime;
+        uint16_t eventTimer;
+        uint8_t SYNCStartValue;
     } x1807_TPDOCommunicationParameter;
     struct {
         uint8_t highestSub_indexSupported;
@@ -237,6 +279,14 @@ typedef struct {
         uint16_t eventTimer;
         uint8_t SYNCStartValue;
     } x1808_TPDOCommunicationParameter;
+    struct {
+        uint8_t highestSub_indexSupported;
+        uint32_t COB_IDUsedByTPDO;
+        uint8_t transmissionType;
+        uint16_t inhibitTime;
+        uint16_t eventTimer;
+        uint8_t SYNCStartValue;
+    } x1809_TPDOCommunicationParameter;
     struct {
         uint8_t numberOfMappedApplicationObjectsInPDO;
         uint32_t applicationObject1;
@@ -313,6 +363,17 @@ typedef struct {
         uint32_t applicationObject6;
         uint32_t applicationObject7;
         uint32_t applicationObject8;
+    } x1A06_TPDOMappingParameter;
+    struct {
+        uint8_t numberOfMappedApplicationObjectsInPDO;
+        uint32_t applicationObject1;
+        uint32_t applicationObject2;
+        uint32_t applicationObject3;
+        uint32_t applicationObject4;
+        uint32_t applicationObject5;
+        uint32_t applicationObject6;
+        uint32_t applicationObject7;
+        uint32_t applicationObject8;
     } x1A07_TPDOMappingParameter;
     struct {
         uint8_t numberOfMappedApplicationObjectsInPDO;
@@ -325,6 +386,17 @@ typedef struct {
         uint32_t applicationObject7;
         uint32_t applicationObject8;
     } x1A08_TPDOMappingParameter;
+    struct {
+        uint8_t numberOfMappedApplicationObjectsInPDO;
+        uint32_t applicationObject1;
+        uint32_t applicationObject2;
+        uint32_t applicationObject3;
+        uint32_t applicationObject4;
+        uint32_t applicationObject5;
+        uint32_t applicationObject6;
+        uint32_t applicationObject7;
+        uint32_t applicationObject8;
+    } x1A09_TPDOMappingParameter;
     uint8_t x2001_zeroLimit;
     uint8_t x2002_nunchuckOffsets_sub0;
     int8_t x2002_nunchuckOffsets[OD_CNT_ARR_2002];
@@ -359,6 +431,9 @@ typedef struct {
     int32_t x203A_steeringMotorCurrentPosition;
     int8_t x203B_controlStateMachine;
     int8_t x203C_steeringStateMachine;
+    uint8_t x203D_gearTransition;
+    uint8_t x203E_gearPos;
+    uint16_t x203F_speed;
     uint32_t x6000_velocity;
 } OD_RAM_t;
 
@@ -401,48 +476,59 @@ extern OD_ATTR_OD OD_t *OD;
 #define OD_ENTRY_H1400 &OD->list[17]
 #define OD_ENTRY_H1401 &OD->list[18]
 #define OD_ENTRY_H1402 &OD->list[19]
-#define OD_ENTRY_H1404 &OD->list[20]
-#define OD_ENTRY_H1405 &OD->list[21]
-#define OD_ENTRY_H1600 &OD->list[22]
-#define OD_ENTRY_H1601 &OD->list[23]
-#define OD_ENTRY_H1602 &OD->list[24]
-#define OD_ENTRY_H1604 &OD->list[25]
-#define OD_ENTRY_H1605 &OD->list[26]
-#define OD_ENTRY_H1800 &OD->list[27]
-#define OD_ENTRY_H1801 &OD->list[28]
-#define OD_ENTRY_H1802 &OD->list[29]
-#define OD_ENTRY_H1803 &OD->list[30]
-#define OD_ENTRY_H1804 &OD->list[31]
-#define OD_ENTRY_H1805 &OD->list[32]
-#define OD_ENTRY_H1807 &OD->list[33]
-#define OD_ENTRY_H1808 &OD->list[34]
-#define OD_ENTRY_H1A00 &OD->list[35]
-#define OD_ENTRY_H1A01 &OD->list[36]
-#define OD_ENTRY_H1A02 &OD->list[37]
-#define OD_ENTRY_H1A03 &OD->list[38]
-#define OD_ENTRY_H1A04 &OD->list[39]
-#define OD_ENTRY_H1A05 &OD->list[40]
-#define OD_ENTRY_H1A07 &OD->list[41]
-#define OD_ENTRY_H1A08 &OD->list[42]
-#define OD_ENTRY_H2001 &OD->list[43]
-#define OD_ENTRY_H2002 &OD->list[44]
-#define OD_ENTRY_H2003 &OD->list[45]
-#define OD_ENTRY_H2004 &OD->list[46]
-#define OD_ENTRY_H2020 &OD->list[47]
-#define OD_ENTRY_H2030 &OD->list[48]
-#define OD_ENTRY_H2031 &OD->list[49]
-#define OD_ENTRY_H2032 &OD->list[50]
-#define OD_ENTRY_H2033 &OD->list[51]
-#define OD_ENTRY_H2034 &OD->list[52]
-#define OD_ENTRY_H2035 &OD->list[53]
-#define OD_ENTRY_H2036 &OD->list[54]
-#define OD_ENTRY_H2037 &OD->list[55]
-#define OD_ENTRY_H2038 &OD->list[56]
-#define OD_ENTRY_H2039 &OD->list[57]
-#define OD_ENTRY_H203A &OD->list[58]
-#define OD_ENTRY_H203B &OD->list[59]
-#define OD_ENTRY_H203C &OD->list[60]
-#define OD_ENTRY_H6000 &OD->list[61]
+#define OD_ENTRY_H1403 &OD->list[20]
+#define OD_ENTRY_H1404 &OD->list[21]
+#define OD_ENTRY_H1405 &OD->list[22]
+#define OD_ENTRY_H1406 &OD->list[23]
+#define OD_ENTRY_H1600 &OD->list[24]
+#define OD_ENTRY_H1601 &OD->list[25]
+#define OD_ENTRY_H1602 &OD->list[26]
+#define OD_ENTRY_H1603 &OD->list[27]
+#define OD_ENTRY_H1604 &OD->list[28]
+#define OD_ENTRY_H1605 &OD->list[29]
+#define OD_ENTRY_H1606 &OD->list[30]
+#define OD_ENTRY_H1800 &OD->list[31]
+#define OD_ENTRY_H1801 &OD->list[32]
+#define OD_ENTRY_H1802 &OD->list[33]
+#define OD_ENTRY_H1803 &OD->list[34]
+#define OD_ENTRY_H1804 &OD->list[35]
+#define OD_ENTRY_H1805 &OD->list[36]
+#define OD_ENTRY_H1806 &OD->list[37]
+#define OD_ENTRY_H1807 &OD->list[38]
+#define OD_ENTRY_H1808 &OD->list[39]
+#define OD_ENTRY_H1809 &OD->list[40]
+#define OD_ENTRY_H1A00 &OD->list[41]
+#define OD_ENTRY_H1A01 &OD->list[42]
+#define OD_ENTRY_H1A02 &OD->list[43]
+#define OD_ENTRY_H1A03 &OD->list[44]
+#define OD_ENTRY_H1A04 &OD->list[45]
+#define OD_ENTRY_H1A05 &OD->list[46]
+#define OD_ENTRY_H1A06 &OD->list[47]
+#define OD_ENTRY_H1A07 &OD->list[48]
+#define OD_ENTRY_H1A08 &OD->list[49]
+#define OD_ENTRY_H1A09 &OD->list[50]
+#define OD_ENTRY_H2001 &OD->list[51]
+#define OD_ENTRY_H2002 &OD->list[52]
+#define OD_ENTRY_H2003 &OD->list[53]
+#define OD_ENTRY_H2004 &OD->list[54]
+#define OD_ENTRY_H2020 &OD->list[55]
+#define OD_ENTRY_H2030 &OD->list[56]
+#define OD_ENTRY_H2031 &OD->list[57]
+#define OD_ENTRY_H2032 &OD->list[58]
+#define OD_ENTRY_H2033 &OD->list[59]
+#define OD_ENTRY_H2034 &OD->list[60]
+#define OD_ENTRY_H2035 &OD->list[61]
+#define OD_ENTRY_H2036 &OD->list[62]
+#define OD_ENTRY_H2037 &OD->list[63]
+#define OD_ENTRY_H2038 &OD->list[64]
+#define OD_ENTRY_H2039 &OD->list[65]
+#define OD_ENTRY_H203A &OD->list[66]
+#define OD_ENTRY_H203B &OD->list[67]
+#define OD_ENTRY_H203C &OD->list[68]
+#define OD_ENTRY_H203D &OD->list[69]
+#define OD_ENTRY_H203E &OD->list[70]
+#define OD_ENTRY_H203F &OD->list[71]
+#define OD_ENTRY_H6000 &OD->list[72]
 
 
 /*******************************************************************************
@@ -468,48 +554,59 @@ extern OD_ATTR_OD OD_t *OD;
 #define OD_ENTRY_H1400_RPDOCommunicationParameter &OD->list[17]
 #define OD_ENTRY_H1401_RPDOCommunicationParameter &OD->list[18]
 #define OD_ENTRY_H1402_RPDOCommunicationParameter &OD->list[19]
-#define OD_ENTRY_H1404_RPDOCommunicationParameter &OD->list[20]
-#define OD_ENTRY_H1405_RPDOCommunicationParameter &OD->list[21]
-#define OD_ENTRY_H1600_RPDOMappingParameter &OD->list[22]
-#define OD_ENTRY_H1601_RPDOMappingParameter &OD->list[23]
-#define OD_ENTRY_H1602_RPDOMappingParameter &OD->list[24]
-#define OD_ENTRY_H1604_RPDOMappingParameter &OD->list[25]
-#define OD_ENTRY_H1605_RPDOMappingParameter &OD->list[26]
-#define OD_ENTRY_H1800_TPDOCommunicationParameter &OD->list[27]
-#define OD_ENTRY_H1801_TPDOCommunicationParameter &OD->list[28]
-#define OD_ENTRY_H1802_TPDOCommunicationParameter &OD->list[29]
-#define OD_ENTRY_H1803_TPDOCommunicationParameter &OD->list[30]
-#define OD_ENTRY_H1804_TPDOCommunicationParameter &OD->list[31]
-#define OD_ENTRY_H1805_TPDOCommunicationParameter &OD->list[32]
-#define OD_ENTRY_H1807_TPDOCommunicationParameter &OD->list[33]
-#define OD_ENTRY_H1808_TPDOCommunicationParameter &OD->list[34]
-#define OD_ENTRY_H1A00_TPDOMappingParameter &OD->list[35]
-#define OD_ENTRY_H1A01_TPDOMappingParameter &OD->list[36]
-#define OD_ENTRY_H1A02_TPDOMappingParameter &OD->list[37]
-#define OD_ENTRY_H1A03_TPDOMappingParameter &OD->list[38]
-#define OD_ENTRY_H1A04_TPDOMappingParameter &OD->list[39]
-#define OD_ENTRY_H1A05_TPDOMappingParameter &OD->list[40]
-#define OD_ENTRY_H1A07_TPDOMappingParameter &OD->list[41]
-#define OD_ENTRY_H1A08_TPDOMappingParameter &OD->list[42]
-#define OD_ENTRY_H2001_zeroLimit &OD->list[43]
-#define OD_ENTRY_H2002_nunchuckOffsets &OD->list[44]
-#define OD_ENTRY_H2003_joystickOffsets &OD->list[45]
-#define OD_ENTRY_H2004_treshold_NewValue &OD->list[46]
-#define OD_ENTRY_H2020_joystick &OD->list[47]
-#define OD_ENTRY_H2030_driveStatusWord &OD->list[48]
-#define OD_ENTRY_H2031_driveMotorSpeed &OD->list[49]
-#define OD_ENTRY_H2032_driveTorque &OD->list[50]
-#define OD_ENTRY_H2033_driveMode &OD->list[51]
-#define OD_ENTRY_H2034_driveControlWord &OD->list[52]
-#define OD_ENTRY_H2035_steeringControlWord &OD->list[53]
-#define OD_ENTRY_H2036_steeringMode &OD->list[54]
-#define OD_ENTRY_H2037_steeringTorque &OD->list[55]
-#define OD_ENTRY_H2038_steeringPosition &OD->list[56]
-#define OD_ENTRY_H2039_steeringStatusWord &OD->list[57]
-#define OD_ENTRY_H203A_steeringMotorCurrentPosition &OD->list[58]
-#define OD_ENTRY_H203B_controlStateMachine &OD->list[59]
-#define OD_ENTRY_H203C_steeringStateMachine &OD->list[60]
-#define OD_ENTRY_H6000_velocity &OD->list[61]
+#define OD_ENTRY_H1403_RPDOCommunicationParameter &OD->list[20]
+#define OD_ENTRY_H1404_RPDOCommunicationParameter &OD->list[21]
+#define OD_ENTRY_H1405_RPDOCommunicationParameter &OD->list[22]
+#define OD_ENTRY_H1406_RPDOCommunicationParameter &OD->list[23]
+#define OD_ENTRY_H1600_RPDOMappingParameter &OD->list[24]
+#define OD_ENTRY_H1601_RPDOMappingParameter &OD->list[25]
+#define OD_ENTRY_H1602_RPDOMappingParameter &OD->list[26]
+#define OD_ENTRY_H1603_RPDOMappingParameter &OD->list[27]
+#define OD_ENTRY_H1604_RPDOMappingParameter &OD->list[28]
+#define OD_ENTRY_H1605_RPDOMappingParameter &OD->list[29]
+#define OD_ENTRY_H1606_RPDOMappingParameter &OD->list[30]
+#define OD_ENTRY_H1800_TPDOCommunicationParameter &OD->list[31]
+#define OD_ENTRY_H1801_TPDOCommunicationParameter &OD->list[32]
+#define OD_ENTRY_H1802_TPDOCommunicationParameter &OD->list[33]
+#define OD_ENTRY_H1803_TPDOCommunicationParameter &OD->list[34]
+#define OD_ENTRY_H1804_TPDOCommunicationParameter &OD->list[35]
+#define OD_ENTRY_H1805_TPDOCommunicationParameter &OD->list[36]
+#define OD_ENTRY_H1806_TPDOCommunicationParameter &OD->list[37]
+#define OD_ENTRY_H1807_TPDOCommunicationParameter &OD->list[38]
+#define OD_ENTRY_H1808_TPDOCommunicationParameter &OD->list[39]
+#define OD_ENTRY_H1809_TPDOCommunicationParameter &OD->list[40]
+#define OD_ENTRY_H1A00_TPDOMappingParameter &OD->list[41]
+#define OD_ENTRY_H1A01_TPDOMappingParameter &OD->list[42]
+#define OD_ENTRY_H1A02_TPDOMappingParameter &OD->list[43]
+#define OD_ENTRY_H1A03_TPDOMappingParameter &OD->list[44]
+#define OD_ENTRY_H1A04_TPDOMappingParameter &OD->list[45]
+#define OD_ENTRY_H1A05_TPDOMappingParameter &OD->list[46]
+#define OD_ENTRY_H1A06_TPDOMappingParameter &OD->list[47]
+#define OD_ENTRY_H1A07_TPDOMappingParameter &OD->list[48]
+#define OD_ENTRY_H1A08_TPDOMappingParameter &OD->list[49]
+#define OD_ENTRY_H1A09_TPDOMappingParameter &OD->list[50]
+#define OD_ENTRY_H2001_zeroLimit &OD->list[51]
+#define OD_ENTRY_H2002_nunchuckOffsets &OD->list[52]
+#define OD_ENTRY_H2003_joystickOffsets &OD->list[53]
+#define OD_ENTRY_H2004_treshold_NewValue &OD->list[54]
+#define OD_ENTRY_H2020_joystick &OD->list[55]
+#define OD_ENTRY_H2030_driveStatusWord &OD->list[56]
+#define OD_ENTRY_H2031_driveMotorSpeed &OD->list[57]
+#define OD_ENTRY_H2032_driveTorque &OD->list[58]
+#define OD_ENTRY_H2033_driveMode &OD->list[59]
+#define OD_ENTRY_H2034_driveControlWord &OD->list[60]
+#define OD_ENTRY_H2035_steeringControlWord &OD->list[61]
+#define OD_ENTRY_H2036_steeringMode &OD->list[62]
+#define OD_ENTRY_H2037_steeringTorque &OD->list[63]
+#define OD_ENTRY_H2038_steeringPosition &OD->list[64]
+#define OD_ENTRY_H2039_steeringStatusWord &OD->list[65]
+#define OD_ENTRY_H203A_steeringMotorCurrentPosition &OD->list[66]
+#define OD_ENTRY_H203B_controlStateMachine &OD->list[67]
+#define OD_ENTRY_H203C_steeringStateMachine &OD->list[68]
+#define OD_ENTRY_H203D_gearTransition &OD->list[69]
+#define OD_ENTRY_H203E_gearPos &OD->list[70]
+#define OD_ENTRY_H203F_speed &OD->list[71]
+#define OD_ENTRY_H6000_velocity &OD->list[72]
 
 
 /*******************************************************************************

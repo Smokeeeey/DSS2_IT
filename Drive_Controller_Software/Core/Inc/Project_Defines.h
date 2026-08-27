@@ -143,12 +143,33 @@ typedef struct{
 	int16_t torqueDrive;
 	int16_t speed;
 	int8_t  gearPos;
+	bool handBreakSwitch;
+	uint8_t gearCounter = ;
 }Car_ST;
 extern Car_ST Car_1;
 
 //---------------------------CanOpen---------------------------
 
 extern CANopenNodeSTM32 canOpenNodeSTM32;
+
+//------------------------ID CanOpen---------------------------
+
+//Transmit
+#define  ID_DRIVE_TORQUE 			0
+#define  ID_DRIVE_CONTROL_WORD 		1
+#define  ID_DRIVE_MODE 				2
+#define  ID_STEERING_MODE			3
+#define  ID_STEERING_TORQUE			4
+#define  ID_STEERING_STATE_MACHINE	5
+#define  ID_GEARPOS					6
+#define  ID_STEERING_CONTROL_WORD	7
+#define  ID_STEERING_POSITION		8
+#define  ID_SPEED					9
+
+
+
+
+
 
 //---------------------------Variables GLobales---------------------------
 extern bool lectureADC;
