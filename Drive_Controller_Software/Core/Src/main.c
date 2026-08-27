@@ -244,6 +244,8 @@ int main(void)
   //Initialise les machines d'état
   XF_post(steeringProcess, E_INIT_STEERING, 6000);
   XF_post(driveProcess, E_INIT_DRIVE, 6000);
+  XF_post(controllerProcess, E_INIT_CONTROL, 6000);
+
 
 
   //Affectation du pointer sur l'adresse de l'i2c pour avoir accès depuis tout les fichiers

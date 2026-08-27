@@ -12,8 +12,9 @@
 
 void transformValue();
 void transmitValue();
-void handBreak();
+bool handBreak();
 void changingGear();
+void nextGear();
 
 bool controllerProcess(Event* ev);
 

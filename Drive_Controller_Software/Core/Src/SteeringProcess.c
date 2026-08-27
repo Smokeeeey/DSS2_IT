@@ -26,7 +26,6 @@ bool startHoming = true;
 
 //-------------------------------
 
-
 bool steeringProcess(Event* ev)
 	{
 

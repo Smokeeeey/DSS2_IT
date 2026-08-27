@@ -8,7 +8,7 @@
 
 
 StateController controllerState = INIT_CONTROL;
-
+//uint8_t gearCounter = OD_RAM.x203E_gearPos;
 
 bool controllerProcess(Event* ev)
 	{
@@ -16,16 +16,9 @@ bool controllerProcess(Event* ev)
 	//****************************************************************************
 	switch(controllerState){                  // this is the transition state machine
 		//-----------------------------------------------------------------------
-		case INIT_DRIVE:
-			if (ev->id == E_MODE_D){
+		case INIT_CONTROL:
+			if (ev->id == E_INIT_CONTROL){
 				controllerState = MODE_D;
-			}
-
-			if (ev->id == E_MODE_P){
-				controllerState = MODE_P;
-			}
-			if (ev->id == E_ERROR){
-				controllerState = ERROR_CONTOL;
 			}
 				break;
 		//-----------------------------------------------------------------------
@@ -94,65 +87,77 @@ bool controllerProcess(Event* ev)
 	if(controllerState == oldState){			// this is the loop actions
 
 		//-----------------------------------------------------------------------
-		case INIT_DRIVE:
-			break;
-		//-----------------------------------------------------------------------
-		case MODE_P:
+		switch(controllerState){
 
-			//Interdit de changer de vitesse
-			if (Car_1.handBreakSwitch == false && OD_RAM.x203D_gearTransition == 0)
-			{
-				XF_post(controllerProcess, E_MODE_D, 10);
-			}
+			case INIT_CONTROL:
+				break;
+			//-----------------------------------------------------------------------
+			case MODE_P:
 
-			break;
-		//-----------------------------------------------------------------------
-		case MODE_R:
-			handBreak();
-			if (OD_RAM.x2020_joystick[3] == 1)
-			{
-				XF_post(controllerProcess, E_MODE_G, 0);
-			}
+				//Interdit de changer de vitesse
+				if (Car_1.handBreakSwitch == false && OD_RAM.x203D_gearTransition == 0)
+				{
+					XF_post(controllerProcess, E_MODE_D, 10);
+				}else
+				{
+					XF_post(controllerProcess, E_MODE_P, 10);
+				}
 
-			break;
-		//-----------------------------------------------------------------------
-		case MODE_G:
-			handBreak();
+				break;
+			//-----------------------------------------------------------------------
+			case MODE_R:
+				if (handBreak())
+				{
+					break;
+				}
+				if (OD_RAM.x2020_joystick[3] == 1)
+				{
+					XF_post(controllerProcess, E_MODE_G, 0);
+				}else
+				{
+					XF_post(controllerProcess, E_MODE_R, 10);
+				}
 
-			Car_1.gearCounter= Car_1.gearCounter % 2;
-			if (Car_1.gearCounter == 0)
-			{
-				//transmit to od gear 1
-			}else if (Car_1.gearCounter == 1)
-			{
-				//gear N
-			}else
-			{
-				//gear 2
-			}
-
-			break;
-		//-----------------------------------------------------------------------
-		case MODE_D:
-
-			//Check si frein a main
-			handBreak();
-
-			//Check si on veux changer de vitesse
-			if (OD_RAM.x2020_joystick[3] == 1)
-			{
-				XF_post(controllerProcess, E_MODE_G, 0);
-			}
+				break;
+			//-----------------------------------------------------------------------
+			case MODE_G:
+				if (handBreak())
+				{
+					break;
+				}
 
 
-			XF_post(controllerProcess, E_MODE_D, 10);
 
-			break;
-		//-----------------------------------------------------------------------
-		case ERROR_CONTOL:
 
-			break;
+				XF_post(controllerProcess, E_MODE_G, 50);
 
+
+
+				break;
+			//-----------------------------------------------------------------------
+			case MODE_D:
+				//Check si frein a main
+				if (handBreak())
+				{
+					break;
+				}
+				//Check si on veux changer de vitesse
+				else if (OD_RAM.x2020_joystick[3] == 1)
+				{
+					XF_post(controllerProcess, E_MODE_G, 0);
+				}else
+				{
+					XF_post(controllerProcess, E_MODE_D, 10);
+				}
+
+				break;
+			//-----------------------------------------------------------------------
+			case ERROR_CONTOL:
+
+				break;
+
+
+		}
 
 		return false;
 	}
@@ -164,7 +169,7 @@ bool controllerProcess(Event* ev)
 	switch(controllerState){                  // this is the entry action state machine
 
 		//-----------------------------------------------------------------------
-		case INIT_DRIVE:
+		case INIT_CONTROL:
 			break;
 		//-----------------------------------------------------------------------
 		case MODE_P:
@@ -176,10 +181,22 @@ bool controllerProcess(Event* ev)
 			break;
 		//-----------------------------------------------------------------------
 		case MODE_R:
+			//Relance le mode drive
+			XF_post(driveProcess, E_MOVE_DRIVE, 10);
+
 			XF_post(controllerProcess, E_MODE_R, 10);
 			break;
 		//-----------------------------------------------------------------------
 		case MODE_G:
+			//gear change sequence
+			OD_RAM.x203E_gearPos = OD_RAM.x203E_gearPos % 2;
+			if (OD_RAM.x203E_gearPos == 0)
+			{
+				nextGear();
+			}else if (OD_RAM.x203E_gearPos == 1)
+			{
+				nextGear();
+			}
 			XF_post(controllerProcess, E_MODE_G, 10);
 			break;
 		//-----------------------------------------------------------------------
@@ -200,19 +217,38 @@ bool controllerProcess(Event* ev)
 
 /* ======== Functions ========== */
 
-void handBreak()
+bool handBreak()
 {
+	//lire pin gpio HB
+	Car_1.handBreakSwitch = HAL_GPIO_ReadPin(External_Btn_GPIO_Port, External_Btn_Pin);
 	if (Car_1.handBreakSwitch)
 	{
 		XF_post(controllerProcess, E_MODE_P, 10);
+		return true;
 	}
+	return false;
 }
 
-void changingGear()
+//void changingGear()
+//{
+//	if (OD_RAM.x203D_gearTransition == 1)
+//	{
+//		XF_post(controllerProcess, E_MODE_G, 10);
+//		break;
+//	}
+//}
+
+void nextGear()
 {
-	if (OD_RAM.x203D_gearTransition == 1)
+	//incrementer la gear de 1
+	OD_RAM.x203E_gearPos++;
+	//send to OD
+	CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[ID_GEARPOS]);
+
+	//check if transition fini
+	if (OD_RAM.x203D_gearTransition == 0)
 	{
-		XF_post(controllerProcess, E_MODE_G, 10);
+		XF_post(controllerProcess, E_MODE_D, 10);
 	}
 }
 

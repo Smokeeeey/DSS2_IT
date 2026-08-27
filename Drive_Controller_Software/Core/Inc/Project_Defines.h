@@ -144,7 +144,6 @@ typedef struct{
 	int16_t speed;
 	int8_t  gearPos;
 	bool handBreakSwitch;
-	uint8_t gearCounter = ;
 }Car_ST;
 extern Car_ST Car_1;
 
