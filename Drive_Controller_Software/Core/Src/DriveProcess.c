@@ -256,7 +256,7 @@ bool driveProcess(Event* ev)
 
 		//-----------------------------------------------------------------------
 		case INIT_D:
-			XF_post(driveProcess, E_MOVE_DRIVE, 100);
+//			XF_post(driveProcess, E_MOVE_DRIVE, 100);
 
 
 			break;
