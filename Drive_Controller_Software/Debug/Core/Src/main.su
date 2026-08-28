@@ -1,4 +1,4 @@
-C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_ODinterface.h:463:1:OD_extension_init	16	static
+C:/Users/jennifer.harries/Desktop/SS2/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_ODinterface.h:463:1:OD_extension_init	16	static
 ../Core/Src/main.c:88:6:physicalSwitch	8	static
 ../Core/Src/main.c:137:6:mapCallbacks	24	static
 ../Core/Src/main.c:157:6:HAL_TIM_PeriodElapsedCallback	16	static

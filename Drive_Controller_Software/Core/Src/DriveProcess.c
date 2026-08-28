@@ -200,6 +200,10 @@ bool driveProcess(Event* ev)
 						{
 							OD_RAM.x2032_driveTorque = -1000;
 						}
+						else if (calculTorque >= -30 && calculTorque <= 30)
+						{
+							OD_RAM.x2032_driveTorque = 0;
+						}
 						else
 						{
 							OD_RAM.x2032_driveTorque = calculTorque;
