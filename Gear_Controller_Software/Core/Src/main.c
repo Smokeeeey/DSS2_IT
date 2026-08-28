@@ -105,6 +105,43 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 	XF_decrementAndQueueTimers();
 }
 
+//void mapCallbacks(OD_t *od) {
+//
+//	/* Find the OD entry for Index 0x1010 */
+//	OD_entry_t *entry = OD_find(od, 0x1010); // Find the OD entry for joystick value
+//	if (entry != NULL) {
+//		// Assign the custom write function (set read to NULL if not needed)
+//		my_extensionJoystick.read = NULL;
+//
+//		/* utilisé pour écrire sur la flash
+//		my_extensionJoystick.write = storeCallback;
+//		*/
+//
+//		my_extensionJoystick.object = NULL; // Can be used to store private data
+//		// Register the extension to the OD entry
+//		OD_extension_init(entry, &my_extensionJoystick);
+//	}
+//}
+
+//Saves parameters from bus master
+//  static ODR_t storeCallback(OD_stream_t *stream, const void *buf,OD_size_t count, OD_size_t *countWritten)
+//  {
+//  	if (stream->subIndex == 4) // save manufacturer defined parameters (subindex 4)
+//  	{
+//  		if(strncmp(buf,"save",4) == 0) // check if «save» string has been written (Byte0‐3)
+//  		{
+//  			FlashErase(1); // erase flash
+//  			FlashWrite(0,0x1234567812345678); // signature
+//
+//  			FlashWrite(8,OD_PERSIST_COMM.x2001_gearPos0); // save your parameters values
+//  			FlashWrite(16,OD_PERSIST_COMM.x2002_gearPos1); // save your parameters values
+//  			FlashWrite(24,OD_PERSIST_COMM.x2005_gearPosN); // save your parameters values
+//
+//  		}
+//  	}
+//  }
+
+
 /* USER CODE END 0 */
 
 /**
@@ -150,14 +187,6 @@ int main(void)
 
   HAL_DAC_Start(&hdac1, DAC_CHANNEL_1);
 
-  // before canopen_app_init()
-  //read data entered from flash
-  if(FlashRead(0) == 0x1234567812345678)
-  {
-	  //if default values saved in flash, read flash (for now no values stored)
-//	  OD_PERSIST_COMM.x2001_gearPos0 = FlashRead(8);
-//	  OD_PERSIST_COMM.x2002_gearPos1 = FlashRead(16);
-  }
 
 
   // 1. Map the CANopen instance to your hardware (hcan1 is usually defined by CubeMX)
@@ -177,6 +206,26 @@ int main(void)
   XF_post(gearProcess, E_INIT, 0);
   //static uint8_t oldGearRequest = 0;
 
+
+  // before canopen_app_init()
+  //read data entered from flash
+  if(FlashRead(0) == 0x1234567812345678)
+  {
+	  //if default values saved in flash, read flash (for now no values stored)
+	  OD_PERSIST_COMM.x2001_gearPos0 = FlashRead(8);
+	  OD_PERSIST_COMM.x2002_gearPos1 = FlashRead(16);
+	  OD_PERSIST_COMM.x2005_gearPosN = FlashRead(24);
+  }
+  else
+  {
+	  FlashErase(1); // erase flash
+	  FlashWrite(0,0x1234567812345678); // signature
+
+	  FlashWrite(8,OD_PERSIST_COMM.x2001_gearPos0); // save your parameters values
+	  FlashWrite(16,OD_PERSIST_COMM.x2002_gearPos1); // save your parameters values
+	  FlashWrite(24,OD_PERSIST_COMM.x2005_gearPosN); // save your parameters values
+
+  }
   /* USER CODE END 2 */
 
   /* Infinite loop */

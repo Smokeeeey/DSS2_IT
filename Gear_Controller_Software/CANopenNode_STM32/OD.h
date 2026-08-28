@@ -16,7 +16,7 @@
 
         Created:      23.11.2020 13:00:00
         Created By:   
-        Modified:     24.08.2026 13:25:33
+        Modified:     28.08.2026 08:56:03
         Modified By:  
 
     Device Info:
@@ -250,6 +250,7 @@ typedef struct {
     } x1A04_TPDOMappingParameter;
     uint32_t x2001_gearPos0;
     uint32_t x2002_gearPos1;
+    uint32_t x2005_gearPosN;
 } OD_PERSIST_COMM_t;
 
 typedef struct {
@@ -328,7 +329,8 @@ extern OD_ATTR_OD OD_t *OD;
 #define OD_ENTRY_H2002 &OD->list[37]
 #define OD_ENTRY_H2003 &OD->list[38]
 #define OD_ENTRY_H2004 &OD->list[39]
-#define OD_ENTRY_H6000 &OD->list[40]
+#define OD_ENTRY_H2005 &OD->list[40]
+#define OD_ENTRY_H6000 &OD->list[41]
 
 
 /*******************************************************************************
@@ -374,7 +376,8 @@ extern OD_ATTR_OD OD_t *OD;
 #define OD_ENTRY_H2002_gearPos1 &OD->list[37]
 #define OD_ENTRY_H2003_gearPos &OD->list[38]
 #define OD_ENTRY_H2004_gearTransition &OD->list[39]
-#define OD_ENTRY_H6000_velocity &OD->list[40]
+#define OD_ENTRY_H2005_gearPosN &OD->list[40]
+#define OD_ENTRY_H6000_velocity &OD->list[41]
 
 
 /*******************************************************************************

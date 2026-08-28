@@ -208,8 +208,9 @@ OD_ATTR_PERSIST_COMM OD_PERSIST_COMM_t OD_PERSIST_COMM = {
         .applicationObject7 = 0x00000000,
         .applicationObject8 = 0x00000000
     },
-    .x2001_gearPos0 = 0x000005DC,
-    .x2002_gearPos1 = 0x000009C4
+    .x2001_gearPos0 = 0x000000C8,
+    .x2002_gearPos1 = 0x00000A5A,
+    .x2005_gearPosN = 0x00000514
 };
 
 OD_ATTR_RAM OD_RAM_t OD_RAM = {
@@ -275,6 +276,7 @@ typedef struct {
     OD_obj_var_t o_2002_gearPos1;
     OD_obj_var_t o_2003_gearPos;
     OD_obj_var_t o_2004_gearTransition;
+    OD_obj_var_t o_2005_gearPosN;
     OD_obj_var_t o_6000_velocity;
 } ODObjs_t;
 
@@ -1262,6 +1264,11 @@ static CO_PROGMEM ODObjs_t ODObjs = {
         .attribute = ODA_SDO_RW | ODA_TPDO,
         .dataLength = 1
     },
+    .o_2005_gearPosN = {
+        .dataOrig = &OD_PERSIST_COMM.x2005_gearPosN,
+        .attribute = ODA_SDO_RW | ODA_MB,
+        .dataLength = 4
+    },
     .o_6000_velocity = {
         .dataOrig = &OD_RAM.x6000_velocity,
         .attribute = ODA_SDO_RW | ODA_RPDO | ODA_MB,
@@ -1314,6 +1321,7 @@ static OD_ATTR_OD OD_entry_t ODList[] = {
     {0x2002, 0x01, ODT_VAR, &ODObjs.o_2002_gearPos1, NULL},
     {0x2003, 0x01, ODT_VAR, &ODObjs.o_2003_gearPos, NULL},
     {0x2004, 0x01, ODT_VAR, &ODObjs.o_2004_gearTransition, NULL},
+    {0x2005, 0x01, ODT_VAR, &ODObjs.o_2005_gearPosN, NULL},
     {0x6000, 0x01, ODT_VAR, &ODObjs.o_6000_velocity, NULL},
     {0x0000, 0x00, 0, NULL, NULL}
 };
