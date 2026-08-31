@@ -51,8 +51,6 @@ DMA_HandleTypeDef hdma_adc1;
 
 CAN_HandleTypeDef hcan1;
 
-DAC_HandleTypeDef hdac1;
-
 I2C_HandleTypeDef hi2c1;
 
 TIM_HandleTypeDef htim2;
@@ -80,7 +78,6 @@ static void MX_DMA_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_CAN1_Init(void);
-static void MX_DAC1_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_I2C1_Init(void);
 /* USER CODE BEGIN PFP */
@@ -231,7 +228,6 @@ int main(void)
   MX_USART2_UART_Init();
   MX_ADC1_Init();
   MX_CAN1_Init();
-  MX_DAC1_Init();
   MX_TIM2_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
@@ -280,7 +276,6 @@ int main(void)
   XF_post(driveProcess, E_INIT_DRIVE, 6000);
 
 
-
   //Affectation du pointer sur l'adresse de l'i2c pour avoir accès depuis tout les fichiers
   phi2c1 = &hi2c1;
 
@@ -298,6 +293,8 @@ int main(void)
     /* USER CODE BEGIN 3 */
 
 	  XF_executeOnce();
+
+	  Car_1.handBreakSwitch = HAL_GPIO_ReadPin(GPIO_HandBrake_GPIO_Port, GPIO_HandBrake_Pin);
 
 	  //physicalSwitch();
 	  physicalButtonDCDC();
@@ -479,49 +476,6 @@ static void MX_CAN1_Init(void)
 }
 
 /**
-  * @brief DAC1 Initialization Function
-  * @param None
-  * @retval None
-  */
-static void MX_DAC1_Init(void)
-{
-
-  /* USER CODE BEGIN DAC1_Init 0 */
-
-  /* USER CODE END DAC1_Init 0 */
-
-  DAC_ChannelConfTypeDef sConfig = {0};
-
-  /* USER CODE BEGIN DAC1_Init 1 */
-
-  /* USER CODE END DAC1_Init 1 */
-
-  /** DAC Initialization
-  */
-  hdac1.Instance = DAC1;
-  if (HAL_DAC_Init(&hdac1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-
-  /** DAC channel OUT1 config
-  */
-  sConfig.DAC_SampleAndHold = DAC_SAMPLEANDHOLD_DISABLE;
-  sConfig.DAC_Trigger = DAC_TRIGGER_NONE;
-  sConfig.DAC_OutputBuffer = DAC_OUTPUTBUFFER_ENABLE;
-  sConfig.DAC_ConnectOnChipPeripheral = DAC_CHIPCONNECT_DISABLE;
-  sConfig.DAC_UserTrimming = DAC_TRIMMING_FACTORY;
-  if (HAL_DAC_ConfigChannel(&hdac1, &sConfig, DAC_CHANNEL_1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  /* USER CODE BEGIN DAC1_Init 2 */
-
-  /* USER CODE END DAC1_Init 2 */
-
-}
-
-/**
   * @brief I2C1 Initialization Function
   * @param None
   * @retval None
@@ -685,7 +639,13 @@ static void MX_GPIO_Init(void)
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOB, UI_LED1_Pin|LD3_Pin|UI_LED2_Pin, GPIO_PIN_RESET);
 
-  /*Configure GPIO pins : External_Btn_Pin Joystick_Btn_Pin */
+  /*Configure GPIO pin : GPIO_HandBrake_Pin */
+  GPIO_InitStruct.Pin = GPIO_HandBrake_Pin;
+  GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+  GPIO_InitStruct.Pull = GPIO_PULLUP;
+  HAL_GPIO_Init(GPIO_HandBrake_GPIO_Port, &GPIO_InitStruct);
+
+  /*Configure GPIO pins : External_Btn_Pin Bus_DCDC_Btn_Pin */
   GPIO_InitStruct.Pin = External_Btn_Pin|Bus_DCDC_Btn_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;

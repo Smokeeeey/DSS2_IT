@@ -209,43 +209,42 @@ bool driveProcess(Event* ev)
 							OD_RAM.x2032_driveTorque = calculTorque;
 						}
 
-
-						//check hand brake
-						if (!HAL_GPIO_ReadPin(External_Btn_GPIO_Port, External_Btn_Pin))
-						{
-							OD_RAM.x2032_driveTorque = 0;
-						}
-
-						//check if button pressed
-						if ((OD_RAM.x2020_joystick[2] != oldJoystickPin))
-						{
-							oldJoystickPin = OD_RAM.x2020_joystick[2];
-							if (OD_RAM.x2020_joystick[2] == 1)
-							{
-								OD_RAM.x203E_gearPos++;
-								OD_RAM.x203E_gearPos = OD_RAM.x203E_gearPos % 2;
-								CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[ID_GEARPOS]);
-								OD_RAM.x2032_driveTorque = 0;
-							}
-
-						}
-
-						//check if gear reached
-						if (OD_RAM.x203D_gearTransition)
-						{
-							OD_RAM.x2032_driveTorque = 0;
-						}
-
-						//Envoie sur le can
-						CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[ID_DRIVE_TORQUE]);
+//						//Envoie sur le can
+//						CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[ID_DRIVE_TORQUE]);
 
 						oldJoystickY = OD_RAM.x2020_joystick[1];
-						XF_post(driveProcess, E_MOVE_DRIVE, 10);
 					}
-					else
+
+					//check hand brake
+					Car_1.handBreakSwitch = HAL_GPIO_ReadPin(GPIO_HandBrake_GPIO_Port, GPIO_HandBrake_Pin);
+					if (!HAL_GPIO_ReadPin(GPIO_HandBrake_GPIO_Port, GPIO_HandBrake_Pin))
 					{
-						XF_post(driveProcess, E_MOVE_DRIVE, 10);
+						OD_RAM.x2032_driveTorque = 0;
 					}
+
+					//check if button pressed
+					if ((OD_RAM.x2020_joystick[2] != oldJoystickPin))
+					{
+						oldJoystickPin = OD_RAM.x2020_joystick[2];
+						if (OD_RAM.x2020_joystick[2] == 1)
+						{
+							OD_RAM.x203E_gearPos++;
+							OD_RAM.x203E_gearPos = OD_RAM.x203E_gearPos % 2;
+							CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[ID_GEARPOS]);
+							OD_RAM.x2032_driveTorque = 0;
+						}
+
+					}
+
+					//check if gear reached
+					if (OD_RAM.x203D_gearTransition)
+					{
+						OD_RAM.x2032_driveTorque = 0;
+					}
+
+					//Envoie sur le can
+					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[ID_DRIVE_TORQUE]);
+					XF_post(driveProcess, E_MOVE_DRIVE, 10);
 
 
 					break;

@@ -229,6 +229,7 @@ int main(void)
 	  FlashWrite(24,OD_PERSIST_COMM.x2005_gearPosN); // save your parameters values
 
   }
+  uint8_t hb ;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -243,6 +244,7 @@ int main(void)
 
 	  XF_executeOnce();
 
+	  hb = HAL_GPIO_ReadPin(GPIO_HandBrake_GPIO_Port, GPIO_HandBrake_Pin);
 	  if(lectureADC){
 		  HAL_ADCEx_InjectedStart_IT(&hadc1);
 		  lectureADC = false;

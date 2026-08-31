@@ -59,6 +59,8 @@ void Error_Handler(void);
 /* Private defines -----------------------------------------------------------*/
 #define VCP_TX_Pin GPIO_PIN_2
 #define VCP_TX_GPIO_Port GPIOA
+#define GPIO_HandBrake_Pin GPIO_PIN_4
+#define GPIO_HandBrake_GPIO_Port GPIOA
 #define External_Btn_Pin GPIO_PIN_6
 #define External_Btn_GPIO_Port GPIOA
 #define Bus_DCDC_Btn_Pin GPIO_PIN_7
