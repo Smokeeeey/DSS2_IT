@@ -301,6 +301,7 @@ int main(void)
 
 	  //physicalSwitch();
 	  physicalButtonDCDC();
+	  Car_1.tension_busDCDC = OD_RAM.x2044_bus_voltage;
 
 	  if(lectureADC){
 		  HAL_ADCEx_InjectedStart_IT(&hadc1);

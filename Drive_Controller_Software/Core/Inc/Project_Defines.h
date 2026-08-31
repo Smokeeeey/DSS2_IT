@@ -144,6 +144,7 @@ typedef struct{
 	int8_t  gearPos;
 	bool handBreakSwitch;
 	bool buttonDCDC;
+	int32_t tension_busDCDC;
 	//uint8_t oldinTransition;
 }Car_ST;
 extern Car_ST Car_1;
