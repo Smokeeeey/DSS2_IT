@@ -359,7 +359,10 @@ OD_ATTR_PERSIST_COMM OD_PERSIST_COMM_t OD_PERSIST_COMM = {
     .x2002_nunchuckOffsets = {0, 0},
     .x2003_joystickOffsets_sub0 = 0x02,
     .x2003_joystickOffsets = {0, 0},
-    .x2004_treshold_NewValue = 2
+    .x2004_treshold_NewValue = 2,
+    .x2040_thresholdMax = 0,
+    .x2041_thresholdCenter = 0,
+    .x2042_thresholdJoystick = 0x1E
 };
 
 OD_ATTR_RAM OD_RAM_t OD_RAM = {
@@ -472,6 +475,9 @@ typedef struct {
     OD_obj_var_t o_203D_gearTransition;
     OD_obj_var_t o_203E_gearPos;
     OD_obj_var_t o_203F_speed;
+    OD_obj_var_t o_2040_thresholdMax;
+    OD_obj_var_t o_2041_thresholdCenter;
+    OD_obj_var_t o_2042_thresholdJoystick;
     OD_obj_var_t o_6000_velocity;
 } ODObjs_t;
 
@@ -2264,6 +2270,21 @@ static CO_PROGMEM ODObjs_t ODObjs = {
         .attribute = ODA_SDO_RW | ODA_TPDO | ODA_MB,
         .dataLength = 2
     },
+    .o_2040_thresholdMax = {
+        .dataOrig = &OD_PERSIST_COMM.x2040_thresholdMax,
+        .attribute = ODA_SDO_RW | ODA_MB,
+        .dataLength = 2
+    },
+    .o_2041_thresholdCenter = {
+        .dataOrig = &OD_PERSIST_COMM.x2041_thresholdCenter,
+        .attribute = ODA_SDO_RW | ODA_MB,
+        .dataLength = 2
+    },
+    .o_2042_thresholdJoystick = {
+        .dataOrig = &OD_PERSIST_COMM.x2042_thresholdJoystick,
+        .attribute = ODA_SDO_RW,
+        .dataLength = 1
+    },
     .o_6000_velocity = {
         .dataOrig = &OD_RAM.x6000_velocity,
         .attribute = ODA_SDO_RW | ODA_RPDO | ODA_MB,
@@ -2348,6 +2369,9 @@ static OD_ATTR_OD OD_entry_t ODList[] = {
     {0x203D, 0x01, ODT_VAR, &ODObjs.o_203D_gearTransition, NULL},
     {0x203E, 0x01, ODT_VAR, &ODObjs.o_203E_gearPos, NULL},
     {0x203F, 0x01, ODT_VAR, &ODObjs.o_203F_speed, NULL},
+    {0x2040, 0x01, ODT_VAR, &ODObjs.o_2040_thresholdMax, NULL},
+    {0x2041, 0x01, ODT_VAR, &ODObjs.o_2041_thresholdCenter, NULL},
+    {0x2042, 0x01, ODT_VAR, &ODObjs.o_2042_thresholdJoystick, NULL},
     {0x6000, 0x01, ODT_VAR, &ODObjs.o_6000_velocity, NULL},
     {0x0000, 0x00, 0, NULL, NULL}
 };

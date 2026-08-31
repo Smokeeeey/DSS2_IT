@@ -16,7 +16,7 @@
 
         Created:      19.05.2026 15:00:18
         Created By:   
-        Modified:     27.08.2026 10:13:53
+        Modified:     31.08.2026 09:49:33
         Modified By:  
 
     Device Info:
@@ -403,6 +403,9 @@ typedef struct {
     uint8_t x2003_joystickOffsets_sub0;
     int8_t x2003_joystickOffsets[OD_CNT_ARR_2003];
     int16_t x2004_treshold_NewValue;
+    int16_t x2040_thresholdMax;
+    int16_t x2041_thresholdCenter;
+    uint8_t x2042_thresholdJoystick;
 } OD_PERSIST_COMM_t;
 
 typedef struct {
@@ -528,7 +531,10 @@ extern OD_ATTR_OD OD_t *OD;
 #define OD_ENTRY_H203D &OD->list[69]
 #define OD_ENTRY_H203E &OD->list[70]
 #define OD_ENTRY_H203F &OD->list[71]
-#define OD_ENTRY_H6000 &OD->list[72]
+#define OD_ENTRY_H2040 &OD->list[72]
+#define OD_ENTRY_H2041 &OD->list[73]
+#define OD_ENTRY_H2042 &OD->list[74]
+#define OD_ENTRY_H6000 &OD->list[75]
 
 
 /*******************************************************************************
@@ -606,7 +612,10 @@ extern OD_ATTR_OD OD_t *OD;
 #define OD_ENTRY_H203D_gearTransition &OD->list[69]
 #define OD_ENTRY_H203E_gearPos &OD->list[70]
 #define OD_ENTRY_H203F_speed &OD->list[71]
-#define OD_ENTRY_H6000_velocity &OD->list[72]
+#define OD_ENTRY_H2040_thresholdMax &OD->list[72]
+#define OD_ENTRY_H2041_thresholdCenter &OD->list[73]
+#define OD_ENTRY_H2042_thresholdJoystick &OD->list[74]
+#define OD_ENTRY_H6000_velocity &OD->list[75]
 
 
 /*******************************************************************************
