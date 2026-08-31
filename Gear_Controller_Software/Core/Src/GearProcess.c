@@ -13,8 +13,7 @@ bool gearProcess(Event* ev){
 		// keep old value
 		static StateControl oldGearState;
 		static uint8_t oldGearRequest = 0;
-		uint32_t counter_pos1 = 0;
-		uint32_t counter_pos2 = 0;
+		static uint32_t counter_pos = 0;
 		//values to put in OD (test values)
 		gear.gear1 = 200;
 		gear.gear2 = 2650;
@@ -124,14 +123,14 @@ bool gearProcess(Event* ev){
 					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
 
 					//counter restart
-					counter_pos1 = 0;
+					counter_pos = 0;
 
 					//send to can transition
 					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 
 					//go to pos set by OD
-					//HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2001_gearPos0);
-					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear1);
+					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2001_gearPos0);
+					//HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear1);
 					if (gear.position <= MAXPOS0 && gear.position >= MINPOS0)
 					{
 						XF_post(gearProcess, E_REACHED, 0);
@@ -153,11 +152,11 @@ bool gearProcess(Event* ev){
 					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
 
 					//reset counter
-					counter_pos2 = 0;
+					counter_pos = 0;
 
 					//go to pos set by OD
-					//HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2002_gearPos1);
-					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear2);
+					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2002_gearPos1);
+					//HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear2);
 
 					if (gear.position <= MAXPOS1 && gear.position >= MINPOS1)
 					{
@@ -245,7 +244,7 @@ bool gearProcess(Event* ev){
 				//-------------------------------------------
 				case GO_TO1 :
 					//count every time this state is looped, after X times, run error
-					counter_pos1++;
+					counter_pos++;
 
 					//continuously send pos requested
 					//HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear1);
@@ -265,8 +264,8 @@ bool gearProcess(Event* ev){
 					else
 					{
 						//post error
-						if(counter_pos1 == ERRORTIME){
-							counter_pos1 = 0;
+						if(counter_pos == ERRORTIME){
+							counter_pos = 0;
 							XF_post(gearProcess, E_GEAR_ERROR, 0);
 						}
 						XF_post(gearProcess, E_GOTO1, 10);
@@ -274,10 +273,11 @@ bool gearProcess(Event* ev){
 					break;
 				case GO_TO2 :
 					//count every time this state is looped, after X times, run error
-					counter_pos2++;
+					counter_pos++;
 
 					//continuously send pos requested
-					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear2);
+					//HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear2);
+					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2002_gearPos1);
 					if (gear.position <= MAXPOS1 && gear.position >= MINPOS1)
 					{
 						XF_post(gearProcess, E_REACHED, 100);
@@ -293,8 +293,8 @@ bool gearProcess(Event* ev){
 					else
 					{
 						//if after delay pos not right, post error
-						if(counter_pos2 == ERRORTIME){
-							counter_pos2 = 0;
+						if(counter_pos == ERRORTIME){
+							counter_pos = 0;
 							XF_post(gearProcess, E_GEAR_ERROR, 0);
 						}
 						XF_post(gearProcess, E_GOTO2, 10);

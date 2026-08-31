@@ -1,0 +1,11 @@
+Removed Pin From Net: NetName=GEAR_SEL Pin=J1-1
+Removed Pin From Net: NetName=GND Pin=J1-2
+Removed Pin From Net: NetName=EARTH Pin=J4-10
+Removed Pin From Net: NetName=EARTH Pin=J4-11
+Removed Pin From Net: NetName=EARTH Pin=J7-1
+Removed Pin From Net: NetName=EARTH Pin=J7-1
+Removed Member From Class: ClassName=Sch_DSS2_NolanJennifer Member=J1
+Removed Member From Class: ClassName=Sch_DSS2_NolanJennifer Member=J7
+Added Pin To Net: NetName=GEAR_SEL Pin=J8-3
+Change Net Color : Old Net Color=RGB(158, 161, 117) New Net Color=Default
+Added Room: Name=Sch_DSS2_NolanJennifer

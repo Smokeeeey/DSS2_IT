@@ -1,0 +1,11 @@
+Added Component: Designator=R?(RESISTOR 2012 REFLOW)
+Add component (AddParameter): Name = "Manufacturer Part Number 1"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Power"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Tolerance"; Value = ""; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Value"; Value = "NC(120)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Voltage"; Value = ""; VariantName = "[No Variations]"
+Added Pin To Net: NetName=CANL Pin=R?-1
+Added Pin To Net: NetName=CANH Pin=R?-2
+Added Member To Class: ClassName=Sch_DSS2_NolanJennifer Member=Component J6 *
+Added Member To Class: ClassName=Sch_DSS2_NolanJennifer Member=Component R? NC(120)
+Added Room: Name=Sch_DSS2_NolanJennifer
