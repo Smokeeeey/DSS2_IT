@@ -37,15 +37,15 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING, OCTETS
  16 .debug_macro  0002b207  00000000  00000000  00056327  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 17 .debug_line   0002fe45  00000000  00000000  0008152e  2**0
+ 17 .debug_line   0002fe43  00000000  00000000  0008152e  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 18 .debug_str    000f266f  00000000  00000000  000b1373  2**0
+ 18 .debug_str    000f266f  00000000  00000000  000b1371  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 19 .comment      00000043  00000000  00000000  001a39e2  2**0
+ 19 .comment      00000043  00000000  00000000  001a39e0  2**0
                   CONTENTS, READONLY
- 20 .debug_frame  00009520  00000000  00000000  001a3a28  2**2
+ 20 .debug_frame  00009520  00000000  00000000  001a3a24  2**2
                   CONTENTS, READONLY, DEBUGGING, OCTETS
- 21 .debug_line_str 00000076  00000000  00000000  001acf48  2**0
+ 21 .debug_line_str 00000076  00000000  00000000  001acf44  2**0
                   CONTENTS, READONLY, DEBUGGING, OCTETS
 
 Disassembly of section .text:
@@ -23163,9 +23163,7 @@ int main(void)
 
   XF_init();
  8009814:	f000 fe98 	bl	800a548 <XF_init>
-	  OD_PERSIST_COMM.x2004_treshold_NewValue = FlashRead(TRESHOLD_NEW_VALUE_ADR);
-  }
-  */
+
 
   //read data entered from flash
     if(FlashRead(0) == 0x1234567812345678)

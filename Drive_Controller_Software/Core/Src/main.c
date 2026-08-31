@@ -104,26 +104,6 @@ void physicalSwitch(){
 
 }
 
-void mapCallbacks(OD_t *od) {
-
-	/* Find the OD entry for Index 0x1010 */
-	OD_entry_t *entry = OD_find(od, 0x1010); // Find the OD entry for joystick value
-	if (entry != NULL) {
-		// Assign the custom write function (set read to NULL if not needed)
-		my_extensionJoystick.read = NULL;
-
-		/* utilisé pour écrire sur la flash
-		my_extensionJoystick.write = storeCallback;
-		*/
-
-		my_extensionJoystick.object = NULL; // Can be used to store private data
-		// Register the extension to the OD entry
-		OD_extension_init(entry, &my_extensionJoystick);
-	}
-}
-
-
-
 
 
 /* USER CODE END PFP */
@@ -230,20 +210,6 @@ int main(void)
 
   XF_init();
 
-  /*utilisé sur pour la flash
-  // before canopen_app_init()
-  if(FlashRead(0) == 0x1234567812345678)
-  {
-	  OD_PERSIST_COMM.x2001_zeroLimit = FlashRead(ZEROLIMIT_ADR);
-	  OD_PERSIST_COMM.x2002_nunchuckOffsets[0] = FlashRead(NUNCHUCK_OFFSET_ADR);
-	  OD_PERSIST_COMM.x2002_nunchuckOffsets[1] = FlashRead(NUNCHUCK_OFFSET_ADR + 8);
-
-	  OD_PERSIST_COMM.x2003_joystickOffsets[0] = FlashRead(JOYSTICK_OFFSET_ADR);
-	  OD_PERSIST_COMM.x2003_joystickOffsets[1] = FlashRead(JOYSTICK_OFFSET_ADR + 8);
-
-	  OD_PERSIST_COMM.x2004_treshold_NewValue = FlashRead(TRESHOLD_NEW_VALUE_ADR);
-  }
-  */
 
   //read data entered from flash
     if(FlashRead(0) == 0x1234567812345678)
