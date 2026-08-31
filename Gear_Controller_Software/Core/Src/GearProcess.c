@@ -321,8 +321,6 @@ bool gearProcess(Event* ev){
 //					}
 //					break;
 				case REACHED :
-					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
-
 					//continuously check if new request came in
 					if (OD_RAM.x2000_gear != oldGearRequest)
 					{
