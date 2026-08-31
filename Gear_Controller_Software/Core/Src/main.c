@@ -244,7 +244,6 @@ int main(void)
 
 	  XF_executeOnce();
 
-	  hb = HAL_GPIO_ReadPin(GPIO_HandBrake_GPIO_Port, GPIO_HandBrake_Pin);
 	  if(lectureADC){
 		  HAL_ADCEx_InjectedStart_IT(&hadc1);
 		  lectureADC = false;

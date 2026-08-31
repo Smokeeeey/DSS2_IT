@@ -167,9 +167,9 @@ void mapCallbacks(OD_t *od) {
 		// Assign the custom write function (set read to NULL if not needed)
 		my_extensionJoystick.read = NULL;
 
-		/* utilisé pour écrire sur la flash
+		// utilisé pour écrire sur la flash
 		my_extensionJoystick.write = storeCallback;
-		*/
+
 
 		my_extensionJoystick.object = NULL; // Can be used to store private data
 		// Register the extension to the OD entry
@@ -231,29 +231,28 @@ int main(void)
   MX_TIM2_Init();
   MX_I2C1_Init();
   /* USER CODE BEGIN 2 */
-  HAL_TIM_Base_Start_IT(&htim2);
 
   XF_init();
 
 
-//  //read data entered from flash
-//    if(FlashRead(0) == 0x1234567812345678)
-//    {
-//  	  //if default values saved in flash, read flash (for now no values stored)
-//  	  OD_PERSIST_COMM.x2040_thresholdMax = FlashRead(8);
-//  	  OD_PERSIST_COMM.x2041_thresholdCenter = FlashRead(16);
-//  	  OD_PERSIST_COMM.x2042_thresholdJoystick = FlashRead(24);
-//    }
-//    else		//write in flash if no data saved
-//    {
-//  	  FlashErase(1); // erase flash
-//  	  FlashWrite(0,0x1234567812345678); // signature
-//
-//  	  FlashWrite(8,OD_PERSIST_COMM.x2040_thresholdMax); // save your parameters values
-//  	  FlashWrite(16,OD_PERSIST_COMM.x2041_thresholdCenter); // save your parameters values
-//  	  FlashWrite(24,OD_PERSIST_COMM.x2042_thresholdJoystick); // save your parameters values
-//
-//    }
+  //read data entered from flash
+    if(FlashRead(0) == 0x1234567812345678)
+    {
+  	  //if default values saved in flash, read flash (for now no values stored)
+  	  OD_PERSIST_COMM.x2040_thresholdMax = FlashRead(8);
+  	  OD_PERSIST_COMM.x2041_thresholdCenter = FlashRead(16);
+  	  OD_PERSIST_COMM.x2042_thresholdJoystick = FlashRead(24);
+    }
+    else		//write in flash if no data saved
+    {
+  	  FlashErase(1); // erase flash
+  	  FlashWrite(0,0x1234567812345678); // signature
+
+  	  FlashWrite(8,OD_PERSIST_COMM.x2040_thresholdMax); // save your parameters values
+  	  FlashWrite(16,OD_PERSIST_COMM.x2041_thresholdCenter); // save your parameters values
+  	  FlashWrite(24,OD_PERSIST_COMM.x2042_thresholdJoystick); // save your parameters values
+
+    }
 
 
   // 1. Map the CANopen instance to your hardware (hcan1 is usually defined by CubeMX)
@@ -274,6 +273,7 @@ int main(void)
   //Initialise les machines d'état
   XF_post(steeringProcess, E_INIT_STEERING, 6000);
   XF_post(driveProcess, E_INIT_DRIVE, 6000);
+  HAL_TIM_Base_Start_IT(&htim2);
 
 
   //Affectation du pointer sur l'adresse de l'i2c pour avoir accès depuis tout les fichiers
