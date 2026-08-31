@@ -2,7 +2,7 @@
  * GearProcess.c
  *
  *  Created on: August 19, 2026
- *      Author: loic.pinuela
+ *      Author: Jennifer.Harries
  */
 #include <GearProcess.h>
 
@@ -213,6 +213,8 @@ bool gearProcess(Event* ev){
 				//-------------------------------------------
 				case GEARERROR:
 					//go in old gear
+					OD_RAM.x2004_gearTransition = 1;
+					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[1]);
 					if (GEAR == 0)
 						{
 							OD_RAM.x2000_gear = 1;
@@ -222,7 +224,7 @@ bool gearProcess(Event* ev){
 							XF_post(gearProcess, E_GOTO2, 0);
 						}else
 						{
-							OD_RAM.x2000_gear = 1;
+							OD_RAM.x2000_gear = 0;
 							oldGearRequest = OD_RAM.x2000_gear;
 							CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 							XF_post(gearProcess, E_GOTO1, 0);

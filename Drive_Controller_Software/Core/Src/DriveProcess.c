@@ -13,6 +13,8 @@ StateDriveControl driveState = INIT_D;
 StateDriveControl oldStateDrive = INIT_D;
 int8_t oldJoystickY;
 int16_t calculTorque;
+uint8_t oldinTransition;
+uint8_t oldJoystickPin;
 
 //-------------------------------
 
@@ -30,6 +32,10 @@ bool driveProcess(Event* ev)
 			if (ev->id == E_INIT_DRIVE)
 			{
 				driveState = INIT_DRIVE;
+			}
+			if (ev->id == E_MOVE_DRIVE)
+			{
+				driveState = MOVE_DRIVE;
 			}
 
 			break;
@@ -194,25 +200,52 @@ bool driveProcess(Event* ev)
 						{
 							OD_RAM.x2032_driveTorque = -1000;
 						}
+						else if (calculTorque >= -30 && calculTorque <= 30)
+						{
+							OD_RAM.x2032_driveTorque = 0;
+						}
 						else
 						{
 							OD_RAM.x2032_driveTorque = calculTorque;
+						}
+
+
+						//check hand brake
+						if (!HAL_GPIO_ReadPin(External_Btn_GPIO_Port, External_Btn_Pin))
+						{
+							OD_RAM.x2032_driveTorque = 0;
+						}
+
+						//check if button pressed
+						if ((OD_RAM.x2020_joystick[2] != oldJoystickPin))
+						{
+							oldJoystickPin = OD_RAM.x2020_joystick[2];
+							if (OD_RAM.x2020_joystick[2] == 1)
+							{
+								OD_RAM.x203E_gearPos++;
+								OD_RAM.x203E_gearPos = OD_RAM.x203E_gearPos % 2;
+								CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[ID_GEARPOS]);
+								OD_RAM.x2032_driveTorque = 0;
+							}
+
+						}
+
+						//check if gear reached
+						if (OD_RAM.x203D_gearTransition)
+						{
+							OD_RAM.x2032_driveTorque = 0;
 						}
 
 						//Envoie sur le can
 						CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[ID_DRIVE_TORQUE]);
 
 						oldJoystickY = OD_RAM.x2020_joystick[1];
-
 						XF_post(driveProcess, E_MOVE_DRIVE, 10);
 					}
 					else
 					{
 						XF_post(driveProcess, E_MOVE_DRIVE, 10);
 					}
-
-
-
 
 
 					break;
@@ -227,6 +260,7 @@ bool driveProcess(Event* ev)
 
 		//-----------------------------------------------------------------------
 		case INIT_D:
+//			XF_post(driveProcess, E_MOVE_DRIVE, 100);
 
 
 			break;

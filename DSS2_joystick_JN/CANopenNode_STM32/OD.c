@@ -47,13 +47,13 @@ OD_ATTR_PERSIST_COMM OD_PERSIST_COMM_t OD_PERSIST_COMM = {
     },
     .x1400_RPDOCommunicationParameter = {
         .highestSub_indexSupported = 0x05,
-        .COB_IDUsedByRPDO = 0x00000186,
+        .COB_IDUsedByRPDO = 0x80000200,
         .transmissionType = 0xFE,
         .eventTimer = 0x0000
     },
     .x1401_RPDOCommunicationParameter = {
         .highestSub_indexSupported = 0x05,
-        .COB_IDUsedByRPDO = 0x00000190,
+        .COB_IDUsedByRPDO = 0x80000300,
         .transmissionType = 0xFE,
         .eventTimer = 0x0000
     },
@@ -70,8 +70,8 @@ OD_ATTR_PERSIST_COMM OD_PERSIST_COMM_t OD_PERSIST_COMM = {
         .eventTimer = 0x0000
     },
     .x1600_RPDOMappingParameter = {
-        .numberOfMappedApplicationObjectsInPDO = 0x01,
-        .applicationObject1 = 0x20000008,
+        .numberOfMappedApplicationObjectsInPDO = 0x00,
+        .applicationObject1 = 0x00000000,
         .applicationObject2 = 0x00000000,
         .applicationObject3 = 0x00000000,
         .applicationObject4 = 0x00000000,
@@ -81,8 +81,8 @@ OD_ATTR_PERSIST_COMM OD_PERSIST_COMM_t OD_PERSIST_COMM = {
         .applicationObject8 = 0x00000000
     },
     .x1601_RPDOMappingParameter = {
-        .numberOfMappedApplicationObjectsInPDO = 0x01,
-        .applicationObject1 = 0x20030010,
+        .numberOfMappedApplicationObjectsInPDO = 0x00,
+        .applicationObject1 = 0x00000000,
         .applicationObject2 = 0x00000000,
         .applicationObject3 = 0x00000000,
         .applicationObject4 = 0x00000000,
@@ -115,7 +115,7 @@ OD_ATTR_PERSIST_COMM OD_PERSIST_COMM_t OD_PERSIST_COMM = {
     },
     .x1800_TPDOCommunicationParameter = {
         .highestSub_indexSupported = 0x06,
-        .COB_IDUsedByTPDO = 0x00000186,
+        .COB_IDUsedByTPDO = 0x00000188,
         .transmissionType = 0xFE,
         .inhibitTime = 0x0000,
         .eventTimer = 0x0000,
@@ -123,7 +123,7 @@ OD_ATTR_PERSIST_COMM OD_PERSIST_COMM_t OD_PERSIST_COMM = {
     },
     .x1801_TPDOCommunicationParameter = {
         .highestSub_indexSupported = 0x06,
-        .COB_IDUsedByTPDO = 0x00000185,
+        .COB_IDUsedByTPDO = 0xC0000280,
         .transmissionType = 0xFE,
         .inhibitTime = 0x0000,
         .eventTimer = 0x0000,
@@ -131,7 +131,7 @@ OD_ATTR_PERSIST_COMM OD_PERSIST_COMM_t OD_PERSIST_COMM = {
     },
     .x1802_TPDOCommunicationParameter = {
         .highestSub_indexSupported = 0x06,
-        .COB_IDUsedByTPDO = 0x00000190,
+        .COB_IDUsedByTPDO = 0xC0000380,
         .transmissionType = 0xFE,
         .inhibitTime = 0x0000,
         .eventTimer = 0x0000,
@@ -145,19 +145,11 @@ OD_ATTR_PERSIST_COMM OD_PERSIST_COMM_t OD_PERSIST_COMM = {
         .eventTimer = 0x0000,
         .SYNCStartValue = 0x00
     },
-    .x1804_TPDOCommunicationParameter = {
-        .highestSub_indexSupported = 0x06,
-        .COB_IDUsedByTPDO = 0xC0000000,
-        .transmissionType = 0xFE,
-        .inhibitTime = 0x0000,
-        .eventTimer = 0x0000,
-        .SYNCStartValue = 0x00
-    },
     .x1A00_TPDOMappingParameter = {
-        .numberOfMappedApplicationObjectsInPDO = 0x01,
-        .applicationObject1 = 0x20000008,
-        .applicationObject2 = 0x00000000,
-        .applicationObject3 = 0x00000000,
+        .numberOfMappedApplicationObjectsInPDO = 0x03,
+        .applicationObject1 = 0x20000108,
+        .applicationObject2 = 0x20000208,
+        .applicationObject3 = 0x20000308,
         .applicationObject4 = 0x00000000,
         .applicationObject5 = 0x00000000,
         .applicationObject6 = 0x00000000,
@@ -165,8 +157,8 @@ OD_ATTR_PERSIST_COMM OD_PERSIST_COMM_t OD_PERSIST_COMM = {
         .applicationObject8 = 0x00000000
     },
     .x1A01_TPDOMappingParameter = {
-        .numberOfMappedApplicationObjectsInPDO = 0x01,
-        .applicationObject1 = 0x20040008,
+        .numberOfMappedApplicationObjectsInPDO = 0x00,
+        .applicationObject1 = 0x00000000,
         .applicationObject2 = 0x00000000,
         .applicationObject3 = 0x00000000,
         .applicationObject4 = 0x00000000,
@@ -176,8 +168,8 @@ OD_ATTR_PERSIST_COMM OD_PERSIST_COMM_t OD_PERSIST_COMM = {
         .applicationObject8 = 0x00000000
     },
     .x1A02_TPDOMappingParameter = {
-        .numberOfMappedApplicationObjectsInPDO = 0x01,
-        .applicationObject1 = 0x20030010,
+        .numberOfMappedApplicationObjectsInPDO = 0x00,
+        .applicationObject1 = 0x00000000,
         .applicationObject2 = 0x00000000,
         .applicationObject3 = 0x00000000,
         .applicationObject4 = 0x00000000,
@@ -197,20 +189,10 @@ OD_ATTR_PERSIST_COMM OD_PERSIST_COMM_t OD_PERSIST_COMM = {
         .applicationObject7 = 0x00000000,
         .applicationObject8 = 0x00000000
     },
-    .x1A04_TPDOMappingParameter = {
-        .numberOfMappedApplicationObjectsInPDO = 0x00,
-        .applicationObject1 = 0x00000000,
-        .applicationObject2 = 0x00000000,
-        .applicationObject3 = 0x00000000,
-        .applicationObject4 = 0x00000000,
-        .applicationObject5 = 0x00000000,
-        .applicationObject6 = 0x00000000,
-        .applicationObject7 = 0x00000000,
-        .applicationObject8 = 0x00000000
-    },
-    .x2001_gearPos0 = 0x000000C8,
-    .x2002_gearPos1 = 0x00000A5A,
-    .x2005_gearPosN = 0x00000514
+    .x2001_threshold = 0x02,
+    .x2002_limits_sub0 = 0x02,
+    .x2002_limits = {0x0384, 0x0058},
+    .x2003_joy_mode = 0x01
 };
 
 OD_ATTR_RAM OD_RAM_t OD_RAM = {
@@ -224,10 +206,8 @@ OD_ATTR_RAM OD_RAM_t OD_RAM = {
         .COB_IDClientToServerRx = 0x00000600,
         .COB_IDServerToClientTx = 0x00000580
     },
-    .x2000_gear = 0x00,
-    .x2003_gearPos = 0,
-    .x2004_gearTransition = 0x00,
-    .x6000_velocity = 0x00000000
+    .x2000_joystick_sub0 = 0x03,
+    .x2000_joystick = {0, 0, 0}
 };
 
 
@@ -265,19 +245,14 @@ typedef struct {
     OD_obj_record_t o_1801_TPDOCommunicationParameter[6];
     OD_obj_record_t o_1802_TPDOCommunicationParameter[6];
     OD_obj_record_t o_1803_TPDOCommunicationParameter[6];
-    OD_obj_record_t o_1804_TPDOCommunicationParameter[6];
     OD_obj_record_t o_1A00_TPDOMappingParameter[9];
     OD_obj_record_t o_1A01_TPDOMappingParameter[9];
     OD_obj_record_t o_1A02_TPDOMappingParameter[9];
     OD_obj_record_t o_1A03_TPDOMappingParameter[9];
-    OD_obj_record_t o_1A04_TPDOMappingParameter[9];
-    OD_obj_var_t o_2000_gear;
-    OD_obj_var_t o_2001_gearPos0;
-    OD_obj_var_t o_2002_gearPos1;
-    OD_obj_var_t o_2003_gearPos;
-    OD_obj_var_t o_2004_gearTransition;
-    OD_obj_var_t o_2005_gearPosN;
-    OD_obj_var_t o_6000_velocity;
+    OD_obj_array_t o_2000_joystick;
+    OD_obj_var_t o_2001_threshold;
+    OD_obj_array_t o_2002_limits;
+    OD_obj_var_t o_2003_joy_mode;
 } ODObjs_t;
 
 static CO_PROGMEM ODObjs_t ODObjs = {
@@ -921,44 +896,6 @@ static CO_PROGMEM ODObjs_t ODObjs = {
             .dataLength = 1
         }
     },
-    .o_1804_TPDOCommunicationParameter = {
-        {
-            .dataOrig = &OD_PERSIST_COMM.x1804_TPDOCommunicationParameter.highestSub_indexSupported,
-            .subIndex = 0,
-            .attribute = ODA_SDO_R,
-            .dataLength = 1
-        },
-        {
-            .dataOrig = &OD_PERSIST_COMM.x1804_TPDOCommunicationParameter.COB_IDUsedByTPDO,
-            .subIndex = 1,
-            .attribute = ODA_SDO_RW | ODA_MB,
-            .dataLength = 4
-        },
-        {
-            .dataOrig = &OD_PERSIST_COMM.x1804_TPDOCommunicationParameter.transmissionType,
-            .subIndex = 2,
-            .attribute = ODA_SDO_RW,
-            .dataLength = 1
-        },
-        {
-            .dataOrig = &OD_PERSIST_COMM.x1804_TPDOCommunicationParameter.inhibitTime,
-            .subIndex = 3,
-            .attribute = ODA_SDO_RW | ODA_MB,
-            .dataLength = 2
-        },
-        {
-            .dataOrig = &OD_PERSIST_COMM.x1804_TPDOCommunicationParameter.eventTimer,
-            .subIndex = 5,
-            .attribute = ODA_SDO_RW | ODA_MB,
-            .dataLength = 2
-        },
-        {
-            .dataOrig = &OD_PERSIST_COMM.x1804_TPDOCommunicationParameter.SYNCStartValue,
-            .subIndex = 6,
-            .attribute = ODA_SDO_RW,
-            .dataLength = 1
-        }
-    },
     .o_1A00_TPDOMappingParameter = {
         {
             .dataOrig = &OD_PERSIST_COMM.x1A00_TPDOMappingParameter.numberOfMappedApplicationObjectsInPDO,
@@ -1183,96 +1120,31 @@ static CO_PROGMEM ODObjs_t ODObjs = {
             .dataLength = 4
         }
     },
-    .o_1A04_TPDOMappingParameter = {
-        {
-            .dataOrig = &OD_PERSIST_COMM.x1A04_TPDOMappingParameter.numberOfMappedApplicationObjectsInPDO,
-            .subIndex = 0,
-            .attribute = ODA_SDO_RW,
-            .dataLength = 1
-        },
-        {
-            .dataOrig = &OD_PERSIST_COMM.x1A04_TPDOMappingParameter.applicationObject1,
-            .subIndex = 1,
-            .attribute = ODA_SDO_RW | ODA_MB,
-            .dataLength = 4
-        },
-        {
-            .dataOrig = &OD_PERSIST_COMM.x1A04_TPDOMappingParameter.applicationObject2,
-            .subIndex = 2,
-            .attribute = ODA_SDO_RW | ODA_MB,
-            .dataLength = 4
-        },
-        {
-            .dataOrig = &OD_PERSIST_COMM.x1A04_TPDOMappingParameter.applicationObject3,
-            .subIndex = 3,
-            .attribute = ODA_SDO_RW | ODA_MB,
-            .dataLength = 4
-        },
-        {
-            .dataOrig = &OD_PERSIST_COMM.x1A04_TPDOMappingParameter.applicationObject4,
-            .subIndex = 4,
-            .attribute = ODA_SDO_RW | ODA_MB,
-            .dataLength = 4
-        },
-        {
-            .dataOrig = &OD_PERSIST_COMM.x1A04_TPDOMappingParameter.applicationObject5,
-            .subIndex = 5,
-            .attribute = ODA_SDO_RW | ODA_MB,
-            .dataLength = 4
-        },
-        {
-            .dataOrig = &OD_PERSIST_COMM.x1A04_TPDOMappingParameter.applicationObject6,
-            .subIndex = 6,
-            .attribute = ODA_SDO_RW | ODA_MB,
-            .dataLength = 4
-        },
-        {
-            .dataOrig = &OD_PERSIST_COMM.x1A04_TPDOMappingParameter.applicationObject7,
-            .subIndex = 7,
-            .attribute = ODA_SDO_RW | ODA_MB,
-            .dataLength = 4
-        },
-        {
-            .dataOrig = &OD_PERSIST_COMM.x1A04_TPDOMappingParameter.applicationObject8,
-            .subIndex = 8,
-            .attribute = ODA_SDO_RW | ODA_MB,
-            .dataLength = 4
-        }
-    },
-    .o_2000_gear = {
-        .dataOrig = &OD_RAM.x2000_gear,
-        .attribute = ODA_SDO_RW | ODA_TRPDO,
-        .dataLength = 1
-    },
-    .o_2001_gearPos0 = {
-        .dataOrig = &OD_PERSIST_COMM.x2001_gearPos0,
-        .attribute = ODA_SDO_RW | ODA_MB,
-        .dataLength = 4
-    },
-    .o_2002_gearPos1 = {
-        .dataOrig = &OD_PERSIST_COMM.x2002_gearPos1,
-        .attribute = ODA_SDO_RW | ODA_MB,
-        .dataLength = 4
-    },
-    .o_2003_gearPos = {
-        .dataOrig = &OD_RAM.x2003_gearPos,
-        .attribute = ODA_SDO_RW | ODA_TRPDO | ODA_MB,
-        .dataLength = 2
-    },
-    .o_2004_gearTransition = {
-        .dataOrig = &OD_RAM.x2004_gearTransition,
+    .o_2000_joystick = {
+        .dataOrig0 = &OD_RAM.x2000_joystick_sub0,
+        .dataOrig = &OD_RAM.x2000_joystick[0],
+        .attribute0 = ODA_SDO_R,
         .attribute = ODA_SDO_RW | ODA_TPDO,
+        .dataElementLength = 1,
+        .dataElementSizeof = sizeof(int8_t)
+    },
+    .o_2001_threshold = {
+        .dataOrig = &OD_PERSIST_COMM.x2001_threshold,
+        .attribute = ODA_SDO_RW,
         .dataLength = 1
     },
-    .o_2005_gearPosN = {
-        .dataOrig = &OD_PERSIST_COMM.x2005_gearPosN,
+    .o_2002_limits = {
+        .dataOrig0 = &OD_PERSIST_COMM.x2002_limits_sub0,
+        .dataOrig = &OD_PERSIST_COMM.x2002_limits[0],
+        .attribute0 = ODA_SDO_R,
         .attribute = ODA_SDO_RW | ODA_MB,
-        .dataLength = 4
+        .dataElementLength = 2,
+        .dataElementSizeof = sizeof(uint16_t)
     },
-    .o_6000_velocity = {
-        .dataOrig = &OD_RAM.x6000_velocity,
-        .attribute = ODA_SDO_RW | ODA_RPDO | ODA_MB,
-        .dataLength = 4
+    .o_2003_joy_mode = {
+        .dataOrig = &OD_PERSIST_COMM.x2003_joy_mode,
+        .attribute = ODA_SDO_RW,
+        .dataLength = 1
     }
 };
 
@@ -1310,19 +1182,14 @@ static OD_ATTR_OD OD_entry_t ODList[] = {
     {0x1801, 0x06, ODT_REC, &ODObjs.o_1801_TPDOCommunicationParameter, NULL},
     {0x1802, 0x06, ODT_REC, &ODObjs.o_1802_TPDOCommunicationParameter, NULL},
     {0x1803, 0x06, ODT_REC, &ODObjs.o_1803_TPDOCommunicationParameter, NULL},
-    {0x1804, 0x06, ODT_REC, &ODObjs.o_1804_TPDOCommunicationParameter, NULL},
     {0x1A00, 0x09, ODT_REC, &ODObjs.o_1A00_TPDOMappingParameter, NULL},
     {0x1A01, 0x09, ODT_REC, &ODObjs.o_1A01_TPDOMappingParameter, NULL},
     {0x1A02, 0x09, ODT_REC, &ODObjs.o_1A02_TPDOMappingParameter, NULL},
     {0x1A03, 0x09, ODT_REC, &ODObjs.o_1A03_TPDOMappingParameter, NULL},
-    {0x1A04, 0x09, ODT_REC, &ODObjs.o_1A04_TPDOMappingParameter, NULL},
-    {0x2000, 0x01, ODT_VAR, &ODObjs.o_2000_gear, NULL},
-    {0x2001, 0x01, ODT_VAR, &ODObjs.o_2001_gearPos0, NULL},
-    {0x2002, 0x01, ODT_VAR, &ODObjs.o_2002_gearPos1, NULL},
-    {0x2003, 0x01, ODT_VAR, &ODObjs.o_2003_gearPos, NULL},
-    {0x2004, 0x01, ODT_VAR, &ODObjs.o_2004_gearTransition, NULL},
-    {0x2005, 0x01, ODT_VAR, &ODObjs.o_2005_gearPosN, NULL},
-    {0x6000, 0x01, ODT_VAR, &ODObjs.o_6000_velocity, NULL},
+    {0x2000, 0x04, ODT_ARR, &ODObjs.o_2000_joystick, NULL},
+    {0x2001, 0x01, ODT_VAR, &ODObjs.o_2001_threshold, NULL},
+    {0x2002, 0x03, ODT_ARR, &ODObjs.o_2002_limits, NULL},
+    {0x2003, 0x01, ODT_VAR, &ODObjs.o_2003_joy_mode, NULL},
     {0x0000, 0x00, 0, NULL, NULL}
 };
 

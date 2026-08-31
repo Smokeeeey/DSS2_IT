@@ -1,6 +1,0 @@
-C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_PDO.h:354:1:CO_TPDOsendRequest	2
-../Core/Src/ControllerProcess.c:12:6:controllerProcess	58
-../Core/Src/ControllerProcess.c:230:6:handBrake	2
-../Core/Src/ControllerProcess.c:243:6:nextGear	1
-../Core/Src/ControllerProcess.c:251:6:transformValue	1
-../Core/Src/ControllerProcess.c:256:6:transmitValue	1
