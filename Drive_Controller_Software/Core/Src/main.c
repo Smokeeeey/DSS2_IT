@@ -105,6 +105,35 @@ void physicalSwitch(){
 }
 
 
+void physicalButtonDCDC(){
+
+	static bool old_buttonDCDC;
+	static bool initialized = false;
+
+
+	//Lit l'état du bouton
+	Car_1.buttonDCDC = HAL_GPIO_ReadPin(Bus_DCDC_Btn_GPIO_Port, Bus_DCDC_Btn_Pin);
+
+
+	//Securite pour que l'état du bouton soit mis en lisant la pin
+    if (!initialized)
+    {
+    	old_buttonDCDC = Car_1.buttonDCDC;
+        initialized = true;
+        return;
+    }
+
+	//Envoie un 1 quand on appuie sur le bouton
+	if (Car_1.buttonDCDC != old_buttonDCDC)
+	{
+	    OD_RAM.x2043_buttonDCDC = Car_1.buttonDCDC;
+	    CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[ID_BUTTON_DCDC]);
+	}
+	old_buttonDCDC = Car_1.buttonDCDC;
+
+}
+
+
 
 /* USER CODE END PFP */
 
@@ -271,6 +300,7 @@ int main(void)
 	  XF_executeOnce();
 
 	  //physicalSwitch();
+	  physicalButtonDCDC();
 
 	  if(lectureADC){
 		  HAL_ADCEx_InjectedStart_IT(&hadc1);
@@ -654,7 +684,7 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(GPIOB, UI_LED1_Pin|LD3_Pin|UI_LED2_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : External_Btn_Pin Joystick_Btn_Pin */
-  GPIO_InitStruct.Pin = External_Btn_Pin|Joystick_Btn_Pin;
+  GPIO_InitStruct.Pin = External_Btn_Pin|Bus_DCDC_Btn_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);

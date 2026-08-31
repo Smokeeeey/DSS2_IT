@@ -61,8 +61,8 @@ void Error_Handler(void);
 #define VCP_TX_GPIO_Port GPIOA
 #define External_Btn_Pin GPIO_PIN_6
 #define External_Btn_GPIO_Port GPIOA
-#define Joystick_Btn_Pin GPIO_PIN_7
-#define Joystick_Btn_GPIO_Port GPIOA
+#define Bus_DCDC_Btn_Pin GPIO_PIN_7
+#define Bus_DCDC_Btn_GPIO_Port GPIOA
 #define UI_LED1_Pin GPIO_PIN_0
 #define UI_LED1_GPIO_Port GPIOB
 #define PushButton_Pin GPIO_PIN_1

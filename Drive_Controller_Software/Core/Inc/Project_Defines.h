@@ -143,6 +143,7 @@ typedef struct{
 	int16_t speed;
 	int8_t  gearPos;
 	bool handBreakSwitch;
+	bool buttonDCDC;
 	//uint8_t oldinTransition;
 }Car_ST;
 extern Car_ST Car_1;
@@ -164,6 +165,7 @@ extern CANopenNodeSTM32 canOpenNodeSTM32;
 #define  ID_STEERING_CONTROL_WORD	7
 #define  ID_STEERING_POSITION		8
 #define  ID_SPEED					9
+#define  ID_BUTTON_DCDC				10
 
 
 
