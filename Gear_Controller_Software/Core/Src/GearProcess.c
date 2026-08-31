@@ -268,7 +268,10 @@ bool gearProcess(Event* ev){
 							counter_pos = 0;
 							XF_post(gearProcess, E_GEAR_ERROR, 0);
 						}
-						XF_post(gearProcess, E_GOTO1, 10);
+						else
+						{
+							XF_post(gearProcess, E_GOTO1, 10);
+						}
 					}
 					break;
 				case GO_TO2 :
@@ -297,7 +300,10 @@ bool gearProcess(Event* ev){
 							counter_pos = 0;
 							XF_post(gearProcess, E_GEAR_ERROR, 0);
 						}
-						XF_post(gearProcess, E_GOTO2, 10);
+						else
+						{
+							XF_post(gearProcess, E_GOTO2, 10);
+						}
 					}
 					break;
 //				case GO_TO_N :
