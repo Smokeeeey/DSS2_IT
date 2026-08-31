@@ -1,5 +1,5 @@
-C:/Users/jennifer.harries/Desktop/SS2/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_Emergency.h:454:1:CO_isError	4
-C:/Users/jennifer.harries/Desktop/SS2/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_Emergency.h:472:1:CO_getErrorRegister	3
+C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_Emergency.h:454:1:CO_isError	4
+C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_Emergency.h:472:1:CO_getErrorRegister	3
 ../CANopenNode/301/CO_NMT_Heartbeat.h:249:1:CO_NMT_getInternalState	2
 ../CANopenNode/305/CO_LSSslave.h:166:1:CO_LSSslave_getState	2
 ../CANopenNode/CANopen.c:340:1:CO_new	20

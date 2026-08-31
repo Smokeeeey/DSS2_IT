@@ -69,8 +69,8 @@ all: main-build
 main-build: Drive_Controller_Software.elf secondary-outputs
 
 # Tool invocations
-Drive_Controller_Software.elf Drive_Controller_Software.map: $(OBJS) $(USER_OBJS) C:\Users\jennifer.harries\Desktop\SS2\DSS2_IT\Drive_Controller_Software\STM32L432KCUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "Drive_Controller_Software.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\jennifer.harries\Desktop\SS2\DSS2_IT\Drive_Controller_Software\STM32L432KCUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Drive_Controller_Software.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Drive_Controller_Software.elf Drive_Controller_Software.map: $(OBJS) $(USER_OBJS) C:\Users\jennifer.harries\Desktop\ProgSS2\DSS2_IT\Drive_Controller_Software\STM32L432KCUX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "Drive_Controller_Software.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\jennifer.harries\Desktop\ProgSS2\DSS2_IT\Drive_Controller_Software\STM32L432KCUX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Drive_Controller_Software.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

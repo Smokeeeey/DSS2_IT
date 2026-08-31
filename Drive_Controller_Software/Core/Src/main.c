@@ -104,6 +104,26 @@ void physicalSwitch(){
 
 }
 
+void mapCallbacks(OD_t *od) {
+
+	/* Find the OD entry for Index 0x1010 */
+	OD_entry_t *entry = OD_find(od, 0x1010); // Find the OD entry for joystick value
+	if (entry != NULL) {
+		// Assign the custom write function (set read to NULL if not needed)
+		my_extensionJoystick.read = NULL;
+
+		/* utilisé pour écrire sur la flash
+		my_extensionJoystick.write = storeCallback;
+		*/
+
+		my_extensionJoystick.object = NULL; // Can be used to store private data
+		// Register the extension to the OD entry
+		OD_extension_init(entry, &my_extensionJoystick);
+	}
+}
+
+
+
 
 
 /* USER CODE END PFP */
@@ -113,7 +133,7 @@ void physicalSwitch(){
 CANopenNodeSTM32 canOpenNodeSTM32;
 
 
-/* Utilisé pour stocker en flash
+// Utilisé pour stocker en flash
 static ODR_t storeCallback(OD_stream_t *stream, const void *buf,OD_size_t count, OD_size_t *countWritten)
 {
 	if (stream->subIndex == 4) // save manufacturer defined parameters (subindex 4)
@@ -123,14 +143,13 @@ static ODR_t storeCallback(OD_stream_t *stream, const void *buf,OD_size_t count,
 			FlashErase(1); // erase flash
 			FlashWrite(0,0x1234567812345678); // signature
 
-			FlashWrite(ZEROLIMIT_ADR,OD_PERSIST_COMM.x2001_zeroLimit); // save your parameters values
-			FlashWrite(NUNCHUCK_OFFSET_ADR,OD_PERSIST_COMM.x2002_nunchuckOffsets); // save your parameters values
-			FlashWrite(JOYSTICK_OFFSET_ADR,OD_PERSIST_COMM.x2003_joystickOffsets); // save your parameters values
-			FlashWrite(TRESHOLD_NEW_VALUE_ADR,OD_PERSIST_COMM.x2004_treshold_NewValue); // save your parameters values
+			FlashWrite(8,OD_PERSIST_COMM.x2040_thresholdMax); // save your parameters values
+			FlashWrite(16,OD_PERSIST_COMM.x2041_thresholdCenter); // save your parameters values
+			FlashWrite(24,OD_PERSIST_COMM.x2042_thresholdJoystick); // save your parameters values
 		}
 	}
 }
-*/
+
 
 static OD_extension_t my_extensionJoystick;
 
@@ -226,6 +245,25 @@ int main(void)
   }
   */
 
+  //read data entered from flash
+    if(FlashRead(0) == 0x1234567812345678)
+    {
+  	  //if default values saved in flash, read flash (for now no values stored)
+  	  OD_PERSIST_COMM.x2040_thresholdMax = FlashRead(8);
+  	  OD_PERSIST_COMM.x2041_thresholdCenter = FlashRead(16);
+  	  OD_PERSIST_COMM.x2042_thresholdJoystick = FlashRead(24);
+    }
+    else		//write in flash if no data saved
+    {
+  	  FlashErase(1); // erase flash
+  	  FlashWrite(0,0x1234567812345678); // signature
+
+  	  FlashWrite(8,OD_PERSIST_COMM.x2040_thresholdMax); // save your parameters values
+  	  FlashWrite(16,OD_PERSIST_COMM.x2041_thresholdCenter); // save your parameters values
+  	  FlashWrite(24,OD_PERSIST_COMM.x2042_thresholdJoystick); // save your parameters values
+
+    }
+
 
   // 1. Map the CANopen instance to your hardware (hcan1 is usually defined by CubeMX)
   canOpenNodeSTM32.CANHandle = &hcan1;
@@ -239,6 +277,7 @@ int main(void)
   // 5. Initialize the application
   mapCallbacks(OD);
   canopen_app_init(&canOpenNodeSTM32);
+
 
 
   //Initialise les machines d'état
