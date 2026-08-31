@@ -178,6 +178,7 @@ extern bool lectureADC;
 extern uint32_t adc_ch6; // Channel 6 of the ADC
 extern uint32_t adc_ch8; // Channel 8 of the ADC
 extern bool switch_Nunchuck_Joystick;
+extern bool initialized;
 extern I2C_HandleTypeDef *phi2c1;
 
 #endif /* SRC_PROJECT_DEFINES_H_ */

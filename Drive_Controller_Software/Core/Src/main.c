@@ -126,7 +126,7 @@ void physicalButtonDCDC(){
 	//Envoie un 1 quand on appuie sur le bouton
 	if (Car_1.buttonDCDC != old_buttonDCDC)
 	{
-	    OD_RAM.x2043_buttonDCDC = Car_1.buttonDCDC;
+	    OD_RAM.x2043_buttonDCDC = 1;
 	    CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[ID_BUTTON_DCDC]);
 	}
 	old_buttonDCDC = Car_1.buttonDCDC;
@@ -240,24 +240,24 @@ int main(void)
   XF_init();
 
 
-  //read data entered from flash
-    if(FlashRead(0) == 0x1234567812345678)
-    {
-  	  //if default values saved in flash, read flash (for now no values stored)
-  	  OD_PERSIST_COMM.x2040_thresholdMax = FlashRead(8);
-  	  OD_PERSIST_COMM.x2041_thresholdCenter = FlashRead(16);
-  	  OD_PERSIST_COMM.x2042_thresholdJoystick = FlashRead(24);
-    }
-    else		//write in flash if no data saved
-    {
-  	  FlashErase(1); // erase flash
-  	  FlashWrite(0,0x1234567812345678); // signature
-
-  	  FlashWrite(8,OD_PERSIST_COMM.x2040_thresholdMax); // save your parameters values
-  	  FlashWrite(16,OD_PERSIST_COMM.x2041_thresholdCenter); // save your parameters values
-  	  FlashWrite(24,OD_PERSIST_COMM.x2042_thresholdJoystick); // save your parameters values
-
-    }
+//  //read data entered from flash
+//    if(FlashRead(0) == 0x1234567812345678)
+//    {
+//  	  //if default values saved in flash, read flash (for now no values stored)
+//  	  OD_PERSIST_COMM.x2040_thresholdMax = FlashRead(8);
+//  	  OD_PERSIST_COMM.x2041_thresholdCenter = FlashRead(16);
+//  	  OD_PERSIST_COMM.x2042_thresholdJoystick = FlashRead(24);
+//    }
+//    else		//write in flash if no data saved
+//    {
+//  	  FlashErase(1); // erase flash
+//  	  FlashWrite(0,0x1234567812345678); // signature
+//
+//  	  FlashWrite(8,OD_PERSIST_COMM.x2040_thresholdMax); // save your parameters values
+//  	  FlashWrite(16,OD_PERSIST_COMM.x2041_thresholdCenter); // save your parameters values
+//  	  FlashWrite(24,OD_PERSIST_COMM.x2042_thresholdJoystick); // save your parameters values
+//
+//    }
 
 
   // 1. Map the CANopen instance to your hardware (hcan1 is usually defined by CubeMX)
@@ -301,6 +301,7 @@ int main(void)
 
 	  //physicalSwitch();
 	  physicalButtonDCDC();
+
 	  Car_1.tension_busDCDC = OD_RAM.x2044_bus_voltage;
 
 	  if(lectureADC){
