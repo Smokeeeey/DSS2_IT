@@ -1,5 +1,0 @@
-../Core/Src/flash.c:17:17:GetPage	4
-../Core/Src/flash.c:33:17:GetBank	1
-../Core/Src/flash.c:38:6:FlashErase	2
-../Core/Src/flash.c:61:6:FlashWrite	2
-../Core/Src/flash.c:70:10:FlashRead	1
