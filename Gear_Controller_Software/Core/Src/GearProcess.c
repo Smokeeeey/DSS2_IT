@@ -129,8 +129,8 @@ bool gearProcess(Event* ev){
 					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 
 					//go to pos set by OD
-					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2001_gearPos0);
-					//HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear1);
+					//HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2001_gearPos0);
+					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear1);
 					if (gear.position <= MAXPOS0 && gear.position >= MINPOS0)
 					{
 						XF_post(gearProcess, E_REACHED, 0);
@@ -155,8 +155,8 @@ bool gearProcess(Event* ev){
 					counter_pos = 0;
 
 					//go to pos set by OD
-					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2002_gearPos1);
-					//HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear2);
+					//HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2002_gearPos1);
+					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear2);
 
 					if (gear.position <= MAXPOS1 && gear.position >= MINPOS1)
 					{
@@ -247,7 +247,7 @@ bool gearProcess(Event* ev){
 					counter_pos++;
 
 					//continuously send pos requested
-					//HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear1);
+					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear1);
 					if (gear.position <= MAXPOS0 && gear.position >= MINPOS0)
 					{
 						XF_post(gearProcess, E_REACHED, 0);
@@ -279,8 +279,8 @@ bool gearProcess(Event* ev){
 					counter_pos++;
 
 					//continuously send pos requested
-					//HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear2);
-					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2002_gearPos1);
+					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, gear.gear2);
+					//HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2002_gearPos1);
 					if (gear.position <= MAXPOS1 && gear.position >= MINPOS1)
 					{
 						XF_post(gearProcess, E_REACHED, 100);
