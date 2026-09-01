@@ -1263,8 +1263,8 @@ static CO_PROGMEM ODObjs_t ODObjs = {
     },
     .o_2004_treshold_NewValue = {
         .dataOrig = &OD_PERSIST_COMM.x2004_treshold_NewValue,
-        .attribute = ODA_SDO_RW | ODA_MB,
-        .dataLength = 2
+        .attribute = ODA_SDO_RW,
+        .dataLength = 1
     },
     .o_2020_joystick = {
         .dataOrig0 = &OD_RAM.x2020_joystick_sub0,

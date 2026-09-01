@@ -16,7 +16,7 @@
 
         Created:      19.05.2026 15:00:18
         Created By:   
-        Modified:     09.06.2026 19:47:04
+        Modified:     01.09.2026 09:10:10
         Modified By:  
 
     Device Info:
@@ -256,7 +256,7 @@ typedef struct {
     int8_t x2002_nunchuckOffsets[OD_CNT_ARR_2002];
     uint8_t x2003_joystickOffsets_sub0;
     int8_t x2003_joystickOffsets[OD_CNT_ARR_2003];
-    int16_t x2004_treshold_NewValue;
+    int8_t x2004_treshold_NewValue;
 } OD_PERSIST_COMM_t;
 
 typedef struct {

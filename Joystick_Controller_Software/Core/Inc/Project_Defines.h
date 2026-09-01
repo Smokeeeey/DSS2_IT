@@ -30,7 +30,7 @@
 #define TRESHOLD_NEW_VALUE_ADR 32
 
 #define NUNCHUCK_ADRR (0x52 << 1)
-#define MAX_JOYSTICK 905
+#define MAX_JOYSTICK 900
 #define MIN_JOYSTICK 85
 #define MAX_NUNCHUCK 230
 #define MIN_NUNCHUCK 30
@@ -65,16 +65,16 @@ typedef enum {
 //---------------------------Structures---------------------------
 
 typedef struct{
-	int16_t x;
-	int16_t y;
+	int8_t x;
+	int8_t y;
 	bool zButton;
 	bool cButton;
 }Nunchuck_ST;
 extern Nunchuck_ST Nunchuck_1;
 
 typedef struct {
-	int16_t x;
-	int16_t y;
+	int8_t x;
+	int8_t y;
 	bool button;
 }Joystick;
 extern Joystick js;

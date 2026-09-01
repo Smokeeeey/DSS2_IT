@@ -16,8 +16,9 @@ bool joystickProssess(Event* ev){
 
 	//----------Écrit dans la struct du nunchuck--------------
 
+	/*
 	//Standardisation de -100 à +100 avec un treshold quand on est à l'arret
-	joy_value = (adc_ch6 * COURSE_JOYSTICK)/(MAX_JOYSTICK - MIN_JOYSTICK) - 120;
+	joy_value = -((adc_ch6 * COURSE_JOYSTICK)/(MAX_JOYSTICK - MIN_JOYSTICK) - 120);
 	if (joy_value > OD_PERSIST_COMM.x2001_zeroLimit || joy_value < -OD_PERSIST_COMM.x2001_zeroLimit){
 		//Offset pour ajuster le milieu
 		js.x = joy_value + OD_PERSIST_COMM.x2002_nunchuckOffsets[0];
@@ -33,6 +34,28 @@ bool joystickProssess(Event* ev){
 	} else {
 		js.y = 0 + OD_PERSIST_COMM.x2002_nunchuckOffsets[1];
 	}
+	*/
+
+	//Standardisation de -100 à +100 avec un treshold quand on est à l'arret
+	joy_value = ((adc_ch6 - MIN_JOYSTICK) * COURSE_JOYSTICK) / (MAX_JOYSTICK - MIN_JOYSTICK) - 100;
+	if (joy_value > OD_PERSIST_COMM.x2001_zeroLimit || joy_value < -OD_PERSIST_COMM.x2001_zeroLimit){
+		//Offset pour ajuster le milieu
+		js.x = joy_value + OD_PERSIST_COMM.x2002_nunchuckOffsets[0];
+	} else {
+		js.x = 0 + OD_PERSIST_COMM.x2002_nunchuckOffsets[0];
+	}
+
+	//Standardisation de -100 à +100 avec un treshold quand on est à l'arret
+	joy_value = ((adc_ch8 - MIN_JOYSTICK) * COURSE_JOYSTICK) / (MAX_JOYSTICK - MIN_JOYSTICK) - 100;
+	if (joy_value > OD_PERSIST_COMM.x2001_zeroLimit || joy_value < -OD_PERSIST_COMM.x2001_zeroLimit){
+		//Offset pour ajuster le milieu
+		js.y = joy_value + OD_PERSIST_COMM.x2002_nunchuckOffsets[1];
+	} else {
+		js.y = 0 + OD_PERSIST_COMM.x2002_nunchuckOffsets[1];
+	}
+
+
+
 
 	js.button = HAL_GPIO_ReadPin(Joystick_Btn_GPIO_Port, Joystick_Btn_Pin);
 
