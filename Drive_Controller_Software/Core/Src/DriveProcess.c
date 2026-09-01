@@ -33,10 +33,6 @@ bool driveProcess(Event* ev)
 			{
 				driveState = INIT_DRIVE;
 			}
-			if (ev->id == E_MOVE_DRIVE)
-			{
-				driveState = MOVE_DRIVE;
-			}
 
 			break;
 		//-----------------------------------------------------------------------
