@@ -157,7 +157,7 @@ static ODR_t storeCallback(OD_stream_t *stream, const void *buf,OD_size_t count,
 }
 
 
-static OD_extension_t my_extensionJoystick;
+static OD_extension_t my_extensionController;
 
 void mapCallbacks(OD_t *od) {
 
@@ -165,15 +165,15 @@ void mapCallbacks(OD_t *od) {
 	OD_entry_t *entry = OD_find(od, 0x1010); // Find the OD entry for joystick value
 	if (entry != NULL) {
 		// Assign the custom write function (set read to NULL if not needed)
-		my_extensionJoystick.read = NULL;
+		my_extensionController.read = NULL;
 
 		// utilisé pour écrire sur la flash
-		my_extensionJoystick.write = storeCallback;
+		my_extensionController.write = storeCallback;
 
 
-		my_extensionJoystick.object = NULL; // Can be used to store private data
+		my_extensionController.object = NULL; // Can be used to store private data
 		// Register the extension to the OD entry
-		OD_extension_init(entry, &my_extensionJoystick);
+		OD_extension_init(entry, &my_extensionController);
 	}
 }
 

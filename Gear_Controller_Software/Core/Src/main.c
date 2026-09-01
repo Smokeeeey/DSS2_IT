@@ -190,26 +190,6 @@ int main(void)
 
   HAL_DAC_Start(&hdac1, DAC_CHANNEL_1);
 
-
-
-  // 1. Map the CANopen instance to your hardware (hcan1 is usually defined by CubeMX)
-  canOpenNodeSTM32.CANHandle = &hcan1;
-  // 2. Set your hardware initialization function (defined in can.c)
-  canOpenNodeSTM32.HWInitFunction = MX_CAN1_Init;
-  // 3. Map the timer used for CANopen heartbeat and fast tasks (e.g., TIM2)
-  canOpenNodeSTM32.timerHandle = &htim2;
-  // 4. Configure Node‐ID (1‐127) and Baudrate (e.g., 125, 250, 500, 1000)
-  canOpenNodeSTM32.desiredNodeID = 5;
-  canOpenNodeSTM32.baudrate = 250;
-  // 5. Initialize the application
-//  mapCallbacks(OD);
-  canopen_app_init(&canOpenNodeSTM32);
-
-  //Initialize SM_
-  XF_post(gearProcess, E_INIT, 0);
-  //static uint8_t oldGearRequest = 0;
-
-
   // before canopen_app_init()
   //read data entered from flash
   if(FlashRead(0) == 0x1234567812345678)
@@ -229,7 +209,25 @@ int main(void)
 	  FlashWrite(24,OD_PERSIST_COMM.x2005_gearPosN); // save your parameters values
 
   }
-  uint8_t hb ;
+
+  // 1. Map the CANopen instance to your hardware (hcan1 is usually defined by CubeMX)
+  canOpenNodeSTM32.CANHandle = &hcan1;
+  // 2. Set your hardware initialization function (defined in can.c)
+  canOpenNodeSTM32.HWInitFunction = MX_CAN1_Init;
+  // 3. Map the timer used for CANopen heartbeat and fast tasks (e.g., TIM2)
+  canOpenNodeSTM32.timerHandle = &htim2;
+  // 4. Configure Node‐ID (1‐127) and Baudrate (e.g., 125, 250, 500, 1000)
+  canOpenNodeSTM32.desiredNodeID = 5;
+  canOpenNodeSTM32.baudrate = 250;
+  // 5. Initialize the application
+//  mapCallbacks(OD);
+  canopen_app_init(&canOpenNodeSTM32);
+
+
+  //Initialize SM_
+  XF_post(gearProcess, E_INIT, 0);
+
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
