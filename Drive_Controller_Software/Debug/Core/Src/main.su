@@ -1,5 +1,5 @@
-C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_ODinterface.h:463:1:OD_extension_init	16	static
-C:/Users/jennifer.harries/Desktop/ProgSS2/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_PDO.h:354:1:CO_TPDOsendRequest	16	static
+C:/Users/jenni/HES-SO cours/Summer_school/SS2/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_ODinterface.h:463:1:OD_extension_init	16	static
+C:/Users/jenni/HES-SO cours/Summer_school/SS2/DSS2_IT/Drive_Controller_Software/CANopenNode/301/CO_PDO.h:354:1:CO_TPDOsendRequest	16	static
 ../Core/Src/main.c:85:6:physicalSwitch	8	static
 ../Core/Src/main.c:105:6:physicalButtonDCDC	8	static
 ../Core/Src/main.c:143:14:storeCallback	48	static

@@ -19,8 +19,10 @@ int32_t position0 = 0;
 int32_t rouesCentre = 0;
 int8_t waitingMotorMove = 0;
 
+float64_t calculTarget;
+
 int8_t oldJoystickx;
-int8_t joystickX;
+float64_t joystickX;
 
 bool endHoming;
 bool startHoming = true;
@@ -309,9 +311,9 @@ bool steeringProcess(Event* ev)
 						joystickX = 0;
 					}
 
+					calculTarget = ((((joystickX) + 100) / 200) * 836700);
 
-
-					target_position((int32_t) ((joystickX + 100) / 200) * 836700);
+					target_position((int32_t) calculTarget);
 
 					XF_post(steeringProcess, E_WAIT, 10);
 
