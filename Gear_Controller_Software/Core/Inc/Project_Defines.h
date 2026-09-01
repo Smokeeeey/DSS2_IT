@@ -32,7 +32,7 @@
 #define GEAR OD_RAM.x2000_gear
 #define MAXPOS0 3900
 #define MINPOS0 3700
-#define MAXPOS1	1500
+#define MAXPOS1	1600
 #define MINPOS1 1100
 #define MAXN 3000
 #define MINN 2700
