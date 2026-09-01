@@ -16,26 +16,9 @@ bool joystickProssess(Event* ev){
 
 	//----------Écrit dans la struct du nunchuck--------------
 
-	/*
-	//Standardisation de -100 à +100 avec un treshold quand on est à l'arret
-	joy_value = -((adc_ch6 * COURSE_JOYSTICK)/(MAX_JOYSTICK - MIN_JOYSTICK) - 120);
-	if (joy_value > OD_PERSIST_COMM.x2001_zeroLimit || joy_value < -OD_PERSIST_COMM.x2001_zeroLimit){
-		//Offset pour ajuster le milieu
-		js.x = joy_value + OD_PERSIST_COMM.x2002_nunchuckOffsets[0];
-	} else {
-		js.x = 0 + OD_PERSIST_COMM.x2002_nunchuckOffsets[0];
-	}
 
-	//Standardisation de -100 à +100 avec un treshold quand on est à l'arret
-	joy_value = -((adc_ch8 * COURSE_JOYSTICK)/(MAX_JOYSTICK - MIN_JOYSTICK) - 120);
-	if (joy_value > OD_PERSIST_COMM.x2001_zeroLimit || joy_value < -OD_PERSIST_COMM.x2001_zeroLimit){
-		//Offset pour ajuster le milieu
-		js.y = joy_value + OD_PERSIST_COMM.x2002_nunchuckOffsets[1];
-	} else {
-		js.y = 0 + OD_PERSIST_COMM.x2002_nunchuckOffsets[1];
-	}
-	*/
-
+	/* Remplacement temporaire des valeurs en flash qui marchent pas
+	 *
 	//Standardisation de -100 à +100 avec un treshold quand on est à l'arret
 	joy_value = ((adc_ch6 - MIN_JOYSTICK) * COURSE_JOYSTICK) / (MAX_JOYSTICK - MIN_JOYSTICK) - 100;
 	if (joy_value > OD_PERSIST_COMM.x2001_zeroLimit || joy_value < -OD_PERSIST_COMM.x2001_zeroLimit){
@@ -53,6 +36,25 @@ bool joystickProssess(Event* ev){
 	} else {
 		js.y = 0 + OD_PERSIST_COMM.x2002_nunchuckOffsets[1];
 	}
+	*/
+
+	//Standardisation de -100 à +100 avec un treshold quand on est à l'arret
+	joy_value = ((adc_ch6 - MIN_JOYSTICK) * COURSE_JOYSTICK) / (MAX_JOYSTICK - MIN_JOYSTICK) - 100;
+	if (joy_value > ZEROLIMIT_SANS_FLASH || joy_value < -ZEROLIMIT_SANS_FLASH){
+		//Offset pour ajuster le milieu
+		js.x = joy_value + JOYSTICK_OFFSET_SANS_FLASH;
+	} else {
+		js.x = 0 + JOYSTICK_OFFSET_SANS_FLASH;
+	}
+
+	//Standardisation de -100 à +100 avec un treshold quand on est à l'arret
+	joy_value = ((adc_ch8 - MIN_JOYSTICK) * COURSE_JOYSTICK) / (MAX_JOYSTICK - MIN_JOYSTICK) - 100;
+	if (joy_value > ZEROLIMIT_SANS_FLASH || joy_value < -ZEROLIMIT_SANS_FLASH){
+		//Offset pour ajuster le milieu
+		js.y = joy_value + JOYSTICK_OFFSET_SANS_FLASH;
+	} else {
+		js.y = 0 + JOYSTICK_OFFSET_SANS_FLASH;
+	}
 
 
 
@@ -62,8 +64,8 @@ bool joystickProssess(Event* ev){
 	//---------------------------------------------------------
 
 	//Si une des valeurs change
-	if(js.x > (oldJS.x + OD_PERSIST_COMM.x2004_treshold_NewValue) || js.x < (oldJS.x - OD_PERSIST_COMM.x2004_treshold_NewValue) ||
-	js.y > (oldJS.y + OD_PERSIST_COMM.x2004_treshold_NewValue) || js.y < (oldJS.y - OD_PERSIST_COMM.x2004_treshold_NewValue) ||
+	if(js.x > (oldJS.x + TRESHOLD_NEW_VALUE_SANS_FLASH) || js.x < (oldJS.x - TRESHOLD_NEW_VALUE_SANS_FLASH) ||
+	js.y > (oldJS.y + TRESHOLD_NEW_VALUE_SANS_FLASH) || js.y < (oldJS.y - TRESHOLD_NEW_VALUE_SANS_FLASH) ||
 	oldJS.button != js.button){
 
 		//Écrit dans le dictionnaire

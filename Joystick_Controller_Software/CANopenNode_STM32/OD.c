@@ -1249,7 +1249,7 @@ static CO_PROGMEM ODObjs_t ODObjs = {
         .dataOrig0 = &OD_PERSIST_COMM.x2002_nunchuckOffsets_sub0,
         .dataOrig = &OD_PERSIST_COMM.x2002_nunchuckOffsets[0],
         .attribute0 = ODA_SDO_R,
-        .attribute = ODA_SDO_RW | ODA_TPDO | ODA_TSRDO,
+        .attribute = ODA_SDO_RW,
         .dataElementLength = 1,
         .dataElementSizeof = sizeof(int8_t)
     },

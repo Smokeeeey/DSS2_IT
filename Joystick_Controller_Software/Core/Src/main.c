@@ -244,6 +244,15 @@ int main(void)
 
 	  OD_PERSIST_COMM.x2004_treshold_NewValue = FlashRead(TRESHOLD_NEW_VALUE_ADR);
   }
+//  else
+//  {
+//	  FlashErase(1);
+//	  FlashWrite(0, 0x1234567812345678);
+//
+//	  FlashWrite(8, OD_PERSIST_COMM.x2001_zeroLimit);
+//	  FlashWrite(24, OD_PERSIST_COMM.x2003_joystickOffsets[0]);
+//	  FlashWrite(32, OD_PERSIST_COMM.x2003_joystickOffsets[1]);
+//  }
 
 
   // 1. Map the CANopen instance to your hardware (hcan1 is usually defined by CubeMX)

@@ -43,6 +43,13 @@
 #define POS0_ADDR 8
 #define POS1_ADDR 16
 
+//---------------------Temp offset sans flash---------------------
+#define ZEROLIMIT_SANS_FLASH 0
+#define JOYSTICK_OFFSET_SANS_FLASH 0
+#define NUNCHUCK_OFFSET_SANS_FLASH 0
+#define TRESHOLD_NEW_VALUE_SANS_FLASH 0
+
+
 
 //---------------------------ENUM---------------------------
 
