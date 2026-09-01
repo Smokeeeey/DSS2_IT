@@ -233,7 +233,7 @@ bool driveProcess(Event* ev)
 					}
 
 					//check if gear reached
-					if (!OD_RAM.x203D_gearTransition)
+					if (OD_RAM.x203D_gearTransition)
 					{
 						OD_RAM.x2032_driveTorque = 0;
 					}

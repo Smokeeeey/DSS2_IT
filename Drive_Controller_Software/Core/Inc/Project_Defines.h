@@ -43,8 +43,8 @@
 #define switchOn				0x0F
 
 //Values
-#define toCenterPosition 		750		//A voir combien il faut pour etre au centre en partant du 0 du homing
-#define maxSteering				750
+#define centerPosition 		418350 		//A voir combien il faut pour etre au centre en partant du 0 du homing
+#define maxSteering				836700
 #define reductionDrive			200		// = reduction / (π × diam roue × 60 / 1000)​
 
 

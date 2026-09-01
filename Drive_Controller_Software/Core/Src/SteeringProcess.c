@@ -20,6 +20,7 @@ int32_t rouesCentre = 0;
 int8_t waitingMotorMove = 0;
 
 int8_t oldJoystickx;
+int8_t joystickX;
 
 bool endHoming;
 bool startHoming = true;
@@ -252,11 +253,8 @@ bool steeringProcess(Event* ev)
 				        OD_RAM.x2035_steeringControlWord = enableOperation;
 				        CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[ID_STEERING_CONTROL_WORD]);
 
-				        //Sauvegarde du centre
-				        rouesCentre = OD_RAM.x203A_steeringMotorCurrentPosition + toCenterPosition;
-
 				        // Revenir au milieu
-				        target_position(rouesCentre);
+				        target_position(centerPosition);
 
 				        // Nouveau positionnement
 				        OD_RAM.x2035_steeringControlWord = newSetpointImediatly;
@@ -295,12 +293,25 @@ bool steeringProcess(Event* ev)
 				//-----------------------------------------------------------------------
 				case MOVE:
 
-					// Regle de 3
-					// Joy			|0		|  joy[posx]	| 100
-					// Moteur		|pos0	|    target		| 10000
+
+					joystickX = OD_RAM.x2020_joystick[0];
+
+					if (joystickX >= 100)
+					{
+						joystickX = 100;
+					}
+					else if (joystickX <= -100)
+					{
+						joystickX = -100;
+					}
+					else if (joystickX >= -5 && joystickX <= 5)
+					{
+						joystickX = 0;
+					}
 
 
-					target_position((int32_t) (rouesCentre + (OD_RAM.x2020_joystick[0]) * 1000));
+
+					target_position((int32_t) ((joystickX + 100) / 200) * 836700);
 
 					XF_post(steeringProcess, E_WAIT, 10);
 
