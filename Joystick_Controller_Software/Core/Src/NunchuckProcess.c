@@ -78,24 +78,23 @@ bool nunchuckProcess(Event* ev){
 
 				//----------Écrit dans la struct du nunchuck--------------
 
-				((adc_ch8 - MIN_JOYSTICK) * COURSE_JOYSTICK) / (MAX_JOYSTICK - MIN_JOYSTICK) - 100
 
 				//Standardisation de -100 à +100 avec un treshold quand on est à l'arret
 				joy_value = (buffer_nunchuck[0] - MIN_NUNCHUCK) * COURSE_JOYSTICK / (MAX_NUNCHUCK - MIN_NUNCHUCK) - 100;
 				if (joy_value > OD_PERSIST_COMM.x2001_zeroLimit || joy_value < -OD_PERSIST_COMM.x2001_zeroLimit){
 					//Offset pour ajuster le milieu
-					Nunchuck_1.x = joy_value + OD_PERSIST_COMM.x2002_nunchuckOffsets[0];
+					Nunchuck_1.x = -(joy_value + OD_PERSIST_COMM.x2002_nunchuckOffsets[0]);
 				} else {
-					Nunchuck_1.x = 0 + OD_PERSIST_COMM.x2002_nunchuckOffsets[0];
+					Nunchuck_1.x = -(0 + OD_PERSIST_COMM.x2002_nunchuckOffsets[0]);
 				}
 
 				//Standardisation de -100 à +100 avec un treshold quand on est à l'arret
 				joy_value = (buffer_nunchuck[1] - MIN_NUNCHUCK) * COURSE_JOYSTICK / (MAX_NUNCHUCK - MIN_NUNCHUCK) - 100;
 				if (joy_value > OD_PERSIST_COMM.x2001_zeroLimit || joy_value < -OD_PERSIST_COMM.x2001_zeroLimit){
 					//Offset pour ajuster le milieu
-					Nunchuck_1.y = joy_value + OD_PERSIST_COMM.x2002_nunchuckOffsets[1];
+					Nunchuck_1.y = -(joy_value + OD_PERSIST_COMM.x2002_nunchuckOffsets[1]);
 				} else {
-					Nunchuck_1.y = 0 + OD_PERSIST_COMM.x2002_nunchuckOffsets[1];
+					Nunchuck_1.y = -(0 + OD_PERSIST_COMM.x2002_nunchuckOffsets[1]);
 				}
 
 				Nunchuck_1.zButton 		= !(buffer_nunchuck[5] & 0b00000001);
@@ -115,7 +114,14 @@ bool nunchuckProcess(Event* ev){
 
 					  //On écrit dans le dictionnaire
 					  OD_RAM.x2020_joystick[0] = Nunchuck_1.x ;
-					  OD_RAM.x2020_joystick[1] = Nunchuck_1.y ;
+					  if (Nunchuck_1.cButton)
+					  {
+						  OD_RAM.x2020_joystick[1] = 0;
+					  }
+					  else
+					  {
+						  OD_RAM.x2020_joystick[1] = Nunchuck_1.y ;
+					  }
 					  OD_RAM.x2020_joystick[2] = Nunchuck_1.zButton;
 
 					  //Envoie sur le can

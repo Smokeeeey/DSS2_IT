@@ -22,6 +22,9 @@ uint8_t oldJoystickPin;
 bool driveProcess(Event* ev)
 	{
 
+	//Envoie de la vitesse à chauque appel de la state machine
+	send_speed(OD_RAM.x2031_driveMotorSpeed);
+
 
 	//****************************************************************************
 	switch(driveState){                  // this is the transition state machine
@@ -327,6 +330,27 @@ bool driveProcess(Event* ev)
 
 
 /* ======== Functions ========== */
+
+void send_speed(int32_t rpm)
+{
+
+	//Vitesse 1
+	if (OD_RAM.x203E_gearPos == 0)
+	{
+		Car_1.speed = (int16_t) fabsf((rpm * reductionVitesse1 * 10.0f));
+	}
+	//Vitesse 2
+	else
+	{
+		Car_1.speed = (int16_t) fabsf((rpm * reductionVitesse2 * 10.0f));
+	}
+
+	//Write the speed in dico
+	OD_RAM.x203F_speed =  Car_1.speed;
+	//Envoie sur le can
+	CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[ID_SPEED]);
+
+}
 
 
 
