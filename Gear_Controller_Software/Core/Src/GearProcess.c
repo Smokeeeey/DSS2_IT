@@ -126,7 +126,7 @@ bool gearProcess(Event* ev){
 					counter_pos = 0;
 
 					//send to can transition
-					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
+//					CO_TPDOsendRequest(&canOpenNodeSTM32.canOpenStack->TPDO[0]);
 
 					//go to pos set by OD
 					HAL_DAC_SetValue(&hdac1,DAC_CHANNEL_1 , DAC_ALIGN_12B_R, OD_PERSIST_COMM.x2001_gearPos0);
