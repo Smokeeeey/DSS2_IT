@@ -78,8 +78,10 @@ bool nunchuckProcess(Event* ev){
 
 				//----------Écrit dans la struct du nunchuck--------------
 
+				((adc_ch8 - MIN_JOYSTICK) * COURSE_JOYSTICK) / (MAX_JOYSTICK - MIN_JOYSTICK) - 100
+
 				//Standardisation de -100 à +100 avec un treshold quand on est à l'arret
-				joy_value = buffer_nunchuck[0] * COURSE_JOYSTICK / (MAX_NUNCHUCK - MIN_NUNCHUCK) - 120;
+				joy_value = (buffer_nunchuck[0] - MIN_NUNCHUCK) * COURSE_JOYSTICK / (MAX_NUNCHUCK - MIN_NUNCHUCK) - 100;
 				if (joy_value > OD_PERSIST_COMM.x2001_zeroLimit || joy_value < -OD_PERSIST_COMM.x2001_zeroLimit){
 					//Offset pour ajuster le milieu
 					Nunchuck_1.x = joy_value + OD_PERSIST_COMM.x2002_nunchuckOffsets[0];
@@ -88,7 +90,7 @@ bool nunchuckProcess(Event* ev){
 				}
 
 				//Standardisation de -100 à +100 avec un treshold quand on est à l'arret
-				joy_value = buffer_nunchuck[1] * COURSE_JOYSTICK / (MAX_NUNCHUCK - MIN_NUNCHUCK) - 120;
+				joy_value = (buffer_nunchuck[1] - MIN_NUNCHUCK) * COURSE_JOYSTICK / (MAX_NUNCHUCK - MIN_NUNCHUCK) - 100;
 				if (joy_value > OD_PERSIST_COMM.x2001_zeroLimit || joy_value < -OD_PERSIST_COMM.x2001_zeroLimit){
 					//Offset pour ajuster le milieu
 					Nunchuck_1.y = joy_value + OD_PERSIST_COMM.x2002_nunchuckOffsets[1];

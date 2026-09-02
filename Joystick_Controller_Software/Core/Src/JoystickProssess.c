@@ -51,9 +51,9 @@ bool joystickProssess(Event* ev){
 	joy_value = ((adc_ch8 - MIN_JOYSTICK) * COURSE_JOYSTICK) / (MAX_JOYSTICK - MIN_JOYSTICK) - 100;
 	if (joy_value > ZEROLIMIT_SANS_FLASH || joy_value < -ZEROLIMIT_SANS_FLASH){
 		//Offset pour ajuster le milieu
-		js.y = joy_value + JOYSTICK_OFFSET_SANS_FLASH;
+		js.y = -(joy_value + JOYSTICK_OFFSET_SANS_FLASH);
 	} else {
-		js.y = 0 + JOYSTICK_OFFSET_SANS_FLASH;
+		js.y = -(0 + JOYSTICK_OFFSET_SANS_FLASH);
 	}
 
 
