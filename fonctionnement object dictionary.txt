@@ -5,4 +5,8 @@ ourvir fichier EDSEditor.exe
 ourvir dans l'application lancée le fichier se trouvant au chemin suivant : 
 ...workspace_1.18.1\DSS2_joystick_JN\CANopenNode_STM32\DS301_profile.xpd (le dossier de stm vient du git correspondant: )
 aller dans "Object dictionary" 
-créer un nouvel object 
+créer un nouvel object avec toutes les spécificités (type, transmit ou receive, persist ou ram, etc)
+aller dans la rubrique Rx ou Tx selon besoin et ajouter la variable 
+changer le cob-id de la variable selon ce qu'on a défini
+exporter le fichier OD.h et le remplacer dans le dossier du stm 
+lire et ecrire dans le dictionnaire dans stm32 
