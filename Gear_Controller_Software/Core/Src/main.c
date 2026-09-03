@@ -94,8 +94,8 @@ static void MX_I2C1_Init(void);
 void HAL_ADCEx_InjectedConvCpltCallback(ADC_HandleTypeDef *hadc)
 {
 	pos = HAL_ADCEx_InjectedGetValue(hadc, ADC_INJECTED_RANK_1);
-	OD_RAM.x2003_gearPos = pos;
-	gear.position = OD_RAM.x2003_gearPos;
+	OD_RAM.x2003_gearADCpos = pos;
+	gear.position = pos;
 	HAL_ADCEx_InjectedStart_IT(&hadc1);
 }
 
@@ -222,7 +222,7 @@ int main(void)
   // 5. Initialize the application
 //  mapCallbacks(OD);
   canopen_app_init(&canOpenNodeSTM32);
-
+  HAL_ADCEx_InjectedStart(&hadc1);
 
   //Initialize SM_
   XF_post(gearProcess, E_INIT, 0);
@@ -241,10 +241,12 @@ int main(void)
     /* USER CODE BEGIN 3 */
 
 	  XF_executeOnce();
-
-	  if(lectureADC){
-		  HAL_ADCEx_InjectedStart_IT(&hadc1);
-		  lectureADC = false;
+	  if(HAL_ADCEx_InjectedPollForConversion(&hadc1, 0) == HAL_OK)
+	  {
+		  pos = HAL_ADCEx_InjectedGetValue(&hadc1, ADC_INJECTED_RANK_1);
+		  OD_RAM.x2003_gearADCpos = pos;
+		  gear.position = pos;
+		  HAL_ADCEx_InjectedStart(&hadc1);
 	  }
 
   }

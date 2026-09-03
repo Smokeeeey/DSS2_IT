@@ -14,9 +14,9 @@
         Project File: DS301_profile.xpd
         File Version: 1
 
-        Created:      23.11.2020 13:00:00
+        Created:      11/23/2020 1:00:00 PM
         Created By:   
-        Modified:     28.08.2026 11:25:20
+        Modified:     9/2/2026 11:51:52 AM
         Modified By:  
 
     Device Info:
@@ -265,8 +265,10 @@ typedef struct {
         uint32_t COB_IDServerToClientTx;
     } x1200_SDOServerParameter;
     uint8_t x2000_gear;
-    int16_t x2003_gearPos;
+    int32_t x2003_gearADCpos;
     uint8_t x2004_gearTransition;
+    uint8_t x2006_gearState;
+    int32_t x2007_gearDACpos;
     uint32_t x6000_velocity;
 } OD_RAM_t;
 
@@ -330,7 +332,9 @@ extern OD_ATTR_OD OD_t *OD;
 #define OD_ENTRY_H2003 &OD->list[38]
 #define OD_ENTRY_H2004 &OD->list[39]
 #define OD_ENTRY_H2005 &OD->list[40]
-#define OD_ENTRY_H6000 &OD->list[41]
+#define OD_ENTRY_H2006 &OD->list[41]
+#define OD_ENTRY_H2007 &OD->list[42]
+#define OD_ENTRY_H6000 &OD->list[43]
 
 
 /*******************************************************************************
@@ -374,10 +378,12 @@ extern OD_ATTR_OD OD_t *OD;
 #define OD_ENTRY_H2000_gear &OD->list[35]
 #define OD_ENTRY_H2001_gearPos0 &OD->list[36]
 #define OD_ENTRY_H2002_gearPos1 &OD->list[37]
-#define OD_ENTRY_H2003_gearPos &OD->list[38]
+#define OD_ENTRY_H2003_gearADCpos &OD->list[38]
 #define OD_ENTRY_H2004_gearTransition &OD->list[39]
 #define OD_ENTRY_H2005_gearPosN &OD->list[40]
-#define OD_ENTRY_H6000_velocity &OD->list[41]
+#define OD_ENTRY_H2006_gearState &OD->list[41]
+#define OD_ENTRY_H2007_gearDACpos &OD->list[42]
+#define OD_ENTRY_H6000_velocity &OD->list[43]
 
 
 /*******************************************************************************

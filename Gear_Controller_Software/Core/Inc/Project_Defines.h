@@ -31,9 +31,9 @@
 
 #define GEAR OD_RAM.x2000_gear
 #define MAXPOS0 3900
-#define MINPOS0 3700
-#define MAXPOS1	1600
-#define MINPOS1 1100
+#define MINPOS0 3600
+#define MAXPOS1	1800
+#define MINPOS1 1200
 #define MAXN 3000
 #define MINN 2700
 #define ERRORTIME 400
@@ -50,7 +50,6 @@ typedef enum {
 	E_GOTO1 = 2,
 	E_GOTO2 = 3,
 	E_REACHED = 4,
-//	E_GOTO_N = 5,
 	E_GEAR_ERROR = 6,
 }EventList;
 
@@ -59,7 +58,6 @@ typedef enum {
 	GO_TO1 = 2,
 	GO_TO2 = 3,
 	REACHED = 4,
-//	GO_TO_N = 5,
 	GEARERROR = 6,
 }StateControl;
 
@@ -72,6 +70,7 @@ typedef struct{
 	uint16_t gear1;
 	uint16_t gear2;
 	uint16_t gearN;
+	uint16_t counter;
 }Gear_ST;
 extern Gear_ST gear;
 
